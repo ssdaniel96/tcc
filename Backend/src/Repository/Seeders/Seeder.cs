@@ -1,7 +1,6 @@
 ﻿using Domain.Entities.Equipments;
 using Domain.Entities.Events;
 using Domain.Entities.Locations;
-using Domain.Entities.People;
 using Repository.Context;
 
 namespace Repository.Seeders
@@ -50,16 +49,6 @@ namespace Repository.Seeders
                 };
 
                 _context.AddRange(locations);
-                await _context.SaveChangesAsync();
-
-                List<Collaborator> collaborators = new()
-                {
-                    new("Daniel Soares"),
-                    new("Antônio Jefferson"),
-                    new("Richard Baldin")
-                };
-
-                _context.AddRange(collaborators);
                 await _context.SaveChangesAsync();
 
                 List<Equipment> equipments = new()
