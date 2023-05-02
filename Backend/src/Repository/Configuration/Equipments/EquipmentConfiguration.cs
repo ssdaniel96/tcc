@@ -20,11 +20,6 @@ internal sealed class EquipmentConfiguration : IEntityTypeConfiguration<Equipmen
             .HasMaxLength(100)
             .IsRequired();
 
-        builder.HasOne(p => p.Responsible)
-               .WithMany()
-               .HasForeignKey("ResponsibleId")
-               .IsRequired();
-
         builder.ToTable(nameof(Equipment), schema: "equipments");
     }
 }

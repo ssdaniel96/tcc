@@ -5,7 +5,7 @@ using Repository.Context;
 
 namespace Repository.Seeders
 {
-    public sealed class Seeder
+    public sealed class Seeder : ISeeder
     {
         private ApplicationDbContext _context;
 
@@ -53,9 +53,9 @@ namespace Repository.Seeders
 
                 List<Equipment> equipments = new()
                 {
-                    new("123", "IPhone", collaborators[0]),
-                    new("123", "Notebook", collaborators[1]),
-                    new("123", "Prancha de Surf", collaborators[2]),
+                    new("123", "IPhone"),
+                    new("123", "Notebook"),
+                    new("123", "Prancha de Surf"),
                 };
 
                 _context.AddRange(equipments);

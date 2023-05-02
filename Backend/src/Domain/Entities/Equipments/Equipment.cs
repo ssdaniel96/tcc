@@ -1,5 +1,4 @@
 ﻿using Domain.Entities.Events;
-using Domain.Entities.People;
 
 namespace Domain.Entities.Equipments;
 
@@ -7,7 +6,6 @@ public sealed class Equipment : Entity
 {
     public string RFTag { get; private set; }
     public string Description { get; private set; }
-    public Collaborator Responsible { get; private set; }
 
     //navigations
     public IReadOnlyList<Event> Events => _events.AsReadOnly();
@@ -20,10 +18,9 @@ public sealed class Equipment : Entity
 
     }
 
-    public Equipment(string rfTag, string description, Collaborator responsible)
+    public Equipment(string rfTag, string description)
     {
         RFTag = rfTag;
         Description = description;
-        Responsible = responsible;
     }
 }

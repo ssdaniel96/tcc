@@ -22,11 +22,11 @@ internal sealed class AddressConfiguration : IEntityTypeConfiguration<Address>
 
         builder.Property(p => p.Complement)
             .HasColumnType("varchar")
-            .HasMaxLength(8);
+            .HasMaxLength(100);
 
         builder.Property(p => p.Observation)
             .HasColumnType("varchar")
-            .HasMaxLength(8);
+            .HasMaxLength(100);
 
         builder.ToTable(nameof(Address), schema: "locations");
     }

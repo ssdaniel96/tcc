@@ -1,4 +1,5 @@
 using IoC;
+using Repository.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,13 +19,22 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    ExecuteSeeders(app.Services);
 }
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapGet("/", () => "Hello World!");
-//app.MapControllers();
+app.MapControllers();
 
 app.Run();
+
+static void ExecuteSeeders(IServiceProvider services)
+{
+    var service = services.GetRequiredService<ISeeder>();
+
+    service.SeedAsync().Wait();
+
+
+}

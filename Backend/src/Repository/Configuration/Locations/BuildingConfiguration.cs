@@ -17,7 +17,7 @@ internal sealed class BuildingConfiguration : IEntityTypeConfiguration<Building>
 
         builder.HasOne(p => p.Address)
             .WithMany()
-            .HasForeignKey(p => "AddressId")
+            .HasForeignKey("AddressId")
             .IsRequired();
 
         builder.ToTable(nameof(Building), schema: "locations");

@@ -9,7 +9,8 @@ public static class InfrastructureConfiguration
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddDatabase(configuration);
+        services.AddDatabase(configuration)
+                .AddServices();
 
         return services;
     }
