@@ -1,6 +1,4 @@
-﻿using Domain.Entities.Equipments;
-using Domain.Entities.Events;
-using Domain.Entities.Locations;
+﻿using Domain.Entities.Events;
 using Repository.Context;
 
 namespace Repository.Seeders
@@ -16,9 +14,10 @@ namespace Repository.Seeders
 
         public async Task SeedAsync()
         {
-            if (!_context.Addresses.Any())
+            var addresses = _context.Addresses.ToList();
+            if (!addresses.Any())
             {
-                List<Address> addresses = new()
+                addresses = new()
                 {
                     new("13182823", "43", complement: "Bl B Apt 30"),
                     new("13192823", "700", complement: "Bl A Apt 55", observation: "Condomínio das Pérolas"),
@@ -27,8 +26,13 @@ namespace Repository.Seeders
 
                 _context.AddRange(addresses);
                 await _context.SaveChangesAsync();
+            }
 
-                List<Building> buildings = new()
+            var buildings = _context.Buildings.ToList();
+
+            if (!buildings.Any())
+            {
+                buildings = new()
                 {
                     new(addresses[0], "Prédio de TI"),
                     new(addresses[0], "Prédio de RH"),
@@ -38,8 +42,12 @@ namespace Repository.Seeders
 
                 _context.AddRange(buildings);
                 await _context.SaveChangesAsync();
+            }
 
-                List<Location> locations = new()
+            var locations = _context.Locations.ToList();
+            if (!locations.Any())
+            {
+                locations = new()
                 {
                     new("Sala 1", "1", buildings[0]),
                     new("Sala 2", "1", buildings[0]),
@@ -50,17 +58,24 @@ namespace Repository.Seeders
 
                 _context.AddRange(locations);
                 await _context.SaveChangesAsync();
+            }
 
-                List<Equipment> equipments = new()
+            var equipments = _context.Equipments.ToList();
+            if (!equipments.Any())
+            {
+                equipments = new()
                 {
                     new("123", "IPhone"),
-                    new("123", "Notebook"),
-                    new("123", "Prancha de Surf"),
+                    new("133", "Notebook"),
+                    new("143", "Prancha de Surf"),
                 };
 
                 _context.AddRange(equipments);
                 await _context.SaveChangesAsync();
+            }
 
+            if (!_context.MovimentTypes.Any())
+            {
                 List<MovimentType> movimentTypes = new()
                 {
                     new("IN"),

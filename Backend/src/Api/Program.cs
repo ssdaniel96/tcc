@@ -32,9 +32,11 @@ app.Run();
 
 static void ExecuteSeeders(IServiceProvider services)
 {
-    var service = services.GetRequiredService<ISeeder>();
-
+    using var scope = services.CreateScope();
+    var service = scope.ServiceProvider.GetService<ISeeder>()
+        ?? throw new ArgumentException("Service cant be null");
     service.SeedAsync().Wait();
+
 
 
 }
