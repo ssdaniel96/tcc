@@ -8,7 +8,7 @@ public sealed class Event : Entity
 {
     public Location Location { get; private set; }
     public Equipment Equipment { get; private set; }
-    public MovimentType MovimentType { get; private set; }
+    public MovimentTypeEnum MovimentType { get; private set; }
     public DateTime EventDateTime { get; private set; }
 
 #pragma warning disable CS8618
@@ -17,7 +17,7 @@ public sealed class Event : Entity
     {
 
     }
-    public Event(Location location, Equipment equipment, MovimentType movimentType)
+    public Event(Location location, Equipment equipment, MovimentTypeEnum movimentType)
     {
         Location = location;
         Equipment = equipment;
