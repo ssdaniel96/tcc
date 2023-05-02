@@ -10,7 +10,8 @@ public static class InfrastructureConfiguration
         IConfiguration configuration)
     {
         services.AddDatabase(configuration)
-                .AddServices();
+                .AddServices()
+                .AddAutoMapper();
 
         return services;
     }
