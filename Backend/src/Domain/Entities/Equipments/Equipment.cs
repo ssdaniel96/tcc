@@ -13,6 +13,13 @@ public sealed class Equipment : Entity
     public IReadOnlyList<Event> Events => _events.AsReadOnly();
     private readonly List<Event> _events = new();
 
+#pragma warning disable CS8618
+    private Equipment()
+#pragma warning restore CS8618
+    {
+
+    }
+
     public Equipment(string rfTag, string description, Collaborator responsible)
     {
         RFTag = rfTag;

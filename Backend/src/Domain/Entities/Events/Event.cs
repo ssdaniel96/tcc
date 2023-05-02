@@ -11,6 +11,12 @@ public sealed class Event : Entity
     public MovimentType MovimentType { get; private set; }
     public DateTime EventDateTime { get; private set; }
 
+#pragma warning disable CS8618
+    private Event()
+#pragma warning restore CS8618
+    {
+
+    }
     public Event(Location location, Equipment equipment, MovimentType movimentType)
     {
         Location = location;
