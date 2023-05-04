@@ -11,7 +11,8 @@ public static class InfrastructureConfiguration
     {
         services.AddDatabase(configuration)
                 .AddServices()
-                .AddAutoMapper();
+                .AddMapper()
+                .AddMediator();
 
         return services;
     }
