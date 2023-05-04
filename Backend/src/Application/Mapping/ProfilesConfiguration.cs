@@ -1,12 +1,14 @@
 ﻿using Application.Dtos;
 using AutoMapper;
+using Domain.Entities.Equipments;
 using Domain.Entities.Events;
+using Domain.Entities.Locations;
 
 namespace Application.Mapping;
 
-internal sealed class EventDtoProfile : Profile
+internal sealed class ProfilesConfiguration : Profile
 {
-    public EventDtoProfile()
+    public ProfilesConfiguration()
     {
         CreateMap<Event, EventDto>()
             .ForMember(p => p.EventDateTime, c => c.MapFrom(p => p.EventDateTime))
@@ -15,5 +17,8 @@ internal sealed class EventDtoProfile : Profile
             .ForMember(p => p.LocationDescription, c => c.MapFrom(p => p.Location.Description))
             .ForMember(p => p.LocationLevel, c => c.MapFrom(p => p.Location.Level))
             .ForMember(p => p.MovimentType, c => c.MapFrom(p => p.MovimentType));
+
+        CreateMap<Equipment, EquipmentDto>();
+        CreateMap<Location, LocationDto>();
     }
 }
