@@ -18,7 +18,7 @@ public class LocationsController : ControllerBase
 
     [HttpGet]
 
-    public async Task<ActionResult<IEnumerable<LocationDto>>> Get(GetLocationRequest request)
+    public async Task<ActionResult<IEnumerable<LocationDto>>> Get([FromQuery] GetLocationRequest request)
     {
         var dtos = await _mediator.Send(request);
 

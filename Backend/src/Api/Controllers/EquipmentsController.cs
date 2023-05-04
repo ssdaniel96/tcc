@@ -17,7 +17,7 @@ public class EquipmentsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<EquipmentDto>>> Get(GetEquipmentRequest request)
+    public async Task<ActionResult<IEnumerable<EquipmentDto>>> Get([FromQuery] GetEquipmentRequest request)
     {
         var dtos = await _mediator.Send(request);
 

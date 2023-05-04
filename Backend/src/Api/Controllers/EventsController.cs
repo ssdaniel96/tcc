@@ -34,7 +34,7 @@ public class EventsController : ControllerBase
     /// Recuperar lista de eventos com filtro
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<EventDto>>> Get(GetEventRequest request)
+    public async Task<ActionResult<IEnumerable<EventDto>>> Get([FromQuery] GetEventRequest request)
     {
         var dtos = await _mediator.Send(request);
 
