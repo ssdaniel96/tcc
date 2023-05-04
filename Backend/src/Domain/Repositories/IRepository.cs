@@ -1,6 +1,8 @@
-﻿namespace Domain.Repositories;
+﻿using Domain.Entities;
 
-public interface IRepository<TEntity> : IReaderRepository<TEntity>
+namespace Domain.Repositories;
+
+public interface IRepository<TEntity> : IReaderRepository<TEntity> where TEntity : Entity
 {
     Task RemoveAsync(TEntity entity);
 
