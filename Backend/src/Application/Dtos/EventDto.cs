@@ -2,7 +2,7 @@
 
 namespace Application.Dtos;
 
-public sealed class EventDto
+public sealed record EventDto
 {
     public string RFTag { get; init; } = string.Empty;
     public string EquipmentDescription { get; init; } = string.Empty;

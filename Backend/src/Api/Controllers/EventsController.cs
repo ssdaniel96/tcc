@@ -1,4 +1,5 @@
 ﻿using Application.Dtos;
+using Application.UseCases.Events.Commands.Capture;
 using Application.UseCases.Events.Queries.Get;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,18 +21,18 @@ public class EventsController : ControllerBase
     /// <summary>
     /// Salvar a captura de um evento
     /// </summary>
-    /// <returns></returns>
     [HttpPost]
-    public ActionResult Capture()
+    public async Task<ActionResult> Capture(EventCaptureRequest request)
     {
+        await _mediator.Send(request);
+
         return Ok();
     }
 
 
     /// <summary>
-    /// Recuperar toda lista de eventos
+    /// Recuperar lista de eventos com filtro
     /// </summary>
-    /// <returns></returns>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<EventDto>>> Get(GetEventRequest request)
     {
