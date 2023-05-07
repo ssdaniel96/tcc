@@ -4,7 +4,7 @@ Projeto de TCC
 # Description
 
 Esse projeto pretende ser um monorepo de toda a solução das aplicações para gerenciar a localização de equipamentos por RFId.
-<br>É a solução da problemática de nosso "TCC: Automatização de Gerenciamento de Localização de Equipamentos Compartilhados."
+<br>É a solução da problemática de nosso TCC: "Automatização de Gerenciamento de Localização de Equipamentos Compartilhados."
 
 # Equipe
 
