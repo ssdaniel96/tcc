@@ -16,7 +16,7 @@ Esse projeto pretende ser um monorepo de toda a solução das aplicações para 
 
 ## Projeto Físico-Lógico
 
-Corresponderá à lógica implementada e carregada no ESP32 para controlar os dispositivos de RFID e sensores de cálculo de vetor.
+Corresponderá à lógica implementada e carregada no ESP32 para controlar os dispositivos de RFID e sensores ópticos para cálculo de vetor.
 
 ## Projeto BackEnd
 
