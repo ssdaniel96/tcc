@@ -1,0 +1,29 @@
+.navigation{
+  display: grid;
+  grid-template-areas: "logo menu";
+  padding: 20px 5px;
+  max-height: 5vh;
+}
+
+.navigation .logo{
+  grid-area: logo;
+}
+
+.navigation img{
+  max-height: 100%;
+}
+
+.navigation .menu {
+  grid-area: menu;
+}
+
+.menu-items{
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+.menu-item a, a:hover, a:focus, a:active{
+  text-decoration: none;
+  text-transform: uppercase;
+}
