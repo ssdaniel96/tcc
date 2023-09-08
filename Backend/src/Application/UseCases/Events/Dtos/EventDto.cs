@@ -1,6 +1,6 @@
 ﻿using Domain.Enums;
 
-namespace Application.Dtos;
+namespace Application.UseCases.Events.Dtos;
 
 public sealed record EventDto
 {

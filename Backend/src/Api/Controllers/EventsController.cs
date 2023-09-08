@@ -1,5 +1,5 @@
-﻿using Application.Dtos;
-using Application.UseCases.Events.Commands.Capture;
+﻿using Application.UseCases.Events.Commands.Capture;
+using Application.UseCases.Events.Dtos;
 using Application.UseCases.Events.Queries.Get;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

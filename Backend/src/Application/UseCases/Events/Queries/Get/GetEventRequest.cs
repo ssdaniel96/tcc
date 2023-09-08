@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.UseCases.Events.Dtos;
 using MediatR;
 
 namespace Application.UseCases.Events.Queries.Get;

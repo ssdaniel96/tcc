@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.UseCases.Locations.Dtos;
 using MediatR;
 
 namespace Application.UseCases.Locations.Queries.Get;

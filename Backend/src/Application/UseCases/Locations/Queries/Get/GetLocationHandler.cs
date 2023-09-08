@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.UseCases.Locations.Dtos;
 using AutoMapper;
 using Domain.Repositories.Locations;
 using MediatR;

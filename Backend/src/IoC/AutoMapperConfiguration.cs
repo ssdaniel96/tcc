@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.UseCases.Events.Dtos;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IoC;

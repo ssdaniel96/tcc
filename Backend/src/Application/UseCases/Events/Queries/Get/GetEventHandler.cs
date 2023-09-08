@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.UseCases.Events.Dtos;
 using AutoMapper;
 using Domain.Repositories.Events;
 using MediatR;

@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.UseCases.Locations.Dtos;
 using Application.UseCases.Locations.Queries.Get;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.UseCases.Equipments.Dtos;
 using AutoMapper;
 using Domain.Repositories.Equipments;
 using MediatR;

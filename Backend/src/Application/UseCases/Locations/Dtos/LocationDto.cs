@@ -1,4 +1,4 @@
-﻿namespace Application.Dtos;
+﻿namespace Application.UseCases.Locations.Dtos;
 
 public sealed record LocationDto
 {

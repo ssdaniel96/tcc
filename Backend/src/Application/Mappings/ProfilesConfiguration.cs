@@ -1,10 +1,12 @@
-﻿using Application.Dtos;
+﻿using Application.UseCases.Equipments.Dtos;
+using Application.UseCases.Events.Dtos;
+using Application.UseCases.Locations.Dtos;
 using AutoMapper;
 using Domain.Entities.Equipments;
 using Domain.Entities.Events;
 using Domain.Entities.Locations;
 
-namespace Application.Mapping;
+namespace Application.Mappings;
 
 internal sealed class ProfilesConfiguration : Profile
 {
