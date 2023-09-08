@@ -1,4 +1,6 @@
 using IoC;
+using Microsoft.EntityFrameworkCore;
+using Repository.Context;
 using Repository.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +35,12 @@ app.Run();
 static void ExecuteSeeders(IServiceProvider services)
 {
     using var scope = services.CreateScope();
+    var context = scope.ServiceProvider.GetService<ApplicationDbContext>() 
+                   ?? throw new ArgumentNullException("Database cant be null!");
+    
+    context.Database.Migrate();
+    
+    
     var service = scope.ServiceProvider.GetService<ISeeder>()
         ?? throw new ArgumentException("Service cant be null");
     service.SeedAsync().Wait();

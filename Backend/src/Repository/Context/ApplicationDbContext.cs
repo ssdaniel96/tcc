@@ -18,7 +18,6 @@ public sealed class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions options) : base(options)
 #pragma warning restore CS8618
     {
-
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
