@@ -46,7 +46,7 @@ public class EquipmentsController : ControllerBase
     {
         var response = await _mediator.Send(request);
 
-        return CreatedAtRoute("GetEquipmentById", response.Id, response);
+        return CreatedAtRoute("GetEquipmentById", new { id = response.Id }, response);
     }
 
     [HttpDelete("{id:int}")]
