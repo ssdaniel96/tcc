@@ -13,8 +13,6 @@ export class LocalizacoesService {
   constructor(public httpClient: HttpClient) { }
 
   public get(): Observable<LocalizationModel[]>{
-    const test = this.httpClient.get<LocalizationModel[]>(`${environment.api_url}/locations`);
-    console.log(test);
-    return test;
+    return this.httpClient.get<LocalizationModel[]>(`${environment.api_url}/locations`);
   }
 }
