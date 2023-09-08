@@ -3,13 +3,16 @@
         <h1>Localizações</h1>
     </div>
     <table class="localizaceos-table">
-        <th>
-            <td>Descrição</td>
-            <td>Andar</td>
-        </th>
-        <tr *ngFor="let item in localizacoes">
-            
+      <thead>
+        <th>Descrição</th>
+        <th>Andar</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of localizations">
+          <td>{{ item?.description }}</td>
+          <td>{{ item?.level }}</td>
         </tr>
+      </tbody>
     </table>
 
 </article>

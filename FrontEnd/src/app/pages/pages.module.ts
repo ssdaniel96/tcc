@@ -5,6 +5,8 @@ import { EventosComponent } from '../pages/eventos/eventos.component';
 import { EquipamentosComponent } from '../pages/equipamentos/equipamentos.component';
 import { LocalizacoesComponent } from '../pages/localizacoes/localizacoes.component';
 import { SimulacaoComponent } from '../pages/simulacao/simulacao.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppModule } from '../app.module';
 
 
 
@@ -18,6 +20,7 @@ import { SimulacaoComponent } from '../pages/simulacao/simulacao.component';
   ],
   imports: [
     CommonModule
+    // BrowserModule
   ]
 })
 export class PagesModule { }
