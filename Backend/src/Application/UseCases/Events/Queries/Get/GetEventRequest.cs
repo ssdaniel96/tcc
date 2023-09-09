@@ -1,9 +1,10 @@
-﻿using Application.UseCases.Events.Dtos;
+﻿using Application.Shared.Dtos;
+using Application.UseCases.Events.Dtos;
 using MediatR;
 
 namespace Application.UseCases.Events.Queries.Get;
 
-public sealed record GetEventRequest : IRequest<IEnumerable<EventDto>>
+public sealed record GetEventRequest : IRequest<ResponseDto<IEnumerable<EventDto>>>
 {
     public string RFTag { get; init; } = string.Empty;
     public int LocationId { get; init; }

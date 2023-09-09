@@ -1,4 +1,5 @@
-﻿using Application.UseCases.Locations.Dtos;
+﻿using Application.Shared.Dtos;
+using Application.UseCases.Locations.Dtos;
 using AutoMapper;
 using Domain.Entities.Locations;
 using Domain.Repositories.Locations;
@@ -6,7 +7,7 @@ using MediatR;
 
 namespace Application.UseCases.Locations.Commands.Insert;
 
-public class InsertLocationHandler : IRequestHandler<InsertLocationRequest, LocationDto>
+public class InsertLocationHandler : IRequestHandler<InsertLocationRequest, ResponseDto<LocationDto>>
 {
     private readonly IBuildingRepository _buildingRepository;
     private readonly IAddressRepository _addressRepository;
@@ -22,7 +23,7 @@ public class InsertLocationHandler : IRequestHandler<InsertLocationRequest, Loca
         _mapper = mapper;
     }
 
-    public async Task<LocationDto> Handle(InsertLocationRequest request, CancellationToken cancellationToken)
+    public async Task<ResponseDto<LocationDto>> Handle(InsertLocationRequest request, CancellationToken cancellationToken)
     {
         var address = await GetOrCreateAddress(request.Building.Address);
         var building = await GetOrCreateBuilding(request.Building, address);
@@ -30,7 +31,9 @@ public class InsertLocationHandler : IRequestHandler<InsertLocationRequest, Loca
         var entity = new Location(request.Description, request.Level, building);
         entity = await _locationRepository.InsertAsync(entity);
 
-        return _mapper.Map<LocationDto>(entity);
+        var dto = _mapper.Map<LocationDto>(entity);
+
+        return new(dto);
     }
 
     private async Task<Building> GetOrCreateBuilding(BuildingDto buildingDto, Address address)

@@ -1,11 +1,12 @@
-﻿using Application.UseCases.Locations.Dtos;
+﻿using Application.Shared.Dtos;
+using Application.UseCases.Locations.Dtos;
 using AutoMapper;
 using Domain.Repositories.Locations;
 using MediatR;
 
 namespace Application.UseCases.Locations.Queries.Get;
 
-public sealed class GetLocationHandler : IRequestHandler<GetLocationRequest, IEnumerable<LocationDto>>
+public sealed class GetLocationHandler : IRequestHandler<GetLocationRequest, ResponseDto<IEnumerable<LocationDto>>>
 {
     private readonly ILocationRepository _locationRepository;
     private readonly IMapper _mapper;
@@ -16,12 +17,12 @@ public sealed class GetLocationHandler : IRequestHandler<GetLocationRequest, IEn
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<LocationDto>> Handle(GetLocationRequest request, CancellationToken cancellationToken)
+    public async Task<ResponseDto<IEnumerable<LocationDto>>> Handle(GetLocationRequest request, CancellationToken cancellationToken)
     {
         var entities = await _locationRepository.GetAsync();
 
         var dtos = _mapper.Map<IEnumerable<LocationDto>>(entities);
 
-        return dtos;
+        return new(dtos);
     }
 }

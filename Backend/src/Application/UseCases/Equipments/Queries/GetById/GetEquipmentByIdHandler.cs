@@ -1,11 +1,12 @@
-﻿using Application.UseCases.Equipments.Dtos;
+﻿using Application.Shared.Dtos;
+using Application.UseCases.Equipments.Dtos;
 using AutoMapper;
 using Domain.Repositories.Equipments;
 using MediatR;
 
 namespace Application.UseCases.Equipments.Queries.GetById;
 
-public class GetEquipmentByIdHandler : IRequestHandler<GetEquipmentByIdRequest, EquipmentDto?>
+public class GetEquipmentByIdHandler : IRequestHandler<GetEquipmentByIdRequest, ResponseDto<EquipmentDto?>>
 {
     private readonly IMapper _mapper;
     private readonly IEquipmentRepository _equipmentRepository;
@@ -16,10 +17,12 @@ public class GetEquipmentByIdHandler : IRequestHandler<GetEquipmentByIdRequest, 
         _equipmentRepository = equipmentRepository;
     }
 
-    public async Task<EquipmentDto?> Handle(GetEquipmentByIdRequest request, CancellationToken cancellationToken)
+    public async Task<ResponseDto<EquipmentDto?>> Handle(GetEquipmentByIdRequest request, CancellationToken cancellationToken)
     {
         var entity = await _equipmentRepository.GetByIdAsync(request.Id);
 
-        return _mapper.Map<EquipmentDto?>(entity);
+        var dto = _mapper.Map<EquipmentDto?>(entity);
+
+        return new(dto);
     }
 }

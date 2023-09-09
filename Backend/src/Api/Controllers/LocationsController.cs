@@ -1,4 +1,5 @@
-﻿using Application.UseCases.Locations.Commands.Insert;
+﻿using Application.Shared.Dtos;
+using Application.UseCases.Locations.Commands.Insert;
 using Application.UseCases.Locations.Dtos;
 using Application.UseCases.Locations.Queries.Get;
 using Application.UseCases.Locations.Queries.GetById;
@@ -19,7 +20,7 @@ public class LocationsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<LocationDto>>> Get([FromQuery] GetLocationRequest request)
+    public async Task<ActionResult<ResponseDto<IEnumerable<LocationDto>>>> Get([FromQuery] GetLocationRequest request)
     {
         var dtos = await _mediator.Send(request);
 
@@ -27,31 +28,28 @@ public class LocationsController : ControllerBase
     }
 
     [HttpGet("{id:int}", Name = "GetLocationById")]
-    public async Task<ActionResult<LocationDto>> GetById([FromRoute] int id)
+    public async Task<ActionResult<ResponseDto<LocationDto>>> GetById([FromRoute] int id)
     {
         var request = new GetLocationByIdRequest(id);
         var response = await _mediator.Send(request);
 
-        if (response == null)
-            return NotFound();
-        
         return Ok(response);
     }
 
     [HttpPost]
-    public async Task<ActionResult<LocationDto>> Insert([FromBody] InsertLocationRequest request)
+    public async Task<ActionResult<ResponseDto<LocationDto>>> Insert([FromBody] InsertLocationRequest request)
     {
         var response = await _mediator.Send(request);
 
-        return CreatedAtRoute("GetLocationById", new { id = response.Id }, response);
+        return CreatedAtRoute("GetLocationById", new { id = response.Data!.Id }, response);
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<ActionResult> Delete([FromRoute] int id)
+    public async Task<ActionResult<ResponseDto>> Delete([FromRoute] int id)
     {
         var request = new GetLocationByIdRequest(id);
-        await _mediator.Send(request);
+        var response = await _mediator.Send(request);
 
-        return NoContent();
+        return Ok(response);
     }
 }

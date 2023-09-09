@@ -1,4 +1,5 @@
-﻿using Application.UseCases.Events.Commands.Capture;
+﻿using Application.Shared.Dtos;
+using Application.UseCases.Events.Commands.Capture;
 using Application.UseCases.Events.Dtos;
 using Application.UseCases.Events.Queries.Get;
 using MediatR;
@@ -22,11 +23,11 @@ public class EventsController : ControllerBase
     /// Salvar a captura de um evento
     /// </summary>
     [HttpPost]
-    public async Task<ActionResult> Capture(EventCaptureRequest request)
+    public async Task<ActionResult<ResponseDto>> Capture(EventCaptureRequest request)
     {
-        await _mediator.Send(request);
+        var response = await _mediator.Send(request);
 
-        return Ok();
+        return Ok(response);
     }
 
 
@@ -34,7 +35,7 @@ public class EventsController : ControllerBase
     /// Recuperar lista de eventos com filtro
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<EventDto>>> Get([FromQuery] GetEventRequest request)
+    public async Task<ActionResult<ResponseDto<IEnumerable<EventDto>>>> Get([FromQuery] GetEventRequest request)
     {
         var dtos = await _mediator.Send(request);
 

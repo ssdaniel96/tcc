@@ -1,11 +1,12 @@
-﻿using Application.UseCases.Equipments.Dtos;
+﻿using Application.Shared.Dtos;
+using Application.UseCases.Equipments.Dtos;
 using AutoMapper;
 using Domain.Repositories.Equipments;
 using MediatR;
 
 namespace Application.UseCases.Equipments.Commands.Remove;
 
-public class RemoveEquipmentByIdHandler : IRequestHandler<RemoveEquipmentByIdRequest>
+public class RemoveEquipmentByIdHandler : IRequestHandler<RemoveEquipmentByIdRequest, ResponseDto>
 {
     private readonly IEquipmentRepository _equipmentRepository;
 
@@ -15,7 +16,7 @@ public class RemoveEquipmentByIdHandler : IRequestHandler<RemoveEquipmentByIdReq
         _equipmentRepository = equipmentRepository;
     }
 
-    public async Task Handle(RemoveEquipmentByIdRequest request, CancellationToken cancellationToken)
+    public async Task<ResponseDto> Handle(RemoveEquipmentByIdRequest request, CancellationToken cancellationToken)
     {
         var entity = await _equipmentRepository.GetByIdAsync(request.Id);
 
@@ -23,5 +24,10 @@ public class RemoveEquipmentByIdHandler : IRequestHandler<RemoveEquipmentByIdReq
             throw new ArgumentNullException($"{entity.GetType().Name} cant be null");
 
         await _equipmentRepository.RemoveAsync(entity);
+
+        return new()
+        {
+            IsSuccessfully = true
+        };
     }
 }

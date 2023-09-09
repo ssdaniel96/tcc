@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using Application.Shared.Dtos;
+using MediatR;
 
 namespace Application.UseCases.Locations.Commands.Remove;
 
-public record RemoveLocationRequest : IRequest
+public record RemoveLocationRequest : IRequest<ResponseDto>
 {
     public int Id { get; init; }
 
