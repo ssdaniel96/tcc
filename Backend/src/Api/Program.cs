@@ -1,56 +1,43 @@
+using Api.Infrastructure.Extensions;
+using Api.Infrastructure.Filters;
 using IoC;
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Repository.Context;
-using Repository.Seeders;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration)
+                .AddEndpointsApiExplorer()
+                .AddSwaggerGen();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddMvcCore(config =>
+{
+    config.Filters.Add<ExceptionFilter>();
+    config.Filters.Add<TransactionFilter>();
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseCors(config =>
+{
+    config.AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowAnyOrigin();
+});
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseCors(config =>
-    {
-        config.AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowAnyOrigin();
-    });
     app.UseSwagger();
     app.UseSwaggerUI();
-    ExecuteSeeders(app.Services);
+
+    app.Services.ExecuteSeeders().Wait();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
+else
+{
+    app.UseHttpsRedirection();
+}
 
 app.MapControllers();
 
 app.Run();
-
-static void ExecuteSeeders(IServiceProvider services)
-{
-    using var scope = services.CreateScope();
-    var context = scope.ServiceProvider.GetService<ApplicationDbContext>() 
-                   ?? throw new ArgumentNullException("Database cant be null!");
-    
-    context.Database.Migrate();
-    
-    
-    var service = scope.ServiceProvider.GetService<ISeeder>()
-        ?? throw new ArgumentException("Service cant be null");
-    service.SeedAsync().Wait();
-
-
-
-}
