@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities.Locations;
+﻿using Domain.Exceptions;
+
+namespace Domain.Entities.Locations;
 
 public sealed class Building : Entity
 {
@@ -14,7 +16,29 @@ public sealed class Building : Entity
 
     public Building(Address address, string description)
     {
+        ValidateDescription(description);
+        
         Address = address;
         Description = description;
+    }
+
+    private static void ValidateDescription(string? description)
+    {
+        if (string.IsNullOrWhiteSpace(description))
+        {
+            throw new DomainException("A descrição não pode ser nula!");
+        }
+
+        if (description.Length > 100)
+        {
+            throw new DomainException(
+                $"A descrição excede o limite máximo de caracteres (100), tamanho atual: {description.Length}");
+        }
+
+        if (description.Length < 3)
+        {
+            throw new DomainException(
+                $"A descrição precisa ter pelo menos 3 caracteres, tamanho atual: {description.Length}");
+        }
     }
 }
