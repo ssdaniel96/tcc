@@ -6,6 +6,7 @@ using Repository.Repositories.Equipments;
 using Repository.Repositories.Events;
 using Repository.Repositories.Locations;
 using Repository.Seeders;
+using Repository.Transactions;
 
 namespace IoC;
 
@@ -14,6 +15,7 @@ internal static class ServicesConfiguration
     internal static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<ISeeder, Seeder>()
+                .AddScoped<ITransaction, Transaction>()
                 .AddRepositores();
 
         return services;
@@ -22,9 +24,11 @@ internal static class ServicesConfiguration
     private static IServiceCollection AddRepositores(this IServiceCollection services)
     {
         services.AddScoped<IEquipmentRepository, EquipmentRepository>()
-                .AddScoped<ILocationRepository, LocationRepository>()
-                .AddScoped<IEventRepository, EventRepository>();
-
+            .AddScoped<ILocationRepository, LocationRepository>()
+            .AddScoped<IEventRepository, EventRepository>()
+            .AddScoped<IBuildingRepository, BuildingRepository>()
+            .AddScoped<IAddressRepository, AddressRepository>();
+        
         return services;
     }
 }
