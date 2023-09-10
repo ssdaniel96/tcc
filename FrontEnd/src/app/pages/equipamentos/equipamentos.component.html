@@ -1,7 +1,7 @@
 <article class="equipments">
   <div class="equipments-content">
     <h1 class="equipment-content-title">Equipamentos</h1>
-    <table class="equipments-content-table table table-striped">
+    <table class="equipments-content-table table table-striped form-group">
       <thead>
         <tr>
           <th class="table-column-description">Descrição</th>
@@ -27,6 +27,7 @@
         <tr *ngIf="newEquipmentSetted">
           <td>
             <input
+              class="form-control"
               id="newEquipmentDescription"
               type="text"
               [(ngModel)]="newEquipment.description"
@@ -34,6 +35,7 @@
           </td>
           <td>
             <input
+              class="form-control"
               id="newEquipmentRfTag"
               type="text"
               [(ngModel)]="newEquipment.rfTag"
