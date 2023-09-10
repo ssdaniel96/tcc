@@ -32,12 +32,7 @@ public sealed class Location : Entity
         {
             throw new DomainException("O andar não pode ser nulo!");
         }
-
-        if (level.Length < 3)
-        {
-            throw new DomainException(
-                $"O andar precisa ter pelo menos 3 caracteres! Limite atual: {level.Length}");
-        }
+        
 
         if (level.Length > 100)
         {

@@ -6,6 +6,7 @@ import { LocalizacoesComponent } from '../pages/localizacoes/localizacoes.compon
 import { SimulacaoComponent } from '../pages/simulacao/simulacao.component';
 import { FormsModule } from '@angular/forms';
 import { LocalizacoesNovoComponent } from './localizacoes/localizacoes-novo/localizacoes-novo.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -19,7 +20,8 @@ import { LocalizacoesNovoComponent } from './localizacoes/localizacoes-novo/loca
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ]
 })
 export class PagesModule { }

@@ -4,6 +4,7 @@ namespace Domain.Entities.Locations;
 
 public sealed class Building : Entity
 {
+    public int AddressId { get; private set; }
     public Address Address { get; private set; }
     public string Description { get; private set; }
 
@@ -19,6 +20,7 @@ public sealed class Building : Entity
         ValidateDescription(description);
         
         Address = address;
+        AddressId = address.Id;
         Description = description;
     }
 

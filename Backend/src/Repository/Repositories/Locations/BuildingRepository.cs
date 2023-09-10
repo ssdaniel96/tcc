@@ -14,7 +14,8 @@ public class BuildingRepository : Repository<Building>, IBuildingRepository
     public async Task<IEnumerable<Building>> GetAsync(int addressId)
     {
         return await Context.Buildings
-            .Where(p => p.Address.Id == addressId)
+            .Include(p => p.Address)
+            .Where(p => p.AddressId == addressId)
             .ToListAsync();
     }
 }
