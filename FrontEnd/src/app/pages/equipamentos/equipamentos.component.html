@@ -16,7 +16,7 @@
           <td>
             <button
               type="button"
-              class="btn btn-secondary"
+              class="btn btn-secondary btn-delete"
               [disabled]="loading"
               (click)="remove(item.id)"
             >
@@ -26,36 +26,48 @@
         </tr>
         <tr *ngIf="newEquipmentSetted">
           <td>
-            <input id="newEquipmentDescription" type="text" [(ngModel)]="newEquipment.description" />
+            <input
+              id="newEquipmentDescription"
+              type="text"
+              [(ngModel)]="newEquipment.description"
+            />
           </td>
           <td>
-            <input id="newEquipmentRfTag" type="text" [(ngModel)]="newEquipment.rfTag" />
+            <input
+              id="newEquipmentRfTag"
+              type="text"
+              [(ngModel)]="newEquipment.rfTag"
+            />
           </td>
           <td>
-            <button 
-              type="button" 
-              class="btn btn-secondary" 
-              [disabled]="loading"
-              (click)="cancel()">
-              Cancelar
-            </button>
-            <button 
-              type="button" 
-              class="btn btn-primary" 
-              [disabled]="loading"
-              (click)="save()">
-              Salvar
-            </button>
-
+            <div class="btn-group" role="group">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                [disabled]="loading"
+                (click)="cancel()"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                [disabled]="loading"
+                (click)="save()"
+              >
+                Salvar
+              </button>
+            </div>
           </td>
         </tr>
-        <tr *ngIf="!newEquipmentSetted"  class="last-line">
+        <tr *ngIf="!newEquipmentSetted" class="last-line">
           <td>
-            <button 
-              type="button" 
-              class="btn btn-primary" 
+            <button
+              type="button"
+              class="btn btn-primary"
               [disabled]="loading"
-              (click)="newEquipmentToggle()">
+              (click)="newEquipmentToggle()"
+            >
               Novo
             </button>
           </td>
