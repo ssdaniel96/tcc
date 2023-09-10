@@ -5,6 +5,7 @@ import { EquipamentosComponent } from '../pages/equipamentos/equipamentos.compon
 import { LocalizacoesComponent } from '../pages/localizacoes/localizacoes.component';
 import { SimulacaoComponent } from '../pages/simulacao/simulacao.component';
 import { FormsModule } from '@angular/forms';
+import { LocalizacoesNovoComponent } from './localizacoes/localizacoes-novo/localizacoes-novo.component';
 
 
 
@@ -13,7 +14,8 @@ import { FormsModule } from '@angular/forms';
     HistoricoComponent,
     EquipamentosComponent,
     LocalizacoesComponent,
-    SimulacaoComponent
+    SimulacaoComponent,
+    LocalizacoesNovoComponent
   ],
   imports: [
     CommonModule,

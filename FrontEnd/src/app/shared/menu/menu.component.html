@@ -1,27 +1,13 @@
 <nav class="navigation">
-  <div class="logo">
-     <!-- Aplicar estilos para que a imagem mantenha-se dentro do nav -->
-    <img src="path/to/helmet" alt="Logo do TCC" />
-  </div>
-  <!-- Por algum motivo o routerLink tá tirando com a minha cara -->
-  <div class="menu">
-    <ul class="menu-items">
-      <li class="menu-item">
-        <a href="/historico">Histórico</a>
-        <!-- <a routerLink="['/historico']" routerLinkActive="active">Histórico</a> -->
-      </li>
-      <li class="menu-item">
-        <!-- <a routerLink="/equipamentos">Equipamentos</a> -->
-        <a href="/equipamentos">Equipamentos</a>
-      </li>
-      <li class="menu-item">
-        <!-- <a routerLink="/localizacoes">Localizações</a> -->
-        <a href="/localizacoes">Localizações</a>
-      </li>
-      <li class="menu-item">
-        <!-- <a routerLink="/simulacao">Simulação</a> -->
-        <a href="/simulacao">Simulação</a>
-      </li>
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle float-end" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+      Menu
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+      <li><a class="dropdown-item" routerLink="/historico" routerLinkActive="active">Histórico</a></li>
+      <li><a class="dropdown-item" routerLink="/equipamentos" routerLinkActive="active">Equipamentos</a></li>
+      <li><a class="dropdown-item" routerLink="/localizacoes" routerLinkActive="active">Localizações</a></li>
+      <li><a class="dropdown-item" routerLink="/simulacao" routerLinkActive="active">Simulação</a></li>
     </ul>
   </div>
 </nav>
