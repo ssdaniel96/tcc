@@ -3,6 +3,8 @@ using Application.UseCases.Locations.Commands.Insert;
 using Application.UseCases.Locations.Commands.Remove;
 using Application.UseCases.Locations.Dtos;
 using Application.UseCases.Locations.Queries.Get;
+using Application.UseCases.Locations.Queries.GetAddresses;
+using Application.UseCases.Locations.Queries.GetBuildings;
 using Application.UseCases.Locations.Queries.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -53,4 +55,22 @@ public class LocationsController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpGet("addresses")]
+    public async Task<ActionResult<ResponseDto<IEnumerable<AddressDto>>>> GetAddresses([FromRoute] GetAddressesRequest request)
+    {
+        var response = await _mediator.Send(request);
+
+        return Ok(response);
+    }
+
+    [HttpGet("buildings")]
+    public async Task<ActionResult<ResponseDto<IEnumerable<BuildingDto>>>> GetBuildings(
+        [FromQuery] GetBuildingsRequest request)
+    {
+        var response = await _mediator.Send(request);
+
+        return Ok(response);
+    }
+    
 }
