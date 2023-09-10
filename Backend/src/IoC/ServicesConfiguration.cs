@@ -1,10 +1,12 @@
 ﻿using Domain.Repositories.Equipments;
 using Domain.Repositories.Events;
 using Domain.Repositories.Locations;
+using Domain.Repositories.Sensors;
 using Microsoft.Extensions.DependencyInjection;
 using Repository.Repositories.Equipments;
 using Repository.Repositories.Events;
 using Repository.Repositories.Locations;
+using Repository.Repositories.Sensors;
 using Repository.Seeders;
 using Repository.Transactions;
 
@@ -27,7 +29,8 @@ internal static class ServicesConfiguration
             .AddScoped<ILocationRepository, LocationRepository>()
             .AddScoped<IEventRepository, EventRepository>()
             .AddScoped<IBuildingRepository, BuildingRepository>()
-            .AddScoped<IAddressRepository, AddressRepository>();
+            .AddScoped<IAddressRepository, AddressRepository>()
+            .AddScoped<ISensorRepository, SensorRepository>();
         
         return services;
     }

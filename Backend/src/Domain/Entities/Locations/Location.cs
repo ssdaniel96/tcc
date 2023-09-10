@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Domain.Entities.Sensors;
 using Domain.Exceptions;
 
 namespace Domain.Entities.Locations;
@@ -8,6 +9,9 @@ public sealed class Location : Entity
     public string Description { get; private set; }
     public string Level { get; private set; }
     public Building Building { get; private set; }
+
+    public IReadOnlyCollection<Sensor> Sensors => _sensors.AsReadOnly();
+    private List<Sensor> _sensors => new();
 
 #pragma warning disable CS8618
     private Location()
@@ -24,6 +28,26 @@ public sealed class Location : Entity
         Description = description;
         Level = level;
         Building = building;
+    }
+
+    public void AddSensor(Sensor sensor)
+    {
+        if (_sensors.Select(p => p.Id).Contains(sensor.Id))
+        {
+            throw new DomainException($"A localização ({Id}) já possui esse sensor ({sensor.Id}) instalado!");
+        }
+        
+        _sensors.Add(sensor);
+    }
+
+    public void RemoveSensor(Sensor sensor)
+    {
+        if (!_sensors.Select(p => p.Id).Contains(sensor.Id))
+        {
+            throw new DomainException($"A localização ({Id}) não possui esse sensor ({sensor.Id}) instalado!");
+        }
+
+        _sensors.Remove(sensor);
     }
 
     private static void ValidateLevel(string? level)
