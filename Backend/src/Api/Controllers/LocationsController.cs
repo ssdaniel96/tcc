@@ -86,7 +86,7 @@ public class LocationsController : ControllerBase
         return Ok(response);
     }
 
-    [HttpDelete("sensor/{sensorId}")]
+    [HttpDelete("sensors/{sensorId}")]
     public async Task<ActionResult<ResponseDto>> RemoveSensor(int sensorId)
     {
         var request = new RemoveSensorByIdRequest(sensorId);
@@ -96,7 +96,7 @@ public class LocationsController : ControllerBase
         return response;
     }
 
-    [HttpPost("sensor")]
+    [HttpPost("sensors")]
     public async Task<ActionResult<ResponseDto<SensorDto>>> InsertSensor([FromBody] AddSensorRequest request)
     {
         var response = await _mediator.Send(request);
