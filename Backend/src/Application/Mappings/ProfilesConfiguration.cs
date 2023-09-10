@@ -5,6 +5,7 @@ using AutoMapper;
 using Domain.Entities.Equipments;
 using Domain.Entities.Events;
 using Domain.Entities.Locations;
+using Domain.Repositories.Dtos;
 
 namespace Application.Mappings;
 
@@ -22,5 +23,7 @@ internal sealed class ProfilesConfiguration : Profile
 
         CreateMap<Equipment, EquipmentDto>();
         CreateMap<Location, LocationDto>();
+        CreateMap<Building, BuildingDto>();
+        CreateMap<Address, AddressDto>();
     }
 }
