@@ -27,18 +27,29 @@ export class LocalizacoesComponent implements OnInit {
     this.localizacoesService.get().subscribe(
       res => {
         this.localizationsPage = res.data;
-        console.log(res.data.data);
         this.loading = false;
       },
       error => {
-        console.log('an error occured' + error)
+        console.log('an error occured');
+        console.log(error);
         this.loading = false;
       }
     );
   }
 
   public remove(id: number): void {
-    console.log(`TODO: Remove ${id}`);
+    this.loading = true;
+    this.localizacoesService.removeById(id).subscribe(
+      res => {
+        this.localizationsPage.data = this.localizationsPage.data.filter(p => p.id != id);
+        this.loading = false;
+      },
+      error => {
+        console.log('an error occured');
+        console.log(error);        
+        this.loading = false;
+      }
+    )
   }
 
 }

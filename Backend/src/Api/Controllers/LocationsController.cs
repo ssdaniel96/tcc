@@ -1,5 +1,6 @@
 ﻿using Application.Shared.Dtos;
 using Application.UseCases.Locations.Commands.Insert;
+using Application.UseCases.Locations.Commands.Remove;
 using Application.UseCases.Locations.Dtos;
 using Application.UseCases.Locations.Queries.Get;
 using Application.UseCases.Locations.Queries.GetById;
@@ -47,7 +48,7 @@ public class LocationsController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<ActionResult<ResponseDto>> Delete([FromRoute] int id)
     {
-        var request = new GetLocationByIdRequest(id);
+        var request = new RemoveLocationRequest(id);
         var response = await _mediator.Send(request);
 
         return Ok(response);
