@@ -7,6 +7,7 @@ import { LocalizacoesComponent } from '../pages/localizacoes/localizacoes.compon
 import { SimulacaoComponent } from '../pages/simulacao/simulacao.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppModule } from '../app.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -19,7 +20,8 @@ import { AppModule } from '../app.module';
     SimulacaoComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
     // BrowserModule
   ]
 })

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EquipmentModel } from 'src/app/models/equipments/equipment.model';
 import { InsertEquipmentModel } from 'src/app/models/equipments/insert-equipment.model';
+import { Response, SimpleResponse } from '../../models/shared/response.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -14,19 +15,19 @@ export class EquipamentosService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public get(): Observable<EquipmentModel[]>{
-    return this.httpClient.get<EquipmentModel[]>(`${this.baseUrl}`);
+  public get(): Observable<Response<EquipmentModel[]>>{
+    return this.httpClient.get<Response<EquipmentModel[]>>(`${this.baseUrl}`);
   }
 
-  public getById(id: number): Observable<EquipmentModel>{
-    return this.httpClient.get<EquipmentModel>(`${this.baseUrl}/${id}`);
+  public getById(id: number): Observable<Response<EquipmentModel>>{
+    return this.httpClient.get<Response<EquipmentModel>>(`${this.baseUrl}/${id}`);
   }
 
-  public deleteById(id: number): Observable<any>{
-    return this.httpClient.delete(`${this.baseUrl}/${id}`);
+  public deleteById(id: number): Observable<SimpleResponse>{
+    return this.httpClient.delete<SimpleResponse>(`${this.baseUrl}/${id}`);
   }
 
-  public insert(equipment: InsertEquipmentModel): Observable<EquipmentModel>{
-    return this.httpClient.post<EquipmentModel>(`${this.baseUrl}`, equipment);
+  public insert(equipment: InsertEquipmentModel): Observable<Response<EquipmentModel>>{
+    return this.httpClient.post<Response<EquipmentModel>>(`${this.baseUrl}`, equipment);
   }
 }
