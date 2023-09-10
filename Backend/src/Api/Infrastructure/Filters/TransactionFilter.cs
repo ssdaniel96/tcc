@@ -21,11 +21,11 @@ public class TransactionFilter : IActionFilter
     {
         if (context.Exception != null)
         {
-            _transaction.CommitTransaction();
+            _transaction.RollbackTransaction();
         }
         else
         {
-            _transaction.RollbackTransaction();
+            _transaction.CommitTransaction();
         }
     }
 }
