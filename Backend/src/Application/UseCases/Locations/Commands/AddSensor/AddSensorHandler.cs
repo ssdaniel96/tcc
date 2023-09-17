@@ -26,7 +26,7 @@ public class AddSensorHandler : IRequestHandler<AddSensorRequest, ResponseDto<Se
         var location = await _locationRepository.GetByIdAsync(request.LocationId)
             ?? throw new ApplicationException($"A localização fornecida ({request.LocationId}) não existe!");
 
-        var entity = new Sensor(request.Description, location);
+        var entity = new Sensor(request.Id, request.Description, location);
 
         entity = await _sensorRepository.InsertAsync(entity);
 
