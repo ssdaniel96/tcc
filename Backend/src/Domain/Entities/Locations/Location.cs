@@ -11,7 +11,7 @@ public sealed class Location : Entity
     public Building Building { get; private set; }
 
     public IReadOnlyCollection<Sensor> Sensors => _sensors.AsReadOnly();
-    private List<Sensor> _sensors => new();
+    private List<Sensor> _sensors = new();
 
 #pragma warning disable CS8618
     private Location()

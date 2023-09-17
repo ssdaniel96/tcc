@@ -62,7 +62,7 @@ export class SensoresComponent implements OnInit, OnChanges {
     );
   }
 
-  public delete(sensorId: number): void {
+  public remove(sensorId: number): void {
     this.isLoading = true;
     this.localizationService.deleteSensor(sensorId).subscribe(
       (res) => {

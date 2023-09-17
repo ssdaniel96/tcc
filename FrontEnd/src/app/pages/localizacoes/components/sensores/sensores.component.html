@@ -7,11 +7,22 @@
     <thead>
       <th>Id</th>
       <th>Descrição</th>
+      <th></th>
     </thead>
     <tbody>
       <tr *ngFor="let item of sensors">
         <td>{{ item?.id }}</td>
         <td>{{ item?.description }}</td>
+        <td> 
+          <button 
+            *ngIf="!isNewSensor"
+            class="btn btn-danger"
+            (click)="remove(item.id)"
+            [disabled]="isLoading"
+          >
+            Excluir
+          </button>
+        </td>
       </tr>
       <tr *ngIf="isNewSensor">
         <td>
