@@ -16,16 +16,14 @@ public class Sensor : Entity
         
     }
     
-    public Sensor(string description, Location location)
+    public Sensor(int id, string description, Location location) : base(id)
     {
         ValidateDescription(description);
         Description = description;
         Location = location;
         LocationId = location.Id;
     }
-
-
-
+    
     private static void ValidateDescription(string description)
     {
         if (string.IsNullOrEmpty(description))

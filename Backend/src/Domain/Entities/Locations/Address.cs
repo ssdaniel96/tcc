@@ -18,7 +18,7 @@ public sealed class Address : Entity
 
     public Address(string zipCode, string number, string? complement = null, string? observation = null)
     {
-        ValidateZipCode(ZipCode);
+        ValidateZipCode(zipCode);
         ValidateNumber(number);
         ValidateComplement(complement);
         ValidateObservation(observation);

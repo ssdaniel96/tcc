@@ -6,6 +6,8 @@ namespace Application.UseCases.Locations.Commands.AddSensor;
 
 public record AddSensorRequest : IRequest<ResponseDto<SensorDto>>
 {
-    public string Description { get; set; } = string.Empty;
-    public int LocationId { get; set; }
+
+    public int Id { get; init; }
+    public string Description { get; init; } = string.Empty;
+    public int LocationId { get; init; }
 }
