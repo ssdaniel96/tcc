@@ -12,6 +12,8 @@ export class LocalizacoesComponent implements OnInit {
 
   public localizationsPage: PageResponse<LocalizationModel> = new PageResponse<LocalizationModel>(0, 0, 0, []);
 
+  public locationDetailsSelected = new LocalizationModel(0, '', '', null);
+
   public loading: boolean = false;
 
   constructor(private localizacoesService: LocalizacoesService){
@@ -50,6 +52,10 @@ export class LocalizacoesComponent implements OnInit {
         this.loading = false;
       }
     )
+  }
+
+  public setDetails(location: LocalizationModel): void {
+    this.locationDetailsSelected = location;
   }
 
 }

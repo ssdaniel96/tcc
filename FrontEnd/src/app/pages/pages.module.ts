@@ -7,6 +7,7 @@ import { SimulacaoComponent } from '../pages/simulacao/simulacao.component';
 import { FormsModule } from '@angular/forms';
 import { LocalizacoesNovoComponent } from './localizacoes/localizacoes-novo/localizacoes-novo.component';
 import { RouterModule } from '@angular/router';
+import { SensoresComponent } from './localizacoes/components/sensores/sensores.component';
 
 
 
@@ -16,7 +17,8 @@ import { RouterModule } from '@angular/router';
     EquipamentosComponent,
     LocalizacoesComponent,
     SimulacaoComponent,
-    LocalizacoesNovoComponent
+    LocalizacoesNovoComponent,
+    SensoresComponent
   ],
   imports: [
     CommonModule,

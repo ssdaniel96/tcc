@@ -24,24 +24,35 @@
           <td>{{ item?.building?.address?.complement }}</td>
           <td>{{ item?.building?.address?.observation }}</td>
           <td>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              [disabled]="loading"
-              (click)="remove(item.id)"
-            >
-              Excluir
-            </button>
+            <div class="btn-group">
+              <button
+                type="button"
+                class="btn btn-info"
+                [disabled]="loading"
+                (click)="setDetails(item)"
+              >
+                Detalhes
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                [disabled]="loading"
+                (click)="remove(item.id)"
+              >
+                Excluir
+              </button>
+            </div>
           </td>
         </tr>
         <tr>
           <td>
-            <button 
-              type="button" 
-              class="btn btn-primary" 
+            <button
+              type="button"
+              class="btn btn-primary"
               [disabled]="loading"
-              routerLink="novo" 
-              routerLinkActive="router-link-active">
+              routerLink="novo"
+              routerLinkActive="router-link-active"
+            >
               Novo
             </button>
           </td>
@@ -53,45 +64,13 @@
           <td></td>
           <td></td>
         </tr>
-        <!-- <tr *ngIf="newEquipmentSetted">
-          <td>
-            <input id="newEquipmentDescription" type="text" [(ngModel)]="newEquipment.description" />
-          </td>
-          <td>
-            <input id="newEquipmentRfTag" type="text" [(ngModel)]="newEquipment.rfTag" />
-          </td>
-          <td>
-            <button 
-              type="button" 
-              class="btn btn-secondary" 
-              [disabled]="loading"
-              (click)="cancel()">
-              Cancelar
-            </button>
-            <button 
-              type="button" 
-              class="btn btn-primary" 
-              [disabled]="loading"
-              (click)="save()">
-              Salvar
-            </button>
-
-          </td>
-        </tr> -->
-        <!-- <tr *ngIf="!newEquipmentSetted"  class="last-line">
-          <td>
-            <button 
-              type="button" 
-              class="btn btn-primary" 
-              [disabled]="loading"
-              (click)="newEquipmentToggle()">
-              Novo
-            </button>
-          </td>
-          <td></td>
-          <td></td>
-        </tr> -->
       </tbody>
     </table>
   </div>
+  <app-sensores
+    *ngIf="locationDetailsSelected.id" 
+    [location]="locationDetailsSelected" 
+    [location-id]="locationDetailsSelected.id" 
+    class="sensors">
+  </app-sensores>
 </article>

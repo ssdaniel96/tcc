@@ -53,6 +53,6 @@ export class LocalizacoesService {
   }
 
   public addSensor(insertSensor: InsertSensorModel): Observable<Response<SensorModel>>{
-    return this.httpClient.post<Response<SensorModel>>(`${this.baseRoute}`, insertSensor)
+    return this.httpClient.post<Response<SensorModel>>(`${this.baseRoute}/sensors`, insertSensor)
   }
 }
