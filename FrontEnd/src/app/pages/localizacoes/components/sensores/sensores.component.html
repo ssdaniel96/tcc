@@ -14,12 +14,16 @@
         <td>
           <input id="id-sensor" 
                  class="form-control" 
-                 [(ngModel)]="newSensor.id" />
+                 [(ngModel)]="newSensor.id"
+                 aria-label
+                 placeholder="123" />
         </td>
         <td>
           <input id="description-sensor" 
                  class="form-control" 
-                 [(ngModel)]="newSensor.description" />
+                 [(ngModel)]="newSensor.description"
+                 placeholder="Porta da frente..."
+                 aria-label />
         </td>
       </tr>
       <tr *ngIf="!isNewSensor">
