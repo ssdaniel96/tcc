@@ -177,10 +177,7 @@ namespace Repository.Migrations
             modelBuilder.Entity("Domain.Entities.Sensors.Sensor", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -190,14 +187,9 @@ namespace Repository.Migrations
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("LocationId1")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("LocationId");
-
-                    b.HasIndex("LocationId1");
 
                     b.ToTable("Sensor", "sensors");
                 });
@@ -246,14 +238,10 @@ namespace Repository.Migrations
             modelBuilder.Entity("Domain.Entities.Sensors.Sensor", b =>
                 {
                     b.HasOne("Domain.Entities.Locations.Location", "Location")
-                        .WithMany()
+                        .WithMany("Sensors")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Domain.Entities.Locations.Location", null)
-                        .WithMany("Sensors")
-                        .HasForeignKey("LocationId1");
 
                     b.Navigation("Location");
                 });

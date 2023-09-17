@@ -12,8 +12,8 @@ using Repository.Context;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230502232807_addMovimentType")]
-    partial class addMovimentType
+    [Migration("20230917140313_ChangeAllAfterRemoveIdentityFromSensorId")]
+    partial class ChangeAllAfterRemoveIdentityFromSensorId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -176,6 +176,26 @@ namespace Repository.Migrations
                     b.ToTable("Location", "locations");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Sensors.Sensor", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("Sensor", "sensors");
+                });
+
             modelBuilder.Entity("Domain.Entities.Events.Event", b =>
                 {
                     b.HasOne("Domain.Entities.Equipments.Equipment", "Equipment")
@@ -217,9 +237,25 @@ namespace Repository.Migrations
                     b.Navigation("Building");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Sensors.Sensor", b =>
+                {
+                    b.HasOne("Domain.Entities.Locations.Location", "Location")
+                        .WithMany("Sensors")
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+                });
+
             modelBuilder.Entity("Domain.Entities.Equipments.Equipment", b =>
                 {
                     b.Navigation("Events");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Locations.Location", b =>
+                {
+                    b.Navigation("Sensors");
                 });
 #pragma warning restore 612, 618
         }

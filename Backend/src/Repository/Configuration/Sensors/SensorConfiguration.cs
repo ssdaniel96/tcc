@@ -9,6 +9,8 @@ internal sealed class SensorConfiguration : IEntityTypeConfiguration<Sensor>
     public void Configure(EntityTypeBuilder<Sensor> builder)
     {
         builder.HasKey(p => p.Id);
+        builder.Property(p => p.Id)
+               .ValueGeneratedNever();
 
         builder.Property(p => p.Description)
             .HasColumnType("varchar")
@@ -16,8 +18,8 @@ internal sealed class SensorConfiguration : IEntityTypeConfiguration<Sensor>
             .IsRequired();
 
         builder.HasOne(p => p.Location)
-            .WithMany()
-            .HasForeignKey("LocationId")
+            .WithMany(p => p.Sensors)
+            .HasForeignKey(p => p.LocationId)
             .IsRequired();
 
         builder.ToTable(nameof(Sensor), schema: "sensors");    

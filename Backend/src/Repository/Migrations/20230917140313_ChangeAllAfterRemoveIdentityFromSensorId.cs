@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class firstMigration : Migration
+    public partial class ChangeAllAfterRemoveIdentityFromSensorId : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,6 +17,9 @@ namespace Repository.Migrations
 
             migrationBuilder.EnsureSchema(
                 name: "events");
+
+            migrationBuilder.EnsureSchema(
+                name: "sensors");
 
             migrationBuilder.CreateTable(
                 name: "Address",
@@ -48,6 +51,20 @@ namespace Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Equipment", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MovimentType",
+                schema: "events",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "varchar(3)", maxLength: 3, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovimentType", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,6 +143,27 @@ namespace Repository.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Sensor",
+                schema: "sensors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sensor", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Sensor_Location_LocationId",
+                        column: x => x.LocationId,
+                        principalSchema: "locations",
+                        principalTable: "Location",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Building_AddressId",
                 schema: "locations",
@@ -149,6 +187,12 @@ namespace Repository.Migrations
                 schema: "locations",
                 table: "Location",
                 column: "BuildingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sensor_LocationId",
+                schema: "sensors",
+                table: "Sensor",
+                column: "LocationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -156,6 +200,14 @@ namespace Repository.Migrations
             migrationBuilder.DropTable(
                 name: "Event",
                 schema: "events");
+
+            migrationBuilder.DropTable(
+                name: "MovimentType",
+                schema: "events");
+
+            migrationBuilder.DropTable(
+                name: "Sensor",
+                schema: "sensors");
 
             migrationBuilder.DropTable(
                 name: "Equipment",

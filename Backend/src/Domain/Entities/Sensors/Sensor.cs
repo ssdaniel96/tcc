@@ -5,8 +5,9 @@ namespace Domain.Entities.Sensors;
 
 public class Sensor : Entity
 {
-    public string Description { get; set; }
-    public Location Location { get; set; }
+    public string Description { get; private set; }
+    public Location Location { get; private set; }
+    public int LocationId { get; private set; }
 
 #pragma warning disable CS8618 
     private Sensor()
@@ -20,6 +21,7 @@ public class Sensor : Entity
         ValidateDescription(description);
         Description = description;
         Location = location;
+        LocationId = location.Id;
     }
 
 
