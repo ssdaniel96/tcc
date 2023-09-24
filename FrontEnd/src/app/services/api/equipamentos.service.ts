@@ -16,8 +16,8 @@ export class EquipamentosService {
   constructor(private httpClient: HttpClient) { }
 
   public get(filter: string | null = null): Observable<Response<EquipmentModel[]>>{
-    let queryParams: string | null = null;
-    if (!filter){
+    let queryParams: string = '';
+    if (filter){
       queryParams = `?filter=${filter}`;
     }
 

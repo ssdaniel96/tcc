@@ -62,11 +62,11 @@ export class SimulacaoComponent implements OnInit {
       error: error => {
         console.log('TODO: fix error');
         console.log(error);
-      },
-      complete: () => {
-        this.isLoading = false;
       }
     })
+    .add(() => {
+      this.isLoading =false;
+    });
   }
 
   public IsValidToSave(): boolean {
@@ -78,7 +78,7 @@ export class SimulacaoComponent implements OnInit {
   }
 
   public selectAddress(address: AddressModel): void {
-    if (!address.id){
+    if (address.id){
       this.searchBuilding();
       this.addressWasSelected = true;
     }
@@ -88,7 +88,7 @@ export class SimulacaoComponent implements OnInit {
   }
 
   public selectBuilding(building: BuildingModel): void {
-    if (!building.id){
+    if (building.id){
       this.searchLocation();
       this.buildingWasSelected = true;
     }
@@ -116,10 +116,10 @@ export class SimulacaoComponent implements OnInit {
       error: error => {
         console.log('TODO: fix error');
         console.log(error);
-      },
-      complete: () => {
-        this.isLoading = false;
       }
+    })
+    .add(() => {
+      this.isLoading =false;
     });
   }
 
@@ -132,10 +132,10 @@ export class SimulacaoComponent implements OnInit {
       error: error => {
         console.log('TODO: fix error');
         console.log(error);
-      },
-      complete: () => {
-        this.isLoading = false;
       }
+    })
+    .add(() => {
+      this.isLoading =false;
     })
   }
 
@@ -148,10 +148,10 @@ export class SimulacaoComponent implements OnInit {
       error: error => {
         console.log('TODO: fix error');
         console.log(error);
-      },
-      complete: () => {
-        this.isLoading = false;
       }
+    })
+    .add(() => {
+      this.isLoading =false;
     })
   }
 
@@ -160,19 +160,21 @@ export class SimulacaoComponent implements OnInit {
     this.locationService.getAddresses(filter).subscribe({
       next: res => {
         this.addresses = res.data.map(p => new AddressModel(p.id, p.zipCode, p.number, p.complement, p.observation));
+        this.isLoading = false;
       },
       error: error => {
         console.log('TODO: fix error');
         console.log(error);
-      },
-      complete: () => {
-        this.isLoading = false;
       }
+    })
+    .add(() => {
+      this.isLoading =false;
     })
   }
 
   ngOnInit(): void {
     this.searchAddress();
+    this.searchEquipment();
   }
 
 
