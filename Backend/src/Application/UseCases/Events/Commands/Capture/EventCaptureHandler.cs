@@ -25,13 +25,13 @@ public sealed class EventCaptureHandler : IRequestHandler<EventCaptureRequest, R
 
     public async Task<ResponseDto> Handle(EventCaptureRequest request, CancellationToken cancellationToken)
     {
-        var equipment = await _equipmentRepository.GetByRFTagAsync(request.RFTag) ??
-            throw new ArgumentException($"Equipamento [{request.RFTag}] não encontrado");
+        var equipment = await _equipmentRepository.GetByRFTagAsync(request.RfTag) ??
+            throw new ArgumentException($"Equipamento [{request.RfTag}] não encontrado");
 
         var location = await _locationRepository.GetByIdAsync(request.LocationId) ??
             throw new ArgumentException($"Location [{request.LocationId}] não encontrado");
 
-        var entity = new Event(location, equipment, request.MovimentType);
+        var entity = new Event(location, equipment, request.Vector);
 
         await _eventRepository.InsertAsync(entity);
 

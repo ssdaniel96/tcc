@@ -9,7 +9,7 @@ public sealed class Event : Entity
 {
     public Location Location { get; private set; }
     public Equipment Equipment { get; private set; }
-    public MovimentTypeEnum MovimentType { get; private set; }
+    public Vector MovimentType { get; private set; }
     public DateTime EventDateTime { get; private set; }
 
 #pragma warning disable CS8618
@@ -18,7 +18,7 @@ public sealed class Event : Entity
     {
 
     }
-    public Event(Location location, Equipment equipment, MovimentTypeEnum movimentType)
+    public Event(Location location, Equipment equipment, Vector movimentType)
     {
         ValidateMovimentType(movimentType);
         
@@ -28,15 +28,15 @@ public sealed class Event : Entity
         EventDateTime = DateTime.UtcNow;
     }
 
-    private static void ValidateMovimentType(MovimentTypeEnum movimentTypeEnum)
+    private static void ValidateMovimentType(Vector vector)
     {
-        var permittedValues = Enum.GetValues<MovimentTypeEnum>()
+        var permittedValues = Enum.GetValues<Vector>()
             .Select(x => (int)x);
         
-        if (!Enum.IsDefined<MovimentTypeEnum>(movimentTypeEnum))
+        if (!Enum.IsDefined<Vector>(vector))
         {
             throw new DomainException(
-                $"Valor do Tipo de Movimento inválido ({movimentTypeEnum})! Valores aceitáveis: {string.Join(", ", permittedValues)}");
+                $"Valor do Tipo de Movimento inválido ({vector})! Valores aceitáveis: {string.Join(", ", permittedValues)}");
         }
 
     }

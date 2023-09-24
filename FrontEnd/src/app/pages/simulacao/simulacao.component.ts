@@ -27,8 +27,6 @@ export class SimulacaoComponent implements OnInit {
   public selectedVector: Vector = 0 as Vector;
   public selectedEquipment: EquipmentModel = new EquipmentModel();
 
-  public newEvent: NewEventModel = new NewEventModel(null, 0, 0);
-
   public addressWasSelected: boolean = false;
   public buildingWasSelected: boolean = false;
   public isLoading: boolean = false;
@@ -53,8 +51,9 @@ export class SimulacaoComponent implements OnInit {
   }
 
   public save(): void {
+    const newEvent = new NewEventModel(this.selectedEquipment.rfTag, this.selectedVector, this.selectedLocation.id);
     this.isLoading = true;
-    this.eventService.save(this.newEvent).subscribe({
+    this.eventService.save(newEvent).subscribe({
       next: res => {
         console.log(res.isSuccessfully)
         this.resetAll();
@@ -96,16 +95,6 @@ export class SimulacaoComponent implements OnInit {
       this.buildingWasSelected = false;
     }
   }
-
-  private getNewEvent(): NewEventModel {
-    return new NewEventModel(null, 0, 0);
-  }
-
-  public resetNewEvent(): void {
-    this.newEvent = this.getNewEvent();
-  }
-
-
 
   public searchEquipment(filter: string | null = null): void {
     this.isLoading = true;

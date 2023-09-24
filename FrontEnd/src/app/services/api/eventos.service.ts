@@ -10,7 +10,7 @@ import { SimpleResponse } from 'src/app/models/shared/response.model';
 })
 export class EventosService {
 
-  private baseUrl: string = environment.api_url;
+  private baseUrl: string = `${environment.api_url}/events`;
 
   constructor(private httpClient: HttpClient) { }
 

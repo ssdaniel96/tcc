@@ -23,7 +23,7 @@ public class EventsController : ControllerBase
     /// Salvar a captura de um evento
     /// </summary>
     [HttpPost]
-    public async Task<ActionResult<ResponseDto>> Capture(EventCaptureRequest request)
+    public async Task<ActionResult<ResponseDto>> Capture([FromBody] EventCaptureRequest request)
     {
         var response = await _mediator.Send(request);
 
