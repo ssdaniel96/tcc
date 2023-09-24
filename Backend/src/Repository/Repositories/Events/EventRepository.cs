@@ -12,15 +12,20 @@ public sealed class EventRepository : Repository<Event>, IEventRepository
     }
 
     public async Task<IEnumerable<Event>> GetAsync(
-        string RFTag = "",
+        string rfTag = "",
         int locationId = 0,
         int page = 1,
         int size = 25)
     {
-        var query = Get();
+        var query = Get()
+            .Include(p => p.Equipment)
+            .Include(p => p.Location)
+            .ThenInclude(p => p.Building)
+            .ThenInclude(p => p.Address)
+            .AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(RFTag))
-            query = query.Where(p => p.Equipment.RFTag == RFTag);
+        if (!string.IsNullOrWhiteSpace(rfTag))
+            query = query.Where(p => p.Equipment.RFTag == rfTag);
 
         if (locationId != 0)
             query = query.Where(p => p.Location.Id == locationId);

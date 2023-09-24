@@ -1,1 +1,47 @@
-<p>historico works!</p>
+<div class="history">
+  <h1>Histórico</h1>
+  <div class="container history-content">
+    <div class="history-header"></div>
+    <div class="history-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="col-sm-2">Equipamento</th>
+            <th class="col-sm-2">RF Tag</th>
+            <th class="col-sm-2">Localização</th>
+            <th class="col-sm-2">Vector</th>
+            <th class="col-sm-2">Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of events">
+            <td>{{ item.equipmentDescription }}</td>
+            <td>{{ item.equipmentRfTag }}</td>
+            <td>
+              <tr>
+                {{
+                  item.locationDescription
+                }}
+                -
+                {{
+                  item.locationBuilding
+                }}
+              </tr>
+              <tr>
+                {{
+                  item.locationZipCode
+                }}
+                -
+                {{
+                  item.locationNumber
+                }}
+              </tr>
+            </td>
+            <td>{{ item.eventVector }}</td>
+            <td>{{ item.eventDateTime }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

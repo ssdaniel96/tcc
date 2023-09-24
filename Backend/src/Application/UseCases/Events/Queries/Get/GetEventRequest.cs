@@ -8,6 +8,6 @@ public sealed record GetEventRequest : IRequest<ResponseDto<IEnumerable<EventDto
 {
     public string RFTag { get; init; } = string.Empty;
     public int LocationId { get; init; }
-    public int PageSize { get; set; }
-    public int PageNumber { get; set; }
+    public int PageSize { get; init; } = 25;
+    public int PageNumber { get; init; } = 1;
 }

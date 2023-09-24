@@ -9,5 +9,5 @@ public sealed record EventDto
     public string LocationDescription { get; init; } = string.Empty;
     public string LocationLevel { get; init; } = string.Empty;
     public DateTime EventDateTime { get; init; }
-    public Vector MovimentType { get; init; }
+    public Vector Vector { get; init; }
 }

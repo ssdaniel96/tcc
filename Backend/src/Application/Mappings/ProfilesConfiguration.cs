@@ -20,7 +20,7 @@ internal sealed class ProfilesConfiguration : Profile
             .ForMember(p => p.EquipmentDescription, c => c.MapFrom(p => p.Equipment.Description))
             .ForMember(p => p.LocationDescription, c => c.MapFrom(p => p.Location.Description))
             .ForMember(p => p.LocationLevel, c => c.MapFrom(p => p.Location.Level))
-            .ForMember(p => p.MovimentType, c => c.MapFrom(p => p.MovimentType));
+            .ForMember(p => p.Vector, c => c.MapFrom(p => p.MovimentType));
 
         CreateMap<Equipment, EquipmentDto>();
         CreateMap<Location, LocationDto>();

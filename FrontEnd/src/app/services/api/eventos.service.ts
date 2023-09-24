@@ -1,9 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { NewEventModel } from 'src/app/models/events/new-event.model';
 import { Observable } from 'rxjs';
-import { SimpleResponse } from 'src/app/models/shared/response.model';
+import { Response, SimpleResponse } from 'src/app/models/shared/response.model';
+import { EventHistoryModel } from 'src/app/models/events/event-history.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +17,14 @@ export class EventosService {
 
   public save(event: NewEventModel): Observable<SimpleResponse>{
     return this.httpClient.post<SimpleResponse>(`${this.baseUrl}`, event);
+  }
+
+  public get(filter: string = ''): Observable<Response<EventHistoryModel[]>>{
+    let queryParams: string = '';
+    if (filter){
+      queryParams += `?filter=${filter}`;
+    }
+
+    return this.httpClient.get<Response<EventHistoryModel[]>>(`${this.baseUrl}${queryParams}`)
   }
 }
