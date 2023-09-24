@@ -4,7 +4,7 @@ import { HistoricoComponent } from '../pages/historico/historico.component';
 import { EquipamentosComponent } from '../pages/equipamentos/equipamentos.component';
 import { LocalizacoesComponent } from '../pages/localizacoes/localizacoes.component';
 import { SimulacaoComponent } from '../pages/simulacao/simulacao.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LocalizacoesNovoComponent } from './localizacoes/localizacoes-novo/localizacoes-novo.component';
 import { RouterModule } from '@angular/router';
 import { SensoresComponent } from './localizacoes/components/sensores/sensores.component';
@@ -23,7 +23,8 @@ import { SensoresComponent } from './localizacoes/components/sensores/sensores.c
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ]
 })
 export class PagesModule { }

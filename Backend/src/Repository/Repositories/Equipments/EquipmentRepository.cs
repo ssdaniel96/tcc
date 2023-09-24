@@ -11,8 +11,23 @@ public sealed class EquipmentRepository : Repository<Equipment>, IEquipmentRepos
     {
     }
 
-    public async Task<Equipment?> GetByRFTagAsync(string RFTag)
+    public async Task<IEnumerable<Equipment>> GetAsync(string? filter = null)
     {
-        return await Context.Equipments.SingleOrDefaultAsync(p => p.RFTag == RFTag);
+        var query = Context.Equipments.AsQueryable();
+
+        if (int.TryParse(filter, out var id))
+            query = query.Where(p => p.Id == id
+                                     || p.RFTag.Contains(id.ToString())
+                                     || p.Description.Contains(id.ToString()));
+        else if (!string.IsNullOrWhiteSpace(filter))
+            query = query.Where(p => p.Description.Contains(filter)
+                                     || p.RFTag.Contains(filter));
+
+        return await query.ToListAsync();
+    }
+
+    public async Task<Equipment?> GetByRFTagAsync(string rfTag)
+    {
+        return await Context.Equipments.SingleOrDefaultAsync(p => p.RFTag == rfTag);
     }
 }

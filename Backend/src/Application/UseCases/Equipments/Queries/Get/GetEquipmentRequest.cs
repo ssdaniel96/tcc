@@ -6,4 +6,5 @@ namespace Application.UseCases.Equipments.Queries.Get;
 
 public sealed record GetEquipmentRequest : IRequest<ResponseDto<IEnumerable<EquipmentDto>>>
 {
+    public string? Filter { get; init; } = null;
 }

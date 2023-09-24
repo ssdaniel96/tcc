@@ -11,11 +11,24 @@ public class BuildingRepository : Repository<Building>, IBuildingRepository
     {
     }
 
-    public async Task<IEnumerable<Building>> GetAsync(int addressId)
+    public async Task<IEnumerable<Building>> GetAsync(int addressId, string? filter = null)
     {
-        return await Context.Buildings
+        
+        var query = Context.Buildings
             .Include(p => p.Address)
-            .Where(p => p.AddressId == addressId)
-            .ToListAsync();
+            .AsQueryable();
+
+        if (addressId == 0)
+            query = query.Where(p => p.AddressId == addressId);
+
+        if (int.TryParse(filter, out var id))
+            query = query.Where(p => p.Id == id
+                                || p.Description.Contains(id.ToString()));
+        else if (!string.IsNullOrWhiteSpace(filter))
+            query = query.Where(p => p.Description.Contains(filter));
+
+        return await query.ToListAsync();
+        
+        
     }
 }

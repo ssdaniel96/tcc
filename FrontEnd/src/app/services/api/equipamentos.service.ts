@@ -15,8 +15,13 @@ export class EquipamentosService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public get(): Observable<Response<EquipmentModel[]>>{
-    return this.httpClient.get<Response<EquipmentModel[]>>(`${this.baseUrl}`);
+  public get(filter: string | null = null): Observable<Response<EquipmentModel[]>>{
+    let queryParams: string | null = null;
+    if (!filter){
+      queryParams = `?filter=${filter}`;
+    }
+
+    return this.httpClient.get<Response<EquipmentModel[]>>(`${this.baseUrl}${queryParams}`);
   }
 
   public getById(id: number): Observable<Response<EquipmentModel>>{

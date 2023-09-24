@@ -1,4 +1,5 @@
-﻿using Application.Shared.Dtos;
+﻿using Application.Extensions;
+using Application.Shared.Dtos;
 using Application.UseCases.Equipments.Dtos;
 using AutoMapper;
 using Domain.Repositories.Equipments;
@@ -19,7 +20,7 @@ public sealed class GetEquipmentHandler : IRequestHandler<GetEquipmentRequest, R
 
     public async Task<ResponseDto<IEnumerable<EquipmentDto>>> Handle(GetEquipmentRequest request, CancellationToken cancellationToken)
     {
-        var entities = await _equipmentRepository.GetAsync();
+        var entities = await _equipmentRepository.GetAsync(request.Filter);
 
         var dtos = _mapper.Map<IEnumerable<EquipmentDto>>(entities);
 

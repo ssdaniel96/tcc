@@ -1,4 +1,5 @@
-﻿using Application.Shared.Dtos;
+﻿using Application.Extensions;
+using Application.Shared.Dtos;
 using Application.UseCases.Locations.Dtos;
 using AutoMapper;
 using Domain.Repositories.Dtos;
@@ -20,7 +21,7 @@ public sealed class GetLocationHandler : IRequestHandler<GetLocationRequest, Res
 
     public async Task<ResponseDto<PageResponse<LocationDto>>> Handle(GetLocationRequest request, CancellationToken cancellationToken)
     {
-        var response = await _locationRepository.GetAsync(request.PageRequest);
+        var response = await _locationRepository.GetAsync(request.PageRequest, request.BuildingId, request.Filter.GetOnlyAlfaNumerics());
 
         var responseDtos = _mapper.Map<PageResponse<LocationDto>>(response);
         

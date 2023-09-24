@@ -5,5 +5,5 @@ namespace Domain.Repositories.Locations;
 
 public interface ILocationRepository : IRepository<Location>
 {
-    Task<PageResponse<Location>> GetAsync(PageRequest pageRequest);
+    Task<PageResponse<Location>> GetAsync(PageRequest pageRequest, int buildingId = 0, string? filter = null);
 }

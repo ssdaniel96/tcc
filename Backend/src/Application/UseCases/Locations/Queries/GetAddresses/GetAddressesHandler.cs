@@ -1,4 +1,5 @@
-﻿using Application.Shared.Dtos;
+﻿using Application.Extensions;
+using Application.Shared.Dtos;
 using Application.UseCases.Locations.Dtos;
 using AutoMapper;
 using Domain.Repositories.Locations;
@@ -19,7 +20,7 @@ public class GetAddressesHandler : IRequestHandler<GetAddressesRequest, Response
 
     public async Task<ResponseDto<IEnumerable<AddressDto>>> Handle(GetAddressesRequest request, CancellationToken cancellationToken)
     {
-        var entities = await _addressRepository.GetAsync();
+        var entities = await _addressRepository.GetAsync(request.Filter.GetOnlyAlfaNumerics());
 
         var dtos = _mapper.Map<IEnumerable<AddressDto>>(entities);
 

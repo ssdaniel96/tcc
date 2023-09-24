@@ -9,6 +9,7 @@ import { AddressModel } from '../../models/localizations/address.model';
 import { BuildingModel } from '../../models/localizations/building.model';
 import { SensorModel } from '../../models/sensors/sensor.model';
 import { InsertSensorModel } from '../../models/sensors/insert-sensor.model.';
+import { query } from '@angular/animations';
 
 
 @Injectable({
@@ -20,24 +21,39 @@ export class LocalizacoesService {
 
   constructor(public httpClient: HttpClient) { }
 
-  public get(): Observable<Response<PageResponse<LocalizationModel>>>{
-    return this.httpClient.get<Response<PageResponse<LocalizationModel>>>(this.baseRoute);
+  public get(building: number = 0, filter: string | null = null): Observable<Response<PageResponse<LocalizationModel>>>{
+    let queryParams=`?building=${building}`
+    if (filter){
+      queryParams += `&filter=${filter}`
+    }
+
+    return this.httpClient.get<Response<PageResponse<LocalizationModel>>>(this.baseRoute + queryParams);
   }
 
   public removeById(id: number): Observable<SimpleResponse>{
     return this.httpClient.delete<SimpleResponse>(`${this.baseRoute}/${id}`)
   }
 
-  public getAddresses(): Observable<Response<AddressModel[]>>{
-    return this.httpClient.get<Response<AddressModel[]>>(`${this.baseRoute}/addresses`)
+  public getAddresses(filter: string | null = null): Observable<Response<AddressModel[]>>{
+    let queryParams=null;
+    if (filter){
+      queryParams = `?filter=${filter}`
+    }
+
+    return this.httpClient.get<Response<AddressModel[]>>(`${this.baseRoute}/addresses${queryParams}`)
   }
 
-  public getBuildings(addressId: number): Observable<Response<BuildingModel[]>>{
+  public getBuildings(addressId: number, filter: string | null = null): Observable<Response<BuildingModel[]>>{
     //TODO: fix params
     // const httpParams = new HttpParams();
     // httpParams.append('addressId', addressId);
+    let queryParams = `?addressId=${addressId}`;
 
-    return this.httpClient.get<Response<BuildingModel[]>>(`${this.baseRoute}/buildings?addressId=${addressId}`)
+    if (filter){
+      queryParams += `&filter=${filter}`;
+    }
+
+    return this.httpClient.get<Response<BuildingModel[]>>(`${this.baseRoute}/buildings${queryParams}`)
   }
 
   public save(newLocalization: LocalizationModel): Observable<Response<LocalizationModel>>{
