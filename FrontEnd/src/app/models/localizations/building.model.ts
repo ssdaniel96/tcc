@@ -3,7 +3,7 @@ import { AddressModel } from "./address.model";
 export class BuildingModel {
   public id: number;
   public description: string;
-  public address: AddressModel;
+  public address: AddressModel | null;
 
   public get descriptionFormatted(): string{
    
@@ -14,7 +14,7 @@ export class BuildingModel {
     return this.description;
   }
 
-  constructor(id: number, description: string, address: AddressModel){
+  constructor(id: number, description: string, address: AddressModel | null = null){
     this.id = id;
     this.description = description;
     this.address = address;

@@ -21,9 +21,9 @@ export class SimulacaoComponent implements OnInit {
   public equipments: EquipmentModel[] = new Array<EquipmentModel>();
   public vectors: Vector[] = [Vector.IN, Vector.OUT];
 
-  public selectedAddress: AddressModel = new AddressModel(0, null, null, null, null);
-  public selectedBuilding: BuildingModel = new BuildingModel(0, null, null);
-  public selectedLocation: LocalizationModel = new LocalizationModel(0, null, null, null);
+  public selectedAddress: AddressModel = new AddressModel(0, '', '', null, null);
+  public selectedBuilding: BuildingModel = new BuildingModel(0, '', null);
+  public selectedLocation: LocalizationModel = new LocalizationModel(0, '', '', null);
   public selectedVector: Vector = 0 as Vector;
   public selectedEquipment: EquipmentModel = new EquipmentModel();
 
@@ -41,9 +41,9 @@ export class SimulacaoComponent implements OnInit {
   }
 
   public resetAll(): void {
-    this.selectedAddress = new AddressModel(0, null, null, null, null);
-    this.selectedBuilding = new BuildingModel(0, null, null);
-    this.selectedLocation = new LocalizationModel(0, null, null, null);
+    this.selectedAddress = new AddressModel(0, '', '', null, null);
+    this.selectedBuilding = new BuildingModel(0, '', null);
+    this.selectedLocation = new LocalizationModel(0, '', '', null);
     this.selectedVector = 0 as Vector;
     this.selectedEquipment = new EquipmentModel();
     this.addressWasSelected = false;
