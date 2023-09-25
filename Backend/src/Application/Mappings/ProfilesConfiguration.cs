@@ -14,13 +14,17 @@ internal sealed class ProfilesConfiguration : Profile
 {
     public ProfilesConfiguration()
     {
-        CreateMap<Event, EventDto>()
+        CreateMap<Event, EventHistoryDto>()
             .ForMember(p => p.EventDateTime, c => c.MapFrom(p => p.EventDateTime))
-            .ForMember(p => p.RFTag, c => c.MapFrom(p => p.Equipment.RFTag))
+            .ForMember(p => p.EquipmentRfTag, c => c.MapFrom(p => p.Equipment.RFTag))
             .ForMember(p => p.EquipmentDescription, c => c.MapFrom(p => p.Equipment.Description))
             .ForMember(p => p.LocationDescription, c => c.MapFrom(p => p.Location.Description))
             .ForMember(p => p.LocationLevel, c => c.MapFrom(p => p.Location.Level))
-            .ForMember(p => p.Vector, c => c.MapFrom(p => p.MovimentType));
+            .ForMember(p => p.LocationBuilding, c => c.MapFrom(p => p.Location.Building.Description))
+            .ForMember(p => p.LocationZipCode, c => c.MapFrom(p => p.Location.Building.Address.ZipCode))
+            .ForMember(p => p.LocationNumber, c => c.MapFrom(p => p.Location.Building.Address.Number))
+            .ForMember(p => p.EventVector, c => c.MapFrom(p => p.MovimentType))
+            .ForMember(p => p.EventDateTime, c => c.MapFrom(p => p.EventDateTime.ToString("dd/MM/yyyy HH:mm:ss")));
 
         CreateMap<Equipment, EquipmentDto>();
         CreateMap<Location, LocationDto>();

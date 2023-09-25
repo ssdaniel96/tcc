@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Application.UseCases.Events.Queries.Get;
 
-public sealed class GetEventHandler : IRequestHandler<GetEventRequest, ResponseDto<IEnumerable<EventDto>>>
+public sealed class GetEventHandler : IRequestHandler<GetEventRequest, ResponseDto<IEnumerable<EventHistoryDto>>>
 {
     private readonly IEventRepository _eventRepository;
     private readonly IMapper _mapper;
@@ -17,7 +17,7 @@ public sealed class GetEventHandler : IRequestHandler<GetEventRequest, ResponseD
         _mapper = mapper;
     }
 
-    public async Task<ResponseDto<IEnumerable<EventDto>>> Handle(GetEventRequest request, CancellationToken cancellationToken)
+    public async Task<ResponseDto<IEnumerable<EventHistoryDto>>> Handle(GetEventRequest request, CancellationToken cancellationToken)
     {
         var entities = await _eventRepository.GetAsync(
             request.RFTag,
@@ -25,8 +25,8 @@ public sealed class GetEventHandler : IRequestHandler<GetEventRequest, ResponseD
             request.PageNumber,
             request.PageSize);
 
-        var dtos = _mapper.Map<IEnumerable<EventDto>>(entities);
+        var dtos = _mapper.Map<IEnumerable<EventHistoryDto>>(entities);
 
         return new(dtos);
-    }
+        }
 }

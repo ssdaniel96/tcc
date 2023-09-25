@@ -9,7 +9,7 @@ public static class MediatorConfiguration
     {
         services.AddMediatR(cfg =>
         {
-            cfg.RegisterServicesFromAssembly(typeof(EventDto).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(EventHistoryDto).Assembly);
         });
         return services;
     }

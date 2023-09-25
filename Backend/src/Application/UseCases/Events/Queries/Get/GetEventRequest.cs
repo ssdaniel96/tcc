@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.UseCases.Events.Queries.Get;
 
-public sealed record GetEventRequest : IRequest<ResponseDto<IEnumerable<EventDto>>>
+public sealed record GetEventRequest : IRequest<ResponseDto<IEnumerable<EventHistoryDto>>>
 {
     public string RFTag { get; init; } = string.Empty;
     public int LocationId { get; init; }

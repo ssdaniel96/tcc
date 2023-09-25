@@ -24,9 +24,11 @@ export class HistoricoComponent implements OnInit {
     this.eventService.get(filter).subscribe({
       next: res => {
         this.events = res.data.map(item => new EventHistoryModel(
+          item.id,
           item.equipmentDescription,
           item.equipmentRfTag,
           item.locationDescription,
+          item.locationLevel,
           item.locationBuilding,
           item.locationZipCode,
           item.locationNumber,

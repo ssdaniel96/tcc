@@ -7,7 +7,7 @@ internal static class AutoMapperConfiguration
 {
     internal static IServiceCollection AddMapper(this IServiceCollection services)
     {
-        services.AddAutoMapper(typeof(EventDto).Assembly);
+        services.AddAutoMapper(typeof(EventHistoryDto).Assembly);
 
         return services;
     }
