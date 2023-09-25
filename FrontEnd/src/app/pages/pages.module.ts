@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LocalizacoesNovoComponent } from './localizacoes/localizacoes-novo/localizacoes-novo.component';
 import { RouterModule } from '@angular/router';
 import { SensoresComponent } from './localizacoes/components/sensores/sensores.component';
+import { HistoricoHeaderComponent } from './historico/components/historico-header/historico-header.component';
 
 
 
@@ -18,7 +19,8 @@ import { SensoresComponent } from './localizacoes/components/sensores/sensores.c
     LocalizacoesComponent,
     SimulacaoComponent,
     LocalizacoesNovoComponent,
-    SensoresComponent
+    SensoresComponent,
+    HistoricoHeaderComponent
   ],
   imports: [
     CommonModule,
