@@ -20,10 +20,10 @@ export class LocalizacoesService {
   constructor(public httpClient: HttpClient) {}
 
   public get(
-    building: number = 0,
+    buildingId: number = 0,
     filter: string | null = null
   ): Observable<Response<PageResponse<LocalizationModel>>> {
-    let queryParams = `?building=${building}`;
+    let queryParams = `?buildingId=${buildingId}`;
     if (filter) {
       queryParams += `&filter=${filter}`;
     }

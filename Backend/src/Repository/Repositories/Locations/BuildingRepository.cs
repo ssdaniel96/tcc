@@ -18,7 +18,7 @@ public class BuildingRepository : Repository<Building>, IBuildingRepository
             .Include(p => p.Address)
             .AsQueryable();
 
-        if (addressId == 0)
+        if (addressId != 0)
             query = query.Where(p => p.AddressId == addressId);
 
         if (int.TryParse(filter, out var id))
