@@ -30,7 +30,7 @@
           <label for="simulacao-vector-select">Vetor</label>
           <select name="simulacao-vector-select" class="form-control" [(ngModel)]="selectedVector"
             id="simulacao-vector-select" [disabled]="isLoading">
-            <option *ngFor="let item of vectors" [ngValue]="item">{{item}}</option>
+            <option *ngFor="let item of vectors" [ngValue]="item">{{ getVectorDescription(item)}}</option>
           </select>
         </div>
       </div>

@@ -166,6 +166,16 @@ export class SimulacaoComponent implements OnInit {
     this.searchEquipment();
   }
 
+  public getVectorDescription(vector: Vector): string {
+    if (vector === Vector.IN) {
+      return 'Entrada';
+    } else if (vector === Vector.OUT) {
+      return 'Saída';
+    } else {
+      return 'Não identificado';
+    }
+  }
+
 
 
 }
