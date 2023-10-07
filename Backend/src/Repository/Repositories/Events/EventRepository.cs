@@ -25,7 +25,7 @@ public sealed class EventRepository : Repository<Event>, IEventRepository
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(rfTag))
-            query = query.Where(p => p.Equipment.RFTag == rfTag);
+            query = query.Where(p => p.Equipment.RfTag == rfTag);
 
         if (locationId != 0)
             query = query.Where(p => p.Location.Id == locationId);

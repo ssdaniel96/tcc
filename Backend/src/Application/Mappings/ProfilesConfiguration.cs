@@ -16,7 +16,7 @@ internal sealed class ProfilesConfiguration : Profile
     {
         CreateMap<Event, EventHistoryDto>()
             .ForMember(p => p.EventDateTime, c => c.MapFrom(p => p.EventDateTime))
-            .ForMember(p => p.EquipmentRfTag, c => c.MapFrom(p => p.Equipment.RFTag))
+            .ForMember(p => p.EquipmentRfTag, c => c.MapFrom(p => p.Equipment.RfTag))
             .ForMember(p => p.EquipmentDescription, c => c.MapFrom(p => p.Equipment.Description))
             .ForMember(p => p.LocationDescription, c => c.MapFrom(p => p.Location.Description))
             .ForMember(p => p.LocationLevel, c => c.MapFrom(p => p.Location.Level))

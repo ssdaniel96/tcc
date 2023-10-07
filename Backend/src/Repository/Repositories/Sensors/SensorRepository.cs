@@ -21,4 +21,14 @@ public class SensorRepository : Repository<Sensor>, ISensorRepository
 
         return entities;
     }
+
+    public override async Task<Sensor?> GetByIdAsync(int id)
+    {
+        var entity = await Context.Sensors
+            .Include(p => p.Location)
+            .Where(p => p.Id == id)
+            .FirstOrDefaultAsync();
+
+        return entity;
+    }
 }

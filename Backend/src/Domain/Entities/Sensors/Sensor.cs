@@ -1,14 +1,19 @@
-﻿using Domain.Entities.Locations;
+﻿using Domain.Entities.Events;
+using Domain.Entities.Locations;
 using Domain.Exceptions;
 
 namespace Domain.Entities.Sensors;
 
-public class Sensor : Entity
+public sealed class Sensor : Entity
 {
     public string Description { get; private set; }
     public Location Location { get; private set; }
     public int LocationId { get; private set; }
-
+    
+    //navigations
+    public IReadOnlyCollection<Event> Events => _events.AsReadOnly();
+    private List<Event> _events = new List<Event>();
+    
 #pragma warning disable CS8618 
     private Sensor()
 #pragma warning restore CS8618 

@@ -8,6 +8,8 @@ namespace Application.UseCases.Events.Commands.Capture
     {
         public string RfTag { get; init; } = string.Empty;
         public Vector Vector { get; init; }
-        public int LocationId { get; init; }
+
+        public int SensorId { get; init; }
     }
+    
 }

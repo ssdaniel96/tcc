@@ -8,6 +8,10 @@ public sealed class Address : Entity
     public string Number { get; private set; }
     public string? Complement { get; private set; }
     public string? Observation { get; private set; }
+    
+    //navigations
+    public IReadOnlyCollection<Building> Buildings => _buildings.AsReadOnly();
+    private List<Building> _buildings = new List<Building>();
 
 #pragma warning disable CS8618
     private Address()

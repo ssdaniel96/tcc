@@ -35,7 +35,7 @@ namespace Repository.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<string>("RFTag")
+                    b.Property<string>("RfTag")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
@@ -65,11 +65,16 @@ namespace Repository.Migrations
                     b.Property<int>("MovimentType")
                         .HasColumnType("int");
 
+                    b.Property<int>("SensorId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EquipmentId");
 
                     b.HasIndex("LocationId");
+
+                    b.HasIndex("SensorId");
 
                     b.ToTable("Event", "events");
                 });
@@ -199,24 +204,32 @@ namespace Repository.Migrations
                     b.HasOne("Domain.Entities.Equipments.Equipment", "Equipment")
                         .WithMany("Events")
                         .HasForeignKey("EquipmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Locations.Location", "Location")
-                        .WithMany()
+                        .WithMany("Events")
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Sensors.Sensor", "Sensor")
+                        .WithMany("Events")
+                        .HasForeignKey("SensorId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Equipment");
 
                     b.Navigation("Location");
+
+                    b.Navigation("Sensor");
                 });
 
             modelBuilder.Entity("Domain.Entities.Locations.Building", b =>
                 {
                     b.HasOne("Domain.Entities.Locations.Address", "Address")
-                        .WithMany()
+                        .WithMany("Buildings")
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -227,7 +240,7 @@ namespace Repository.Migrations
             modelBuilder.Entity("Domain.Entities.Locations.Location", b =>
                 {
                     b.HasOne("Domain.Entities.Locations.Building", "Building")
-                        .WithMany()
+                        .WithMany("Locations")
                         .HasForeignKey("BuildingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -251,9 +264,26 @@ namespace Repository.Migrations
                     b.Navigation("Events");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Locations.Address", b =>
+                {
+                    b.Navigation("Buildings");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Locations.Building", b =>
+                {
+                    b.Navigation("Locations");
+                });
+
             modelBuilder.Entity("Domain.Entities.Locations.Location", b =>
                 {
+                    b.Navigation("Events");
+
                     b.Navigation("Sensors");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Sensors.Sensor", b =>
+                {
+                    b.Navigation("Events");
                 });
 #pragma warning restore 612, 618
         }

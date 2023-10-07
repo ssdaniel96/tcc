@@ -1,17 +1,22 @@
 ﻿using System.Data;
+using Domain.Entities.Events;
 using Domain.Entities.Sensors;
 using Domain.Exceptions;
 
 namespace Domain.Entities.Locations;
 
-public sealed class Location : Entity
+public class Location : Entity
 {
     public string Description { get; private set; }
     public string Level { get; private set; }
     public Building Building { get; private set; }
 
+    //navigations
     public IReadOnlyCollection<Sensor> Sensors => _sensors.AsReadOnly();
-    private List<Sensor> _sensors = new();
+    private readonly List<Sensor> _sensors = new();
+    
+    public IReadOnlyCollection<Event> Events => _events.AsReadOnly();
+    private List<Event> _events = new List<Event>();
 
 #pragma warning disable CS8618
     private Location()

@@ -7,6 +7,10 @@ public sealed class Building : Entity
     public int AddressId { get; private set; }
     public Address Address { get; private set; }
     public string Description { get; private set; }
+    
+    //navigations
+    public IReadOnlyCollection<Location> Locations => _locations.AsReadOnly();
+    private List<Location> _locations = new List<Location>();
 
 #pragma warning disable CS8618
     private Building()

@@ -15,7 +15,7 @@ internal sealed class EquipmentConfiguration : IEntityTypeConfiguration<Equipmen
             .HasMaxLength(100)
             .IsRequired();
 
-        builder.Property(p => p.RFTag)
+        builder.Property(p => p.RfTag)
             .HasColumnType("varchar")
             .HasMaxLength(100)
             .IsRequired();

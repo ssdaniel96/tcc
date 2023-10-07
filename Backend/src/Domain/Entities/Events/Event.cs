@@ -1,5 +1,6 @@
 ﻿using Domain.Entities.Equipments;
 using Domain.Entities.Locations;
+using Domain.Entities.Sensors;
 using Domain.Enums;
 using Domain.Exceptions;
 
@@ -7,10 +8,17 @@ namespace Domain.Entities.Events;
 
 public sealed class Event : Entity
 {
-    public Location Location { get; private set; }
-    public Equipment Equipment { get; private set; }
+    public int SensorId { get; private set; }
+    public int LocationId { get; private set; }
+    public int EquipmentId { get; private set; }
     public Vector MovimentType { get; private set; }
     public DateTime EventDateTime { get; private set; }
+    
+    
+    public Sensor Sensor { get; private set; }
+    public Location Location { get; private set; }
+    public Equipment Equipment { get; private set; }
+
 
 #pragma warning disable CS8618
     private Event()
@@ -18,12 +26,16 @@ public sealed class Event : Entity
     {
 
     }
-    public Event(Location location, Equipment equipment, Vector movimentType)
+    public Event(Sensor sensor, Equipment equipment, Vector movimentType)
     {
         ValidateMovimentType(movimentType);
-        
-        Location = location;
+
+        Sensor = sensor;
+        SensorId = sensor.Id;
+        Location = sensor.Location;
+        LocationId = sensor.LocationId;
         Equipment = equipment;
+        EquipmentId = equipment.Id;
         MovimentType = movimentType;
         EventDateTime = DateTime.UtcNow;
     }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class ChangeAllAfterRemoveIdentityFromSensorId : Migration
+    public partial class Recreated : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,7 +45,7 @@ namespace Repository.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RFTag = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    RfTag = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -113,37 +113,6 @@ namespace Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Event",
-                schema: "events",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LocationId = table.Column<int>(type: "int", nullable: false),
-                    EquipmentId = table.Column<int>(type: "int", nullable: false),
-                    MovimentType = table.Column<int>(type: "int", nullable: false),
-                    EventDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Event", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Event_Equipment_EquipmentId",
-                        column: x => x.EquipmentId,
-                        principalSchema: "equipments",
-                        principalTable: "Equipment",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Event_Location_LocationId",
-                        column: x => x.LocationId,
-                        principalSchema: "locations",
-                        principalTable: "Location",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Sensor",
                 schema: "sensors",
                 columns: table => new
@@ -164,6 +133,45 @@ namespace Repository.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Event",
+                schema: "events",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SensorId = table.Column<int>(type: "int", nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false),
+                    EquipmentId = table.Column<int>(type: "int", nullable: false),
+                    MovimentType = table.Column<int>(type: "int", nullable: false),
+                    EventDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Event", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Event_Equipment_EquipmentId",
+                        column: x => x.EquipmentId,
+                        principalSchema: "equipments",
+                        principalTable: "Equipment",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Event_Location_LocationId",
+                        column: x => x.LocationId,
+                        principalSchema: "locations",
+                        principalTable: "Location",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Event_Sensor_SensorId",
+                        column: x => x.SensorId,
+                        principalSchema: "sensors",
+                        principalTable: "Sensor",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Building_AddressId",
                 schema: "locations",
@@ -181,6 +189,12 @@ namespace Repository.Migrations
                 schema: "events",
                 table: "Event",
                 column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Event_SensorId",
+                schema: "events",
+                table: "Event",
+                column: "SensorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Location_BuildingId",
@@ -206,12 +220,12 @@ namespace Repository.Migrations
                 schema: "events");
 
             migrationBuilder.DropTable(
-                name: "Sensor",
-                schema: "sensors");
-
-            migrationBuilder.DropTable(
                 name: "Equipment",
                 schema: "equipments");
+
+            migrationBuilder.DropTable(
+                name: "Sensor",
+                schema: "sensors");
 
             migrationBuilder.DropTable(
                 name: "Location",
