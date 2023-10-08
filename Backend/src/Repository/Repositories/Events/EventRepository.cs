@@ -18,6 +18,7 @@ public sealed class EventRepository : Repository<Event>, IEventRepository
         int locationId = 0)
     {
         var query = Get()
+            .Include(p => p.Sensor)
             .Include(p => p.Equipment)
             .Include(p => p.Location)
             .ThenInclude(p => p.Building)
