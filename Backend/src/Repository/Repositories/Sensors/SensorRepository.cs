@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Sensors;
+using Domain.Repositories.Dtos;
 using Domain.Repositories.Sensors;
 using Microsoft.EntityFrameworkCore;
 using Repository.Context;
@@ -12,14 +13,20 @@ public class SensorRepository : Repository<Sensor>, ISensorRepository
 
     }
     
-    public async Task<IEnumerable<Sensor>> GetAsync(int locationId)
+    public async Task<PageResponse<Sensor>> GetAsync(int locationId, PageRequest pageRequest)
     {
-        var entities = await Context.Sensors
+        var query = Context.Sensors
             .Include(p => p.Location)
-            .Where(p => p.Location.Id == locationId)
+            .Where(p => p.Location.Id == locationId);
+        
+        var totalRows = await query.CountAsync();
+        
+        var pagedResult = await query
+            .Skip(pageRequest.GetRecordsCountToSkip())
+            .Take(pageRequest.PageSize)
             .ToListAsync();
 
-        return entities;
+        return new(pagedResult, pageRequest.PageNumber, totalRows, pageRequest.PageSize);
     }
 
     public override async Task<Sensor?> GetByIdAsync(int id)

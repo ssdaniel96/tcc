@@ -4,6 +4,8 @@ export class EventHistoryModel {
   public id: number = 0;
   public equipmentDescription: string = '';
   public equipmentRfTag: string = '';
+  public sensorId : number =  0;
+  public sensorDescription: string = '';
   public locationDescription: string = '';
   public locationLevel: string = '';
   public locationBuilding: string = '';
@@ -16,6 +18,8 @@ export class EventHistoryModel {
     id: number = 0,
     equipmentDescription: string = '',
     equipmentRfTag: string = '',
+    sensorId: number = 0,
+    sensorDescription: string = '',
     locationDescription: string = '',
     locationLevel: string = '',
     locationBuilding: string = '',
@@ -27,6 +31,8 @@ export class EventHistoryModel {
     this.id = id;
     this.equipmentDescription = equipmentDescription;
     this.equipmentRfTag = equipmentRfTag;
+    this.sensorId = sensorId;
+    this.sensorDescription = sensorDescription;
     this.locationDescription = locationDescription;
     this.locationLevel = locationLevel;
     this.locationBuilding = locationBuilding;

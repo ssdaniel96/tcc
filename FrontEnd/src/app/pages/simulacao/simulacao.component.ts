@@ -5,6 +5,8 @@ import { Vector } from 'src/app/models/events/vector';
 import { AddressModel } from 'src/app/models/localizations/address.model';
 import { BuildingModel } from 'src/app/models/localizations/building.model';
 import { LocalizationModel } from 'src/app/models/localizations/localization.model';
+import { SensorModel } from 'src/app/models/sensors/sensor.model';
+import { PageRequest } from 'src/app/models/shared/pageRequest.model';
 import { EquipamentosService } from 'src/app/services/api/equipamentos.service';
 import { EventosService } from 'src/app/services/api/eventos.service';
 import { LocalizacoesService } from 'src/app/services/api/localizacoes.service';
@@ -19,16 +21,19 @@ export class SimulacaoComponent implements OnInit {
   public buildings: BuildingModel[] = new Array<BuildingModel>();
   public addresses: AddressModel[] = new Array<AddressModel>();
   public equipments: EquipmentModel[] = new Array<EquipmentModel>();
+  public sensors: SensorModel[] = new Array<SensorModel>();
   public vectors: Vector[] = [Vector.IN, Vector.OUT];
 
   public selectedAddress: AddressModel = new AddressModel(0, '', '', null, null);
   public selectedBuilding: BuildingModel = new BuildingModel(0, '', null);
   public selectedLocation: LocalizationModel = new LocalizationModel(0, '', '', null);
+  public selectedSensor: SensorModel = new SensorModel(0, '', null);
   public selectedVector: Vector = 0 as Vector;
   public selectedEquipment: EquipmentModel = new EquipmentModel();
 
   public addressWasSelected: boolean = false;
   public buildingWasSelected: boolean = false;
+  public locationWasSelected: boolean = false;
   public isLoading: boolean = false;
 
 
@@ -51,7 +56,7 @@ export class SimulacaoComponent implements OnInit {
   }
 
   public save(): void {
-    const newEvent = new NewEventModel(this.selectedEquipment.rfTag, this.selectedVector, this.selectedLocation.id);
+    const newEvent = new NewEventModel(this.selectedEquipment.rfTag, this.selectedVector, this.selectedSensor.id);
     this.isLoading = true;
     this.eventService.save(newEvent).subscribe({
       next: res => {
@@ -96,6 +101,16 @@ export class SimulacaoComponent implements OnInit {
     }
   }
 
+  public selectLocation(location: LocalizationModel): void {
+    if (location.id){
+      this.searchSensors();
+      this.locationWasSelected = true;
+    }
+    else {
+      this.locationWasSelected = false;
+    }
+  }
+
   public searchEquipment(filter: string | null = null): void {
     this.isLoading = true;
     this.equipmentService.get(filter).subscribe({
@@ -133,6 +148,22 @@ export class SimulacaoComponent implements OnInit {
     this.locationService.get(this.selectedBuilding.id, filter).subscribe({
       next: res => {
         this.locations = res.data.data.map(p => new LocalizationModel(p.id, p.description, p.level, p.building));
+      },
+      error: error => {
+        console.log('TODO: fix error');
+        console.log(error);
+      }
+    })
+    .add(() => {
+      this.isLoading =false;
+    })
+  }
+
+  public searchSensors(): void {
+    this.isLoading = true;
+    this.locationService.getSensors(this.selectedLocation.id, new PageRequest(1, 100)).subscribe({
+      next: res => {
+        this.sensors = res.data.data.map(p => new SensorModel(p.id, p.description, p.location));
       },
       error: error => {
         console.log('TODO: fix error');

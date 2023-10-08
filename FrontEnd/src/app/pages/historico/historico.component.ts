@@ -41,6 +41,8 @@ export class HistoricoComponent implements OnInit {
                 item.id,
                 item.equipmentDescription,
                 item.equipmentRfTag,
+                item.sensorId,
+                item.sensorDescription,
                 item.locationDescription,
                 item.locationLevel,
                 item.locationBuilding,

@@ -9,6 +9,7 @@ using Application.UseCases.Locations.Queries.GetAddresses;
 using Application.UseCases.Locations.Queries.GetBuildings;
 using Application.UseCases.Locations.Queries.GetById;
 using Application.UseCases.Locations.Queries.GetSensorsByLocationId;
+using Domain.Repositories.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -76,10 +77,10 @@ public class LocationsController : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet("sensors/{id}")]
-    public async Task<ActionResult<ResponseDto<IEnumerable<SensorDto>>>> GetSensors(int id)
+    [HttpGet("{id}/sensors")]
+    public async Task<ActionResult<ResponseDto<PageResponse<SensorDto>>>> GetSensors(int id, [FromQuery] PageRequest pageRequest)
     {
-        var request = new GetSensorsByLocationIdRequest(id);
+        var request = new GetSensorsByLocationIdRequest(id, pageRequest);
 
         var response = await _mediator.Send(request);
 

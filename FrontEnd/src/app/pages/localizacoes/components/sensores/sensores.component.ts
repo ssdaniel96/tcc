@@ -9,6 +9,7 @@ import {
 import { LocalizationModel } from 'src/app/models/localizations/localization.model';
 import { InsertSensorModel } from 'src/app/models/sensors/insert-sensor.model.';
 import { SensorModel } from 'src/app/models/sensors/sensor.model';
+import { PageRequest } from 'src/app/models/shared/pageRequest.model';
 import { LocalizacoesService } from 'src/app/services/api/localizacoes.service';
 
 @Component({
@@ -79,9 +80,9 @@ export class SensoresComponent implements OnInit, OnChanges {
 
   private getSensors(locationId: number): void {
     this.isLoading = true;
-    this.localizationService.getSensors(locationId).subscribe(
+    this.localizationService.getSensors(locationId, new PageRequest(1, 100)).subscribe(
       (response) => {
-        this.sensors = response.data;
+        this.sensors = response.data.data;
         this.isLoading = false;
       },
       (error) => {

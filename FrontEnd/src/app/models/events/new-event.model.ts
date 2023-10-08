@@ -2,11 +2,11 @@ import { Vector } from 'src/app/models/events/vector';
 export class NewEventModel {
   public rfTag: string | null = '';
   public vector: Vector = 0 as Vector;
-  public locationId: number = 0;
+  public sensorId: number = 0;
 
-  constructor(rfTag: string | null, vector: Vector | number, locationId: number ){
+  constructor(rfTag: string | null, vector: Vector | number, sensorId: number){
     this.rfTag = rfTag;
     this.vector = vector as Vector;
-    this.locationId = locationId;
+    this.sensorId = sensorId;
   }
 }

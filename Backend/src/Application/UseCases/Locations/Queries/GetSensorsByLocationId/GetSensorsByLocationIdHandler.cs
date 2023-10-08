@@ -1,12 +1,13 @@
 ﻿using Application.Shared.Dtos;
 using Application.UseCases.Locations.Dtos;
 using AutoMapper;
+using Domain.Repositories.Dtos;
 using Domain.Repositories.Sensors;
 using MediatR;
 
 namespace Application.UseCases.Locations.Queries.GetSensorsByLocationId;
 
-public class GetSensorsByLocationIdHandler : IRequestHandler<GetSensorsByLocationIdRequest, ResponseDto<IEnumerable<SensorDto>>>
+public class GetSensorsByLocationIdHandler : IRequestHandler<GetSensorsByLocationIdRequest, ResponseDto<PageResponse<SensorDto>>>
 {
     private readonly IMapper _mapper;
     private readonly ISensorRepository _sensorRepository;
@@ -17,12 +18,12 @@ public class GetSensorsByLocationIdHandler : IRequestHandler<GetSensorsByLocatio
         _sensorRepository = sensorRepository;
     }
 
-    public async Task<ResponseDto<IEnumerable<SensorDto>>> Handle(GetSensorsByLocationIdRequest request, CancellationToken cancellationToken)
+    public async Task<ResponseDto<PageResponse<SensorDto>>> Handle(GetSensorsByLocationIdRequest request, CancellationToken cancellationToken)
     {
-        var entities = await _sensorRepository.GetAsync(request.LocationId);
+        var entities = await _sensorRepository.GetAsync(request.LocationId, request.PageRequest);
 
-        var dtos = _mapper.Map<IEnumerable<SensorDto>>(entities);
+        var response = _mapper.Map<PageResponse<SensorDto>>(entities);
 
-        return new(dtos);
+        return new(response);
     }
 }

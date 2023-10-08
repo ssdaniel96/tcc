@@ -10,6 +10,7 @@ import { BuildingModel } from '../../models/localizations/building.model';
 import { SensorModel } from '../../models/sensors/sensor.model';
 import { InsertSensorModel } from '../../models/sensors/insert-sensor.model.';
 import { query } from '@angular/animations';
+import { PageRequest } from 'src/app/models/shared/pageRequest.model';
 
 @Injectable({
   providedIn: 'root',
@@ -77,9 +78,11 @@ export class LocalizacoesService {
     );
   }
 
-  public getSensors(locationId: number): Observable<Response<SensorModel[]>> {
-    return this.httpClient.get<Response<SensorModel[]>>(
-      `${this.baseRoute}/sensors/${locationId}`
+  public getSensors(locationId: number, pageRequest: PageRequest): Observable<Response<PageResponse<SensorModel>>> {
+    let queryParams = `?pageNumber=${pageRequest.pageNumber}&pageSize=${pageRequest.pageSize}`
+
+    return this.httpClient.get<Response<PageResponse<SensorModel>>>(
+      `${this.baseRoute}/${locationId}/sensors${queryParams}`
     );
   }
 
