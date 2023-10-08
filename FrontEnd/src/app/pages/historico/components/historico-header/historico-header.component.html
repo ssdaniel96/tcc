@@ -15,8 +15,8 @@
   </div>
   <div class="row">
     <div class="col-sm-3">
-      <select class="form-control" id="history-header-address" name="history-header-address" (ngModelChange)="selectAddress($event)"
-        [(ngModel)]="headerParameters.addressId" [disabled]="isLoading">
+      <select class="form-control" id="history-header-address" name="history-header-address"
+        (ngModelChange)="selectAddress($event)" [(ngModel)]="headerParameters.addressId" [disabled]="isLoading">
         <option [ngValue]="0">
           Todos
         </option>
@@ -26,8 +26,9 @@
       </select>
     </div>
     <div class="col-sm-3">
-      <select class="form-control" id="history-header-building" name="history-header-building" (ngModelChange)="selectBuilding($event)"
-        [(ngModel)]="headerParameters.buildingId" [disabled]="isLoading || !headerParameters.addressId">
+      <select class="form-control" id="history-header-building" name="history-header-building"
+        (ngModelChange)="selectBuilding($event)" [(ngModel)]="headerParameters.buildingId"
+        [disabled]="isLoading || !headerParameters.addressId">
         <option [ngValue]="0">
           Todos
         </option>
@@ -38,7 +39,8 @@
     </div>
     <div class="col-sm-3">
       <select class="form-control" id="history-header-location" name="history-header-location"
-        [(ngModel)]="headerParameters.locationId" [disabled]="isLoading || !headerParameters.buildingId" (ngModelChange)="selectLocation($event)">
+        [(ngModel)]="headerParameters.locationId" [disabled]="isLoading || !headerParameters.buildingId"
+        (ngModelChange)="selectLocation($event)">
         <option [ngValue]="0">
           Todos
         </option>
@@ -60,17 +62,21 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <label for="history-header-equipment">Equipamento</label>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <label for="history-header-vector">Vetor</label>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
+      <label for="history-header-startDatetime">Data/Hora Início</label>
+    </div>
+    <div class="col-sm-3">
+      <label for="history-header-endDatetime">Data/Hora Fim</label>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <select class="form-control" id="history-header-equipment" name="history-header-equipment"
         [(ngModel)]="headerParameters.equipmentId">
         <option [ngValue]="0">
@@ -81,7 +87,7 @@
         </option>
       </select>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <select class="form-control" id="history-header-vector" name="history-header-equipment"
         [(ngModel)]="headerParameters.vectorId">
         <option [ngValue]="0">
@@ -92,8 +98,30 @@
         </option>
       </select>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-3">
+      <p-calendar
+        class="form-calendar"
+        [(ngModel)]="headerParameters.startDatetime"
+        id="history-header-startDateTime"
+        name="history-header-startDateTime"
+        [showIcon]="true"
+        [showTime]="true"
+        dateFormat="dd/mm/yy"></p-calendar>
+      <!-- <input type="datetime" class="form-control" id="history-header-startDateTime" name="history-header-startDateTime"> -->
     </div>
+    <div class="col-sm-3">
+      <p-calendar
+        class="form-calendar"
+        [(ngModel)]="headerParameters.endDatetime"
+        id="history-header-endDateTime"
+        name="history-header-endDateTime"
+        [showIcon]="true"
+        [showTime]="true"
+        dateFormat="dd/mm/yy"></p-calendar>
+      <!-- <input type="datetime" class="form-control" id="history-header-endDateTime" name="history-header-endDateTime"> -->
+    </div>
+  </div>
+  <div class="row">
     <div class="col-sm-2">
       <button type="submit" class="btn btn-primary" [disabled]="isLoading">
         Filtrar

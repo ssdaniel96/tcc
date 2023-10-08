@@ -14,7 +14,8 @@ public sealed class EventRepository : Repository<Event>, IEventRepository
 
     public async Task<PageResponse<Event>> GetAsync(
         PageRequest pageRequest, int equipmentId = 0, int vectorId = 0,
-        int addressId = 0, int buildingId = 0, int locationId = 0, int sensorId = 0)
+        int addressId = 0, int buildingId = 0, int locationId = 0, int sensorId = 0, DateTime? startDatetime = null,
+        DateTime? endDatetime = null)
     {
         var query = Get()
             .Include(p => p.Sensor)
@@ -38,13 +39,18 @@ public sealed class EventRepository : Repository<Event>, IEventRepository
             query = query.Where(p => p.Location.Building.Id == buildingId);
         else if (addressId != 0)
             query = query.Where(p => p.Location.Building.Address.Id == addressId);
-        
+
+        if (startDatetime.HasValue)
+            query = query.Where(p => p.EventDateTime >= startDatetime);
+        if (endDatetime.HasValue)
+            query = query.Where(p => p.EventDateTime <= endDatetime);
+
         var totalRows = await query.CountAsync();
 
         var entities = await query.Skip(pageRequest.GetRecordsCountToSkip())
-                          .Take(pageRequest.PageSize)
-                          .ToListAsync();
-        
+            .Take(pageRequest.PageSize)
+            .ToListAsync();
+
         return new(entities, pageRequest, totalRows);
     }
 }

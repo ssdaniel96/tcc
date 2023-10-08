@@ -11,6 +11,8 @@ import { SensoresComponent } from './localizacoes/components/sensores/sensores.c
 import { HistoricoHeaderComponent } from './historico/components/historico-header/historico-header.component';
 import { NovoEnderecoComponent } from './localizacoes-novo/components/novo-endereco/novo-endereco.component';
 import { NovoPredioComponent } from './localizacoes-novo/components/novo-predio/novo-predio.component';
+import { CalendarModule } from 'primeng/calendar';
+
 
 
 
@@ -28,6 +30,7 @@ import { NovoPredioComponent } from './localizacoes-novo/components/novo-predio/
   ],
   imports: [
     CommonModule,
+    CalendarModule,
     FormsModule,
     RouterModule,
     ReactiveFormsModule

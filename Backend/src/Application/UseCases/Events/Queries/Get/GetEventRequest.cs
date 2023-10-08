@@ -14,4 +14,6 @@ public sealed record GetEventRequest : IRequest<ResponseDto<PageResponse<EventHi
     public int AddressId { get; init; }
     public int VectorId { get; init; }
     public int EquipmentId { get; init; }
+    public DateTime StartDatetime { get; init; } = new DateTime(2023, 1, 1);
+    public DateTime EndDatetime { get; init; } = DateTime.Now;
 }

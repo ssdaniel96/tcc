@@ -7,4 +7,6 @@ export class EventHistoryParametersModel {
   public buildingId: number = 0;
   public addressId: number = 0;
   public vectorId: number = 0;
+  public startDatetime: Date = new Date();
+  public endDatetime: Date = new Date();
 }

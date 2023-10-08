@@ -11,6 +11,7 @@ import { EquipamentosService } from 'src/app/services/api/equipamentos.service';
 import { EventosService } from 'src/app/services/api/eventos.service';
 import { PageRequest } from 'src/app/models/shared/pageRequest.model';
 
+
 @Component({
   selector: 'app-historico-header',
   templateUrl: './historico-header.component.html',
@@ -48,6 +49,7 @@ export class HistoricoHeaderComponent implements OnInit {
   ngOnInit(): void {
     this.searchEquipments();
     this.searchSensors();
+    this.headerParameters.startDatetime = new Date(2023, 1, 1);
   }
 
   public searchEquipments(): void {

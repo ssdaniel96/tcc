@@ -29,7 +29,9 @@ export class EventosService {
       &locationId=${filters.locationId}
       &sensorId=${filters.sensorId}
       &pageSize=${filters.pageRequest.pageSize}
-      &pageNumber=${filters.pageRequest.pageNumber}`
+      &pageNumber=${filters.pageRequest.pageNumber}
+      &startDatetime=${filters.startDatetime.toISOString()}
+      &endDatetime=${filters.endDatetime.toISOString()}`
 
     return this.httpClient.get<Response<PageResponse<EventHistoryModel>>>(`${this.baseUrl}${queryParams}`)
   }
