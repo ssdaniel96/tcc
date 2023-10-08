@@ -2,6 +2,7 @@
 using Application.UseCases.Events.Commands.Capture;
 using Application.UseCases.Events.Dtos;
 using Application.UseCases.Events.Queries.Get;
+using Domain.Repositories.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,7 +36,7 @@ public class EventsController : ControllerBase
     /// Recuperar lista de eventos com filtro
     /// </summary>
     [HttpGet]
-    public async Task<ActionResult<ResponseDto<IEnumerable<EventHistoryDto>>>> Get([FromQuery] GetEventRequest request)
+    public async Task<ActionResult<ResponseDto<PageResponse<EventHistoryDto>>>> Get([FromQuery] GetEventRequest request)
     {
         var dtos = await _mediator.Send(request);
 

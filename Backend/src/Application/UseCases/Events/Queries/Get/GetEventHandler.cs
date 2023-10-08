@@ -1,12 +1,13 @@
 ﻿using Application.Shared.Dtos;
 using Application.UseCases.Events.Dtos;
 using AutoMapper;
+using Domain.Repositories.Dtos;
 using Domain.Repositories.Events;
 using MediatR;
 
 namespace Application.UseCases.Events.Queries.Get;
 
-public sealed class GetEventHandler : IRequestHandler<GetEventRequest, ResponseDto<IEnumerable<EventHistoryDto>>>
+public sealed class GetEventHandler : IRequestHandler<GetEventRequest, ResponseDto<PageResponse<EventHistoryDto>>>
 {
     private readonly IEventRepository _eventRepository;
     private readonly IMapper _mapper;
@@ -17,16 +18,16 @@ public sealed class GetEventHandler : IRequestHandler<GetEventRequest, ResponseD
         _mapper = mapper;
     }
 
-    public async Task<ResponseDto<IEnumerable<EventHistoryDto>>> Handle(GetEventRequest request, CancellationToken cancellationToken)
+    public async Task<ResponseDto<PageResponse<EventHistoryDto>>> Handle(GetEventRequest request,
+        CancellationToken cancellationToken)
     {
         var entities = await _eventRepository.GetAsync(
-            request.RFTag,
-            request.LocationId,
-            request.PageNumber,
-            request.PageSize);
+            request.PageRequest,
+            request.RfTag,
+            request.LocationId);
 
-        var dtos = _mapper.Map<IEnumerable<EventHistoryDto>>(entities);
+        var pagedResult = _mapper.Map<PageResponse<EventHistoryDto>>(entities);
 
-        return new(dtos);
-        }
+        return new(pagedResult);
+    }
 }

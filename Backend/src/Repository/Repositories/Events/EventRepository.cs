@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Events;
+using Domain.Repositories.Dtos;
 using Domain.Repositories.Events;
 using Microsoft.EntityFrameworkCore;
 using Repository.Context;
@@ -11,11 +12,10 @@ public sealed class EventRepository : Repository<Event>, IEventRepository
     {
     }
 
-    public async Task<IEnumerable<Event>> GetAsync(
+    public async Task<PageResponse<Event>> GetAsync(
+        PageRequest pageRequest,
         string rfTag = "",
-        int locationId = 0,
-        int page = 1,
-        int size = 25)
+        int locationId = 0)
     {
         var query = Get()
             .Include(p => p.Equipment)
@@ -30,8 +30,12 @@ public sealed class EventRepository : Repository<Event>, IEventRepository
         if (locationId != 0)
             query = query.Where(p => p.Location.Id == locationId);
 
-        return await query.Skip((page - 1) * size)
-                          .Take(size)
+        var totalRows = await query.CountAsync();
+
+        var entities = await query.Skip(pageRequest.GetRecordsCountToSkip())
+                          .Take(pageRequest.PageSize)
                           .ToListAsync();
+        
+        return new(entities, pageRequest, totalRows);
     }
 }

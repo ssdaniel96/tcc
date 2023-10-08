@@ -18,6 +18,8 @@ internal sealed class ProfilesConfiguration : Profile
             .ForMember(p => p.EventDateTime, c => c.MapFrom(p => p.EventDateTime))
             .ForMember(p => p.EquipmentRfTag, c => c.MapFrom(p => p.Equipment.RfTag))
             .ForMember(p => p.EquipmentDescription, c => c.MapFrom(p => p.Equipment.Description))
+            .ForMember(p => p.SensorId, c => c.MapFrom(p => p.Sensor.Id))
+            .ForMember(p => p.SensorDescription, c => c.MapFrom(p => p.Sensor.Description))
             .ForMember(p => p.LocationDescription, c => c.MapFrom(p => p.Location.Description))
             .ForMember(p => p.LocationLevel, c => c.MapFrom(p => p.Location.Level))
             .ForMember(p => p.LocationBuilding, c => c.MapFrom(p => p.Location.Building.Description))

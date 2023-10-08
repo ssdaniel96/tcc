@@ -7,6 +7,8 @@ public sealed record EventHistoryDto
     public int Id { get; init; }
     public string EquipmentDescription { get; init; } = string.Empty;
     public string EquipmentRfTag { get; init; } = string.Empty;
+    public int SensorId { get; init; }
+    public string SensorDescription { get; init; } = string.Empty;
     public string LocationDescription { get; init; } = string.Empty;
     public string LocationLevel { get; init; } = string.Empty;
     public string LocationBuilding { get; init; } = string.Empty;
