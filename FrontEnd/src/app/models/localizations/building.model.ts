@@ -6,8 +6,8 @@ export class BuildingModel {
   public address: AddressModel | null;
 
   public get descriptionFormatted(): string{
-   
-    if (this.id == 0) {
+
+    if (this.id === -1) {
       return 'Novo'
     }
 

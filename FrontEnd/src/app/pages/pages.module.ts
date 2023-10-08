@@ -5,10 +5,12 @@ import { EquipamentosComponent } from '../pages/equipamentos/equipamentos.compon
 import { LocalizacoesComponent } from '../pages/localizacoes/localizacoes.component';
 import { SimulacaoComponent } from '../pages/simulacao/simulacao.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LocalizacoesNovoComponent } from './localizacoes/localizacoes-novo/localizacoes-novo.component';
+import { LocalizacoesNovoComponent } from './localizacoes-novo/localizacoes-novo.component';
 import { RouterModule } from '@angular/router';
 import { SensoresComponent } from './localizacoes/components/sensores/sensores.component';
 import { HistoricoHeaderComponent } from './historico/components/historico-header/historico-header.component';
+import { NovoEnderecoComponent } from './localizacoes-novo/components/novo-endereco/novo-endereco.component';
+import { NovoPredioComponent } from './localizacoes-novo/components/novo-predio/novo-predio.component';
 
 
 
@@ -20,7 +22,9 @@ import { HistoricoHeaderComponent } from './historico/components/historico-heade
     SimulacaoComponent,
     LocalizacoesNovoComponent,
     SensoresComponent,
-    HistoricoHeaderComponent
+    HistoricoHeaderComponent,
+    NovoEnderecoComponent,
+    NovoPredioComponent
   ],
   imports: [
     CommonModule,

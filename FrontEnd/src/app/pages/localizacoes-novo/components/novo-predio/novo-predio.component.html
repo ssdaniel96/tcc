@@ -1,0 +1,14 @@
+<form (ngSubmit)="onSubmit()" class="form-group" [formGroup]="formBuilding">
+  <div class="row novo-predio-header">
+      <label for="new-address-zipCode">Descrição do Novo Prédio</label>
+  </div>
+  <div class="row novo-predio-body">
+      <input class="form-control" id="new-building-description" type="text" name="new-building-description"
+        formControlName="description" />
+  </div>
+  <div class="row">
+    <button class="btn btn-primary" type="submit" [disabled]="!formBuilding.valid">
+      Salvar
+    </button>
+  </div>
+</form>

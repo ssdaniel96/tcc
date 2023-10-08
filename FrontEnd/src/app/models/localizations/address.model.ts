@@ -6,8 +6,8 @@ export class AddressModel {
   public observation: string | null;
 
   public get description(): string{
-   
-    if (this.id == 0) {
+
+    if (this.id === -1) {
       return 'Novo'
     }
 
