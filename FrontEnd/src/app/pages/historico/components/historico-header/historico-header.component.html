@@ -15,7 +15,8 @@
   </div>
   <div class="row">
     <div class="col-sm-3">
-      <select class="form-control" id="history-header-address" name="history-header-address" [(ngModel)]="headerParameters.addressId" [disabled]="isLoading">
+      <select class="form-control" id="history-header-address" name="history-header-address" (ngModelChange)="selectAddress($event)"
+        [(ngModel)]="headerParameters.addressId" [disabled]="isLoading">
         <option [ngValue]="0">
           Todos
         </option>
@@ -25,31 +26,34 @@
       </select>
     </div>
     <div class="col-sm-3">
-      <select class="form-control" id="history-header-building" name="history-header-building" [(ngModel)]="headerParameters.buildingId" [disabled]="isLoading || !headerParameters.addressId">
+      <select class="form-control" id="history-header-building" name="history-header-building" (ngModelChange)="selectBuilding($event)"
+        [(ngModel)]="headerParameters.buildingId" [disabled]="isLoading || !headerParameters.addressId">
         <option [ngValue]="0">
           Todos
         </option>
-        <option *ngFor="let building of buildings" [ngValue]="building.id">
+        <option *ngFor="let building of filteredBuildings" [ngValue]="building.id">
           {{ building.description }}
         </option>
       </select>
     </div>
     <div class="col-sm-3">
-      <select class="form-control" id="history-header-location" name="history-header-location" [(ngModel)]="headerParameters.locationId" [disabled]="isLoading || !headerParameters.buildingId">
+      <select class="form-control" id="history-header-location" name="history-header-location"
+        [(ngModel)]="headerParameters.locationId" [disabled]="isLoading || !headerParameters.buildingId" (ngModelChange)="selectLocation($event)">
         <option [ngValue]="0">
           Todos
         </option>
-        <option *ngFor="let location of locations" [ngValue]="location.id">
+        <option *ngFor="let location of filteredLocations" [ngValue]="location.id">
           {{ location.description }}
         </option>
       </select>
     </div>
     <div class="col-sm-3">
-      <select class="form-control" id="history-header-sensor" name="history-header-location" [(ngModel)]="headerParameters.sensorId" [disabled]="isLoading || !headerParameters.locationId">
+      <select class="form-control" id="history-header-sensor" name="history-header-location"
+        [(ngModel)]="headerParameters.sensorId" [disabled]="isLoading || !headerParameters.locationId">
         <option [ngValue]="0">
           Todos
         </option>
-        <option *ngFor="let sensor of sensors" [ngValue]="sensor.id">
+        <option *ngFor="let sensor of filteredSensors" [ngValue]="sensor.id">
           {{ sensor.description }}
         </option>
       </select>
@@ -67,7 +71,8 @@
   </div>
   <div class="row">
     <div class="col-sm-4">
-      <select class="form-control" id="history-header-equipment" name="history-header-equipment" [(ngModel)]="headerParameters.equipmentId">
+      <select class="form-control" id="history-header-equipment" name="history-header-equipment"
+        [(ngModel)]="headerParameters.equipmentId">
         <option [ngValue]="0">
           Todos
         </option>
@@ -77,7 +82,8 @@
       </select>
     </div>
     <div class="col-sm-4">
-      <select class="form-control" id="history-header-vector" name="history-header-equipment" [(ngModel)]="headerParameters.vectorId">
+      <select class="form-control" id="history-header-vector" name="history-header-equipment"
+        [(ngModel)]="headerParameters.vectorId">
         <option [ngValue]="0">
           Todos
         </option>

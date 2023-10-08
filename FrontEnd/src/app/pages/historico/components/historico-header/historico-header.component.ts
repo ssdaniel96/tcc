@@ -21,10 +21,18 @@ export class HistoricoHeaderComponent implements OnInit {
 
   public equipments: EquipmentModel[] = new Array<EquipmentModel>();
   public vectors: Vector[] = [Vector.IN, Vector.OUT];
+
   public addresses: AddressModel[] = new Array<AddressModel>();
+
   public buildings: BuildingModel[] = new Array<BuildingModel>();
+  public filteredBuildings: BuildingModel[] = new Array<BuildingModel>();
+
   public locations: LocalizationModel[] = new Array<LocalizationModel>();
+  public filteredLocations: LocalizationModel[] = new Array<LocalizationModel>();
+
   public sensors: SensorModel[] = new Array<SensorModel>();
+  public filteredSensors: SensorModel[] = new Array<SensorModel>();
+
 
   @Output() searchParamaters: EventEmitter<EventHistoryParametersModel> = new EventEmitter<EventHistoryParametersModel>();
 
@@ -118,6 +126,49 @@ export class HistoricoHeaderComponent implements OnInit {
     this.searchParamaters.emit(this.headerParameters);
   }
 
+  public selectAddress(addressId: number){
+    this.headerParameters.buildingId = 0;
+    this.selectBuilding(this.headerParameters.buildingId);
+    this.inMemorySearchBuilding(addressId);
+  }
+
+  public inMemorySearchBuilding(addressId: number){
+    if (addressId == 0){
+      this.filteredBuildings = this.buildings;
+      return;
+    }
+    this.filteredBuildings = this.buildings.filter(p => p.address!.id == addressId)
+  }
+
+  public selectBuilding(buildingId: number){
+    this.headerParameters.locationId = 0;
+    this.selectLocation(this.headerParameters.locationId);
+    this.inMemorySearchLocations(buildingId);
+  }
+
+  public inMemorySearchLocations(buildingId: number){
+    if (buildingId == 0){
+      this.filteredLocations = this.locations;
+      return;
+    }
+
+    this.filteredLocations = this.locations.filter(p => p.building!.id == buildingId)
+  }
+
+  public selectLocation(locationId: number){
+    this.headerParameters.sensorId = 0;
+    this.inMemorySearchSensors(locationId);
+  }
+
+  public inMemorySearchSensors(locationId: number){
+    if (locationId == 0){
+      this.filteredSensors = this.sensors;
+      return;
+    }
+
+    this.filteredSensors = this.sensors.filter(p => p.location!.id == locationId)
+  }
+
   public getVectorDescription(vector: Vector): string {
     if (vector === Vector.IN) {
       return 'Entrada';
@@ -127,4 +178,6 @@ export class HistoricoHeaderComponent implements OnInit {
       return 'Não identificado';
     }
   }
+
+
 }
