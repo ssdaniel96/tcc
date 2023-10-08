@@ -1,7 +1,7 @@
-<app-historico-header></app-historico-header>
-<div class="history">
+<div class="container history">
   <h1>Histórico</h1>
-  <div class="container history-content">
+  <app-historico-header (searchParamaters)="search($event)" class="history-header"></app-historico-header>
+  <div class="history-content">
     <div class="history-header"></div>
     <div class="history-body">
       <table class="table table-striped">

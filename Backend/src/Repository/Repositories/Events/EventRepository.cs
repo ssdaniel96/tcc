@@ -13,9 +13,8 @@ public sealed class EventRepository : Repository<Event>, IEventRepository
     }
 
     public async Task<PageResponse<Event>> GetAsync(
-        PageRequest pageRequest,
-        string rfTag = "",
-        int locationId = 0)
+        PageRequest pageRequest, int equipmentId = 0, int vectorId = 0,
+        int addressId = 0, int buildingId = 0, int locationId = 0, int sensorId = 0)
     {
         var query = Get()
             .Include(p => p.Sensor)
@@ -25,12 +24,21 @@ public sealed class EventRepository : Repository<Event>, IEventRepository
             .ThenInclude(p => p.Address)
             .AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(rfTag))
-            query = query.Where(p => p.Equipment.RfTag == rfTag);
+        if (equipmentId != 0)
+            query = query.Where(p => p.Equipment.Id == equipmentId);
 
-        if (locationId != 0)
+        if (vectorId != 0)
+            query = query.Where(p => (int)p.MovimentType == vectorId);
+
+        if (sensorId != 0)
+            query = query.Where(p => p.Sensor.Id == sensorId);
+        else if (locationId != 0)
             query = query.Where(p => p.Location.Id == locationId);
-
+        else if (buildingId != 0)
+            query = query.Where(p => p.Location.Building.Id == buildingId);
+        else if (addressId != 0)
+            query = query.Where(p => p.Location.Building.Address.Id == addressId);
+        
         var totalRows = await query.CountAsync();
 
         var entities = await query.Skip(pageRequest.GetRecordsCountToSkip())

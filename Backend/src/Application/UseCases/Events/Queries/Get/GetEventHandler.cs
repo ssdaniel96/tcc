@@ -23,8 +23,12 @@ public sealed class GetEventHandler : IRequestHandler<GetEventRequest, ResponseD
     {
         var entities = await _eventRepository.GetAsync(
             request.PageRequest,
-            request.RfTag,
-            request.LocationId);
+            request.EquipmentId,
+            request.VectorId,
+            request.AddressId,
+            request.BuildingId,
+            request.LocationId,
+            request.SensorId);
 
         var pagedResult = _mapper.Map<PageResponse<EventHistoryDto>>(entities);
 

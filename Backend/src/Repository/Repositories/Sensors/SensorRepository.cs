@@ -17,7 +17,12 @@ public class SensorRepository : Repository<Sensor>, ISensorRepository
     {
         var query = Context.Sensors
             .Include(p => p.Location)
-            .Where(p => p.Location.Id == locationId);
+            .ThenInclude(p => p.Building)
+            .ThenInclude(p => p.Address)
+            .AsQueryable();
+        
+        if (locationId != 0)
+            query = query.Where(p => p.Location.Id == locationId);
         
         var totalRows = await query.CountAsync();
         

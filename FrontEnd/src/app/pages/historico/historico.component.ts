@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventHistoryModel } from 'src/app/models/events/event-history.model';
+import { EventHistoryParametersModel } from 'src/app/models/events/parameters/event-history-parameters.model';
 import { Vector } from 'src/app/models/events/vector';
 import { EventosService } from 'src/app/services/api/eventos.service';
 
@@ -16,7 +17,7 @@ export class HistoricoComponent implements OnInit {
   constructor(private eventService: EventosService) {}
 
   ngOnInit(): void {
-    this.search();
+    this.search(new EventHistoryParametersModel());
   }
 
   public getVectorDescription(vector: Vector): string {
@@ -29,10 +30,10 @@ export class HistoricoComponent implements OnInit {
     }
   }
 
-  public search(filter: string = ''): void {
+  public search(filters: EventHistoryParametersModel): void {
     this.isLoading = true;
     this.eventService
-      .get(filter)
+      .get(filters)
       .subscribe({
         next: (res) => {
           this.events = res.data.data.map(
