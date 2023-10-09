@@ -37,7 +37,7 @@ public sealed class Event : Entity
         Equipment = equipment;
         EquipmentId = equipment.Id;
         MovimentType = movimentType;
-        EventDateTime = DateTime.UtcNow;
+        EventDateTime = DateTime.Now;
     }
 
     private static void ValidateMovimentType(Vector vector)
