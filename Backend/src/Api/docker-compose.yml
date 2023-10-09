@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  backend:
+    build:
+      context: ../..
+      dockerfile: src/Api/Dockerfile
+    image: backend
+    ports:
+      - '7248:443'
+      - '5248:80'
+    environment:
+      TZ: America/Sao_Paulo
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+;http://+
+      ASPNETCORE_Kestrel:Certificates:Default:Password: ABC@abc123
+      ASPNETCORE_Kestrel:Certificates:Default:Path: /https/aspnetapp.pfx
+      ConnectionStrings:Default: Server=host.docker.internal,1433;Database=tcc_new;User ID=sa;Password=Abcd!234;Trusted_Connection=False; TrustServerCertificate=True;
+    volumes:
+      - ~/.aspnet/https:/https:ro
