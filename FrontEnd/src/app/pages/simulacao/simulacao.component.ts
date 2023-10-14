@@ -45,14 +45,21 @@ export class SimulacaoComponent implements OnInit {
 
   }
 
-  public resetAll(): void {
-    this.selectedAddress = new AddressModel(0, '', '', null, null);
+
+  private resetBuilding(): void {
     this.selectedBuilding = new BuildingModel(0, '', null);
-    this.selectedLocation = new LocalizationModel(0, '', '', null);
-    this.selectedVector = 0 as Vector;
-    this.selectedEquipment = new EquipmentModel();
-    this.addressWasSelected = false;
     this.buildingWasSelected = false;
+    this.resetLocation();
+  }
+
+  private resetLocation(): void {
+    this.selectedLocation = new LocalizationModel(0, '', '', null);
+    this.locationWasSelected = false;
+    this.resetSensor();
+  }
+
+  private resetSensor(): void{
+    this.selectedSensor = new SensorModel(0, '', null);
   }
 
   public save(): void {
@@ -61,7 +68,6 @@ export class SimulacaoComponent implements OnInit {
     this.eventService.save(newEvent).subscribe({
       next: res => {
         console.log(res.isSuccessfully)
-        this.resetAll();
       },
       error: error => {
         console.log('TODO: fix error');
@@ -72,6 +78,7 @@ export class SimulacaoComponent implements OnInit {
       this.isLoading =false;
     });
   }
+
 
   public IsValidToSave(): boolean {
     return !!(this.selectedAddress.id
@@ -85,6 +92,7 @@ export class SimulacaoComponent implements OnInit {
     if (address.id){
       this.searchBuilding();
       this.addressWasSelected = true;
+      this.resetBuilding();
     }
     else {
       this.addressWasSelected = false;
@@ -95,6 +103,7 @@ export class SimulacaoComponent implements OnInit {
     if (building.id){
       this.searchLocation();
       this.buildingWasSelected = true;
+      this.resetLocation();
     }
     else {
       this.buildingWasSelected = false;
@@ -105,6 +114,7 @@ export class SimulacaoComponent implements OnInit {
     if (location.id){
       this.searchSensors();
       this.locationWasSelected = true;
+      this.resetSensor();
     }
     else {
       this.locationWasSelected = false;
