@@ -6,6 +6,7 @@ import { Vector } from 'src/app/models/events/vector';
 import { PageResponse } from 'src/app/models/shared/pageResponse.model';
 import { EventosService } from 'src/app/services/api/eventos.service';
 import { PaginatorState } from 'primeng/paginator';
+import { MessageDisplayService } from 'src/app/services/message-display.service';
 
 @Component({
   selector: 'app-historico',
@@ -20,7 +21,9 @@ export class HistoricoComponent implements OnInit {
 
   public isLoading: boolean = false;
 
-  constructor(private eventService: EventosService) {}
+  constructor(
+    private eventService: EventosService,
+    private messageService: MessageDisplayService) {}
 
   ngOnInit(): void {
     this.search();
@@ -48,11 +51,16 @@ export class HistoricoComponent implements OnInit {
       .get(this.parameters)
       .subscribe({
         next: (res) => {
-          this.events = res.data;
+          if (res.isSuccessfully) {
+            this.events = res.data;
+          } else {
+            this.messageService.showError(res.error);
+          }
         },
         error: (error) => {
-          console.log('fix error');
+          this.messageService.showError('Ocorreu um erro interno, mais detalhes nos logs do navegador');
           console.log(error);
+          this.isLoading = false;
         },
       })
       .add(() => {

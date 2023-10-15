@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EquipmentModel } from '../../models/equipments/equipment.model';
 import { EquipamentosService } from '../../services/api/equipamentos.service';
 import { InsertEquipmentModel } from '../../models/equipments/insert-equipment.model';
+import { MessageDisplayService } from 'src/app/services/message-display.service';
 
 @Component({
   selector: 'app-equipamentos',
@@ -15,8 +16,11 @@ export class EquipamentosComponent implements OnInit {
 
   public loading: boolean = false;
   public newEquipmentSetted: boolean = false;
-  
-  constructor(private equipmentService: EquipamentosService){
+
+  constructor(
+    private equipmentService: EquipamentosService,
+    private messageService: MessageDisplayService
+  ) {
 
   }
 
@@ -24,23 +28,29 @@ export class EquipamentosComponent implements OnInit {
     this.search();
   }
 
-  public newEquipmentToggle(): void{
+  public newEquipmentToggle(): void {
     this.newEquipmentSetted = !this.newEquipmentSetted;
   }
 
   public search(): void {
     this.loading = true;
-    this.equipmentService.get().subscribe(
-      res => {
-        this.equipments = res.data;
-        this.loading = false;
+    this.equipmentService.get().subscribe({
+      next: res => {
+        if (res.isSuccessfully) {
+          this.equipments = res.data;
+        } else {
+          this.messageService.showError(res.error);
+        }
       },
-      error => {
-        console.log('TODO: mostrar popup de erro');
+      error: error => {
+        this.messageService.showError('Ocorreu um erro interno, mais detalhes nos logs do navegador');
         console.log(error);
         this.loading = false;
+      },
+      complete: () => {
+        this.loading = false;
       }
-    )
+    })
   }
 
   public cancel(): void {
@@ -54,35 +64,47 @@ export class EquipamentosComponent implements OnInit {
 
   public save(): void {
     this.loading = true;
-    this.equipmentService.insert(this.newEquipment).subscribe(
-      res => {
-        this.equipments.push(res.data);
-        this.loading = false;
-        this.changeToDefaultView();
-
+    this.equipmentService.insert(this.newEquipment).subscribe({
+      next: res => {
+        if (res.isSuccessfully) {
+          this.equipments.push(res.data);
+          this.changeToDefaultView();
+          this.messageService.showSuccess('O equipamento foi salvo com sucesso');
+        } else {
+          this.messageService.showError(res.error);
+        }
       },
-      error => {
-        console.log('TODO: mostrar popup de erro');
+      error: error => {
+        this.messageService.showError('Ocorreu um erro interno, mais detalhes nos logs do navegador');
         console.log(error);
-        this.loading = false;     
- 
+        this.loading = false;
+      },
+      complete: () => {
+        this.loading = false;
       }
-    )
+    })
   }
 
   public remove(id: number): void {
     this.loading = true;
-    this.equipmentService.deleteById(id).subscribe(
-      res => {
-        this.equipments = this.equipments.filter(p => p.id != id)
+    this.equipmentService.deleteById(id).subscribe({
+      next: res => {
+        if (res.isSuccessfully) {
+          this.equipments = this.equipments.filter(p => p.id != id)
+          this.messageService.showSuccess('O equipamento foi removido com sucesso');
+        } else {
+          this.messageService.showError(res.error);
+        }
+      },
+      error: error => {
+        this.messageService.showError('Ocorreu um erro interno, mais detalhes nos logs do navegador');
+        console.log(error);
         this.loading = false;
       },
-      error => {
-        console.log('TODO: mostrar popup de erro');
-        console.log(error);
-        this.loading = false;      
+      complete: () => {
+        this.loading = false;
       }
-    )
+    })
   }
 }
 

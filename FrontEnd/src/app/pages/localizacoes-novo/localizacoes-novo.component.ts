@@ -6,6 +6,7 @@ import { LocalizationModel } from '../../models/localizations/localization.model
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormControl, FormGroup, RequiredValidator, ValidatorFn, Validators } from '@angular/forms';
 import { __values } from 'tslib';
+import { MessageDisplayService } from 'src/app/services/message-display.service';
 
 @Component({
   selector: 'app-localizacoes-novo',
@@ -25,15 +26,16 @@ export class LocalizacoesNovoComponent implements OnInit, OnChanges {
   public isNewBuildingEditView: boolean = false;
 
   public formLocation: FormGroup = new FormGroup({
-    address: new FormControl({value: null, disabled: true}, [this.validateProperty('id', [Validators.required, Validators.min(0)])]),
-    building: new FormControl({value: null, disabled: true}, [this.validateProperty('id', [Validators.required, Validators.min(0)])]),
+    address: new FormControl({ value: null, disabled: true }, [this.validateProperty('id', [Validators.required, Validators.min(0)])]),
+    building: new FormControl({ value: null, disabled: true }, [this.validateProperty('id', [Validators.required, Validators.min(0)])]),
     level: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required])
   });
 
   constructor(
     private localizacoesService: LocalizacoesService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageDisplayService
   ) {
   }
 
@@ -45,8 +47,8 @@ export class LocalizacoesNovoComponent implements OnInit, OnChanges {
     this.SearchAddresses();
   }
 
-  public disableOrEnableControls(): void{
-    if (this.isNewAddressEditView || this.isLoading){
+  public disableOrEnableControls(): void {
+    if (this.isNewAddressEditView || this.isLoading) {
       this.formLocation.controls['building'].disable();
     } else {
       this.formLocation.controls['building'].enable();
@@ -77,7 +79,7 @@ export class LocalizacoesNovoComponent implements OnInit, OnChanges {
   public changeAddress(address: AddressModel): void {
     if (address.id === -1) {
       this.isNewAddressEditView = true;
-    } else if (address.id === 0){
+    } else if (address.id === 0) {
       this.isNewAddressEditView = false;
     } else {
       this.isNewAddressEditView = false;
@@ -86,7 +88,7 @@ export class LocalizacoesNovoComponent implements OnInit, OnChanges {
   }
 
   public changeBuilding(building: BuildingModel): void {
-    if (building.id === -1){
+    if (building.id === -1) {
       this.isNewBuildingEditView = true;
     } else {
       this.isNewBuildingEditView = false;
@@ -96,7 +98,7 @@ export class LocalizacoesNovoComponent implements OnInit, OnChanges {
   public save(): void {
     this.isLoading = true;
     const building = this.formLocation.value.building as BuildingModel;
-    if (building.id === 0){
+    if (building.id === 0) {
       building.address = this.formLocation.value.address as AddressModel;
     }
 
@@ -109,11 +111,18 @@ export class LocalizacoesNovoComponent implements OnInit, OnChanges {
 
     this.localizacoesService.save(location).subscribe({
       next: res => {
-        this.router.navigate(["/localizacoes"])
+        if (res.isSuccessfully) {
+          this.messageService.showSuccess('Localização salva com sucesso!')
+          this.router.navigate(["/localizacoes"]);
+        } else {
+          this.messageService.showError(res.error);
+        }
       },
       error: error => {
-        console.log('TODO: show error in popup');
+        this.messageService.showError('Ocorreu um erro interno, mais detalhes nos logs do navegador');
         console.log(error);
+        this.isLoading = false;
+
       },
       complete: () => {
         this.isLoading = false;
@@ -127,12 +136,17 @@ export class LocalizacoesNovoComponent implements OnInit, OnChanges {
     this.disableOrEnableControls();
     this.localizacoesService.getAddresses().subscribe({
       next: res => {
-        this.addresses = res.data.map(p => new AddressModel(p.id, p.zipCode, p.number, p.complement, p.observation));
-        this.formLocation.controls['address'].enable();
+        if (res.isSuccessfully) {
+          this.addresses = res.data.map(p => new AddressModel(p.id, p.zipCode, p.number, p.complement, p.observation));
+          this.formLocation.controls['address'].enable();
+        } else {
+          this.messageService.showError(res.error, 'Erro ao buscar endereços')
+        }
       },
       error: error => {
-        console.log('TODO: show error in popup');
+        this.messageService.showError('Ocorreu um erro interno ao buscar endereços, mais detalhes nos logs do navegador');
         console.log(error);
+        this.isLoading = false;
       },
       complete: () => {
         this.isLoading = false;
@@ -141,23 +155,28 @@ export class LocalizacoesNovoComponent implements OnInit, OnChanges {
     });
   }
 
-    public SearchBuilding(addressId: number) {
-      this.isLoading = true;
-      this.disableOrEnableControls();
-      this.localizacoesService.getBuildings(addressId).subscribe({
-        next: res => {
+  public SearchBuilding(addressId: number) {
+    this.isLoading = true;
+    this.disableOrEnableControls();
+    this.localizacoesService.getBuildings(addressId).subscribe({
+      next: res => {
+        if (res.isSuccessfully) {
           this.buildings = res.data.map(p => new BuildingModel(p.id, p.description, p.address));
-        },
-        error: error => {
-          console.log('TODO: show error in popup');
-          console.log(error);
-        },
-        complete: () => {
-          this.isLoading = false;
-          this.disableOrEnableControls();
+        } else {
+          this.messageService.showError(res.error, 'Erro ao buscar prédios');
         }
+      },
+      error: error => {
+        this.messageService.showError('Ocorreu um erro interno ao buscar prédios, mais detalhes nos logs do navegador');
+        console.log(error);
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+        this.disableOrEnableControls();
+      }
     })
-    }
+  }
 
 
   private validateProperty(property: string, validators: ValidatorFn[]): ValidatorFn {
@@ -168,7 +187,7 @@ export class LocalizacoesNovoComponent implements OnInit, OnChanges {
       // run the validators on the new control and keep the ones that fail
       const failedValidators = validators.map(v => v(newFc)).filter(v => !!v);
       // if any fail, return the list of failures, else valid
-      return failedValidators.length ? {invalidProperty: failedValidators} : null;
+      return failedValidators.length ? { invalidProperty: failedValidators } : null;
     };
   }
 }

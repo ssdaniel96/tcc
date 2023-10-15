@@ -8,12 +8,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { PagesModule } from './pages/pages.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgToastModule } from 'ng-angular-popup';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    NgToastModule,
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,

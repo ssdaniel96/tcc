@@ -10,6 +10,7 @@ import { PageRequest } from 'src/app/models/shared/pageRequest.model';
 import { EquipamentosService } from 'src/app/services/api/equipamentos.service';
 import { EventosService } from 'src/app/services/api/eventos.service';
 import { LocalizacoesService } from 'src/app/services/api/localizacoes.service';
+import { MessageDisplayService } from 'src/app/services/message-display.service';
 
 @Component({
   selector: 'app-simulacao',
@@ -40,7 +41,8 @@ export class SimulacaoComponent implements OnInit {
   constructor(
     private locationService: LocalizacoesService,
     private equipmentService: EquipamentosService,
-    private eventService: EventosService
+    private eventService: EventosService,
+    private messageService: MessageDisplayService
   ) {
 
   }
@@ -58,7 +60,7 @@ export class SimulacaoComponent implements OnInit {
     this.resetSensor();
   }
 
-  private resetSensor(): void{
+  private resetSensor(): void {
     this.selectedSensor = new SensorModel(0, '', null);
   }
 
@@ -67,29 +69,33 @@ export class SimulacaoComponent implements OnInit {
     this.isLoading = true;
     this.eventService.save(newEvent).subscribe({
       next: res => {
-        console.log(res.isSuccessfully)
+        if (res.isSuccessfully) {
+          this.messageService.showSuccess('Novo evento salvo com sucesso! Consultar tela de histórico para mais detalhes!');
+        } else {
+          this.messageService.showError(res.error);
+        }
       },
       error: error => {
-        console.log('TODO: fix error');
+        this.messageService.showError('Ocorreu um erro interno, mais detalhes nos logs do navegador');
         console.log(error);
       }
     })
-    .add(() => {
-      this.isLoading =false;
-    });
+      .add(() => {
+        this.isLoading = false;
+      });
   }
 
 
   public IsValidToSave(): boolean {
     return !!(this.selectedAddress.id
-           && this.selectedBuilding.id
-           && this.selectedLocation.id
-           && this.selectedVector
-           && this.selectedEquipment.id);
+      && this.selectedBuilding.id
+      && this.selectedLocation.id
+      && this.selectedVector
+      && this.selectedEquipment.id);
   }
 
   public selectAddress(address: AddressModel): void {
-    if (address.id){
+    if (address.id) {
       this.searchBuilding();
       this.addressWasSelected = true;
       this.resetBuilding();
@@ -100,7 +106,7 @@ export class SimulacaoComponent implements OnInit {
   }
 
   public selectBuilding(building: BuildingModel): void {
-    if (building.id){
+    if (building.id) {
       this.searchLocation();
       this.buildingWasSelected = true;
       this.resetLocation();
@@ -111,7 +117,7 @@ export class SimulacaoComponent implements OnInit {
   }
 
   public selectLocation(location: LocalizationModel): void {
-    if (location.id){
+    if (location.id) {
       this.searchSensors();
       this.locationWasSelected = true;
       this.resetSensor();
@@ -125,81 +131,100 @@ export class SimulacaoComponent implements OnInit {
     this.isLoading = true;
     this.equipmentService.get(filter).subscribe({
       next: res => {
-        this.equipments = res.data.map(item => new EquipmentModel(item.id, item.rfTag, item.description));
+        if (res.isSuccessfully) {
+          this.equipments = res.data.map(item => new EquipmentModel(item.id, item.rfTag, item.description));
+        } else {
+          this.messageService.showError(res.error, 'Erro ao buscar equipamentos');
+        }
       },
       error: error => {
-        console.log('TODO: fix error');
+        this.messageService.showError('Ocorreu um erro interno, mais detalhes nos logs do navegador');
         console.log(error);
       }
     })
-    .add(() => {
-      this.isLoading =false;
-    });
+      .add(() => {
+        this.isLoading = false;
+      });
   }
 
   public searchBuilding(filter: string | null = null): void {
     this.isLoading = true;
     this.locationService.getBuildings(this.selectedAddress.id, filter).subscribe({
       next: res => {
-        this.buildings = res.data.map(p => new BuildingModel(p.id, p.description, p.address));
+        if (res.isSuccessfully) {
+          this.buildings = res.data.map(p => new BuildingModel(p.id, p.description, p.address));
+        } else {
+          this.messageService.showError(res.error, 'Erro ao buscar prédios');
+        }
       },
       error: error => {
-        console.log('TODO: fix error');
+        this.messageService.showError('Ocorreu um erro interno, mais detalhes nos logs do navegador');
         console.log(error);
       }
     })
-    .add(() => {
-      this.isLoading =false;
-    })
+      .add(() => {
+        this.isLoading = false;
+      })
   }
 
   public searchLocation(filter: string | null = null): void {
     this.isLoading = true;
     this.locationService.get(this.selectedBuilding.id, filter).subscribe({
       next: res => {
-        this.locations = res.data.data.map(p => new LocalizationModel(p.id, p.description, p.level, p.building));
+        if (res.isSuccessfully) {
+          this.locations = res.data.data.map(p => new LocalizationModel(p.id, p.description, p.level, p.building));
+        } else {
+          this.messageService.showError(res.error, 'Erro ao buscar localizações');
+        }
       },
       error: error => {
-        console.log('TODO: fix error');
+        this.messageService.showError('Ocorreu um erro interno, mais detalhes nos logs do navegador');
         console.log(error);
       }
     })
-    .add(() => {
-      this.isLoading =false;
-    })
+      .add(() => {
+        this.isLoading = false;
+      })
   }
 
   public searchSensors(): void {
     this.isLoading = true;
     this.locationService.getSensors(this.selectedLocation.id, new PageRequest(1, 100)).subscribe({
       next: res => {
-        this.sensors = res.data.data.map(p => new SensorModel(p.id, p.description, p.location));
+        if (res.isSuccessfully) {
+          this.sensors = res.data.data.map(p => new SensorModel(p.id, p.description, p.location));
+        } else {
+          this.messageService.showError(res.error, 'Erro ao buscar sensores');
+        }
       },
       error: error => {
-        console.log('TODO: fix error');
+        this.messageService.showError('Ocorreu um erro interno, mais detalhes nos logs do navegador');
         console.log(error);
       }
     })
-    .add(() => {
-      this.isLoading =false;
-    })
+      .add(() => {
+        this.isLoading = false;
+      })
   }
 
   public searchAddress(filter: string | null = null): void {
     this.isLoading = true;
     this.locationService.getAddresses(filter).subscribe({
       next: res => {
-        this.addresses = res.data.map(p => new AddressModel(p.id, p.zipCode, p.number, p.complement, p.observation));
-        this.isLoading = false;
+        if (res.isSuccessfully) {
+          this.addresses = res.data.map(p => new AddressModel(p.id, p.zipCode, p.number, p.complement, p.observation));
+        } else {
+          this.messageService.showError(res.error, 'Erro ao buscar endereços');
+        }
       },
       error: error => {
-        console.log('TODO: fix error');
+        this.messageService.showError('Ocorreu um erro interno, mais detalhes nos logs do navegador');
         console.log(error);
       }
     })
-    .add(() => {
-      this.isLoading =false;
-    })
+      .add(() => {
+        this.isLoading = false;
+      })
   }
 
   ngOnInit(): void {

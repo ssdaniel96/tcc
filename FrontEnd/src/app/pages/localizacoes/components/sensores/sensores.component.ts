@@ -11,6 +11,7 @@ import { InsertSensorModel } from 'src/app/models/sensors/insert-sensor.model.';
 import { SensorModel } from 'src/app/models/sensors/sensor.model';
 import { PageRequest } from 'src/app/models/shared/pageRequest.model';
 import { LocalizacoesService } from 'src/app/services/api/localizacoes.service';
+import { MessageDisplayService } from 'src/app/services/message-display.service';
 
 @Component({
   selector: 'app-sensores',
@@ -28,7 +29,9 @@ export class SensoresComponent implements OnInit, OnChanges {
   public isLoading: boolean = false;
   public isNewSensor: boolean = false;
 
-  constructor(private localizationService: LocalizacoesService) {}
+  constructor(
+    private localizationService: LocalizacoesService,
+    private messageService: MessageDisplayService) { }
 
   public setToEditTable(): void {
     this.isNewSensor = true;
@@ -48,49 +51,69 @@ export class SensoresComponent implements OnInit, OnChanges {
 
   public add(): void {
     this.isLoading = true;
-    this.localizationService.addSensor(this.newSensor).subscribe(
-      (response) => {
-        this.getSensors(this.locationId);
-        this.setNewSensorToDefault();
-        this.setToViewTable();
-        this.isLoading = false;
+    this.localizationService.addSensor(this.newSensor).subscribe({
+      next: (response) => {
+        if (response.isSuccessfully) {
+          this.getSensors(this.locationId);
+          this.setNewSensorToDefault();
+          this.setToViewTable();
+          this.messageService.showSuccess('Sensor adicionado com sucesso à localização');
+        } else {
+          this.messageService.showError(response.error);
+        }
       },
-      (error) => {
-        console.log('TODO: errors');
+      error: (error) => {
+        this.messageService.showError('Ocorreu um erro interno, mais detalhes nos logs do navegador');
         console.log(error);
         this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
       }
-    );
+    });
   }
 
   public remove(sensorId: number): void {
     this.isLoading = true;
-    this.localizationService.deleteSensor(sensorId).subscribe(
-      (res) => {
-        this.sensors = this.sensors.filter((p) => p.id != sensorId);
-        this.isLoading = false;
+    this.localizationService.deleteSensor(sensorId).subscribe({
+      next: (res) => {
+        if (res.isSuccessfully) {
+          this.sensors = this.sensors.filter((p) => p.id != sensorId);
+          this.messageService.showSuccess('Sensor removido com sucesso da localização');
+        } else {
+          this.messageService.showError(res.error);
+        }
       },
-      (error) => {
-        console.log('TODO: errors');
+      error: (error) => {
+        this.messageService.showError('Ocorreu um erro interno, mais detalhes nos logs do navegador');
         console.log(error);
         this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
       }
-    );
+    });
   }
 
   private getSensors(locationId: number): void {
     this.isLoading = true;
-    this.localizationService.getSensors(locationId, new PageRequest(1, 100)).subscribe(
-      (response) => {
-        this.sensors = response.data.data;
-        this.isLoading = false;
+    this.localizationService.getSensors(locationId, new PageRequest(1, 100)).subscribe({
+      next: (response) => {
+        if (response.isSuccessfully) {
+          this.sensors = response.data.data;
+        } else {
+          this.messageService.showError(response.error);
+        }
       },
-      (error) => {
-        console.log('TODO: errors');
+      error: (error) => {
+        this.messageService.showError('Ocorreu um erro interno, mais detalhes nos logs do navegador');
         console.log(error);
         this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
       }
-    );
+  });
   }
 
   ngOnInit(): void {
