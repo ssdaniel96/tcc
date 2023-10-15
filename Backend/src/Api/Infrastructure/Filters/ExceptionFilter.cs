@@ -13,7 +13,7 @@ public class ExceptionFilter : IExceptionFilter
         {
             var result = new ResponseDto(baseException);
 
-            context.Result = new BadRequestObjectResult(result);
+            context.Result = new OkObjectResult(result);
         }
         else
         {
