@@ -22,7 +22,7 @@ public sealed class GetEventHandler : IRequestHandler<GetEventRequest, ResponseD
         CancellationToken cancellationToken)
     {
         var entities = await _eventRepository.GetAsync(
-            request.PageRequest,
+            new PageRequest(request.PageNumber, request.PageSize),
             request.EquipmentId,
             request.VectorId,
             request.AddressId,

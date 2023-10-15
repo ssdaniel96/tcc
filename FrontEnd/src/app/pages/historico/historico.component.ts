@@ -1,8 +1,11 @@
+import { PageRequest } from './../../models/shared/pageRequest.model';
+import { EventHistoryParametersModel } from './../../models/events/parameters/event-history-parameters.model';
 import { Component, OnInit } from '@angular/core';
 import { EventHistoryModel } from 'src/app/models/events/event-history.model';
-import { EventHistoryParametersModel } from 'src/app/models/events/parameters/event-history-parameters.model';
 import { Vector } from 'src/app/models/events/vector';
+import { PageResponse } from 'src/app/models/shared/pageResponse.model';
 import { EventosService } from 'src/app/services/api/eventos.service';
+import { PaginatorState } from 'primeng/paginator';
 
 @Component({
   selector: 'app-historico',
@@ -10,14 +13,23 @@ import { EventosService } from 'src/app/services/api/eventos.service';
   styleUrls: ['./historico.component.scss'],
 })
 export class HistoricoComponent implements OnInit {
-  public events: EventHistoryModel[] = new Array<EventHistoryModel>();
+  public pageRequest: PageRequest = new PageRequest(1, 5);
+
+  public events: PageResponse<EventHistoryModel> = new PageResponse<EventHistoryModel>(this.pageRequest.pageNumber, this.pageRequest.pageSize, 0, []);
+  public parameters: EventHistoryParametersModel = new EventHistoryParametersModel();
 
   public isLoading: boolean = false;
 
   constructor(private eventService: EventosService) {}
 
   ngOnInit(): void {
-    this.search(new EventHistoryParametersModel());
+    this.search();
+  }
+
+  public onPageChange(item: PaginatorState): void {
+    this.pageRequest.pageNumber = (item.first! / item.rows!)+1;
+    this.pageRequest.pageSize = item.rows!;
+    this.searchByEvent(this.parameters);
   }
 
   public getVectorDescription(vector: Vector): string {
@@ -30,29 +42,13 @@ export class HistoricoComponent implements OnInit {
     }
   }
 
-  public search(filters: EventHistoryParametersModel): void {
+  public search(): void {
     this.isLoading = true;
     this.eventService
-      .get(filters)
+      .get(this.parameters)
       .subscribe({
         next: (res) => {
-          this.events = res.data.data.map(
-            (item) =>
-              new EventHistoryModel(
-                item.id,
-                item.equipmentDescription,
-                item.equipmentRfTag,
-                item.sensorId,
-                item.sensorDescription,
-                item.locationDescription,
-                item.locationLevel,
-                item.locationBuilding,
-                item.locationZipCode,
-                item.locationNumber,
-                item.eventDateTime,
-                item.eventVector
-              )
-          );
+          this.events = res.data;
         },
         error: (error) => {
           console.log('fix error');
@@ -62,5 +58,11 @@ export class HistoricoComponent implements OnInit {
       .add(() => {
         this.isLoading = false;
       });
+  }
+
+  public searchByEvent(filters: EventHistoryParametersModel): void {
+    filters.pageRequest = this.pageRequest;
+    this.parameters = filters;
+    this.search();
   }
 }

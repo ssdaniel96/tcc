@@ -12,6 +12,7 @@ import { HistoricoHeaderComponent } from './historico/components/historico-heade
 import { NovoEnderecoComponent } from './localizacoes-novo/components/novo-endereco/novo-endereco.component';
 import { NovoPredioComponent } from './localizacoes-novo/components/novo-predio/novo-predio.component';
 import { CalendarModule } from 'primeng/calendar';
+import { PaginatorModule } from 'primeng/paginator'
 
 
 
@@ -30,10 +31,11 @@ import { CalendarModule } from 'primeng/calendar';
   ],
   imports: [
     CommonModule,
-    CalendarModule,
     FormsModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CalendarModule,
+    PaginatorModule
   ]
 })
 export class PagesModule { }

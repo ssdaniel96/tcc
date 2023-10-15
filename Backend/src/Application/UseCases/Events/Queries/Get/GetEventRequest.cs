@@ -7,7 +7,9 @@ namespace Application.UseCases.Events.Queries.Get;
 
 public sealed record GetEventRequest : IRequest<ResponseDto<PageResponse<EventHistoryDto>>>
 {
-    public PageRequest PageRequest { get; init; } = new(1, 25);
+    // public PageRequest PageRequest { get; init; } = new(1, 25);
+    public int PageNumber { get; init; } = 1;
+    public int PageSize { get; init; } = 100;
     public int SensorId { get; init; }
     public int LocationId { get; init; }
     public int BuildingId { get; init; }

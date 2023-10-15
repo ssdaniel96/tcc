@@ -1,6 +1,6 @@
 <div class="container history">
   <h1>Histórico</h1>
-  <app-historico-header (searchParamaters)="search($event)" class="history-header"></app-historico-header>
+  <app-historico-header (searchParamaters)="searchByEvent($event)" class="history-header"></app-historico-header>
   <div class="history-content">
     <div class="history-header"></div>
     <div class="history-body">
@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of events">
+          <tr *ngFor="let item of events.data">
             <td>{{ item.equipmentDescription }}</td>
             <td>{{ item.equipmentRfTag }}</td>
             <td>{{ item.sensorId }} - {{item.sensorDescription}}</td>
@@ -45,6 +45,14 @@
           </tr>
         </tbody>
       </table>
+      <div *ngIf="events.data.length" class="pagination flex align-items-center justify-content-center" >
+        <p-paginator
+          (onPageChange)="onPageChange($event)"
+          [rows]="pageRequest.pageSize"
+          [totalRecords]="events.totalRows"
+          [rowsPerPageOptions]="[5, 10, 30]">
+        </p-paginator>
+      </div>
     </div>
   </div>
 </div>
