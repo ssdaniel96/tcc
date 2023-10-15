@@ -21,10 +21,10 @@ internal sealed class LocationConfiguration : IEntityTypeConfiguration<Location>
             .IsRequired();
 
         builder.HasOne(p => p.Building)
-            .WithMany()
+            .WithMany(p => p.Locations)
             .HasForeignKey("BuildingId")
             .IsRequired();
-
+        
         builder.ToTable(nameof(Location), schema: "locations");
     }
 }

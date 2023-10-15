@@ -1,0 +1,76 @@
+<article class="localizations">
+  <div class="localizations-content">
+    <h1 class="localizations-content-title">Localizações</h1>
+    <table class="localizations-content-table table table-striped">
+      <thead>
+        <tr>
+          <th class="table-column-description">Descrição</th>
+          <th class="table-column-level">Andar</th>
+          <th class="table-column-building">Prédio</th>
+          <th class="table-column-cep">CEP</th>
+          <th class="table-column-number">Número</th>
+          <th class="table-column-complement">Complemento</th>
+          <th class="table-column-observation">Observação</th>
+          <th class="table-column-action"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of localizationsPage.data">
+          <td>{{ item?.description }}</td>
+          <td>{{ item?.level }}</td>
+          <td>{{ item?.building?.description }}</td>
+          <td>{{ item?.building?.address?.zipCode }}</td>
+          <td>{{ item?.building?.address?.number }}</td>
+          <td>{{ item?.building?.address?.complement }}</td>
+          <td>{{ item?.building?.address?.observation }}</td>
+          <td>
+            <div class="btn-group">
+              <button
+                type="button"
+                class="btn btn-info"
+                [disabled]="loading"
+                (click)="setDetails(item)"
+              >
+                Detalhes
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                [disabled]="loading"
+                (click)="remove(item.id)"
+              >
+                Excluir
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button
+              type="button"
+              class="btn btn-primary"
+              [disabled]="loading"
+              routerLink="novo"
+              routerLinkActive="router-link-active"
+            >
+              Novo
+            </button>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <app-sensores
+    *ngIf="locationDetailsSelected.id" 
+    [location]="locationDetailsSelected" 
+    [location-id]="locationDetailsSelected.id" 
+    class="sensors">
+  </app-sensores>
+</article>

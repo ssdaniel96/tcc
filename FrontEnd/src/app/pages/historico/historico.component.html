@@ -1,0 +1,58 @@
+<div class="container history">
+  <h1>Histórico</h1>
+  <app-historico-header (searchParamaters)="searchByEvent($event)" class="history-header"></app-historico-header>
+  <div class="history-content">
+    <div class="history-header"></div>
+    <div class="history-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="col-sm-2">Equipamento</th>
+            <th class="col-sm-2">RF Tag</th>
+            <th class="col-sm-2">Sensor</th>
+            <th class="col-sm-2">Localização</th>
+            <th class="col-sm-2">Vector</th>
+            <th class="col-sm-2">Data/Hora</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of events.data">
+            <td>{{ item.equipmentDescription }}</td>
+            <td>{{ item.equipmentRfTag }}</td>
+            <td>{{ item.sensorId }} - {{item.sensorDescription}}</td>
+            <td>
+          <tr>
+            {{
+            item.locationDescription
+            }}
+            -
+            {{
+            item.locationBuilding
+            }}
+          </tr>
+          <tr>
+            CEP:
+            {{
+            item.locationZipCode
+            }}, nº
+            {{
+            item.locationNumber
+            }}
+          </tr>
+          </td>
+          <td>{{ getVectorDescription(item.eventVector) }}</td>
+          <td>{{ item.eventDateTime }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="events.data.length" class="pagination flex align-items-center justify-content-center" >
+        <p-paginator
+          (onPageChange)="onPageChange($event)"
+          [rows]="pageRequest.pageSize"
+          [totalRecords]="events.totalRows"
+          [rowsPerPageOptions]="[5, 10, 30]">
+        </p-paginator>
+      </div>
+    </div>
+  </div>
+</div>

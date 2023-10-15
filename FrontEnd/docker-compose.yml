@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  frontend:
+    build: .
+    image: frontend
+    ports:
+      - '4200:4200'
+    environment:
+      TZ: America/Sao_Paulo

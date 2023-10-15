@@ -1,0 +1,62 @@
+<div class="simulacao">
+  <h1>Simulação</h1>
+  <div class="container">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-3">
+          <label for="simulacao-address-select">Endereço</label>
+          <select name="simulacao-address-select" class="form-control" [(ngModel)]="selectedAddress"
+            id="simulacao-address-select" (ngModelChange)="selectAddress($event)" [disabled]="isLoading">
+            <option *ngFor="let item of addresses" [ngValue]="item">{{item.description}}</option>
+          </select>
+        </div>
+        <div class="col-sm-3">
+          <label for="simulacao-building-select">Prédio</label>
+          <select name="simulacao-building-select" class="form-control" [(ngModel)]="selectedBuilding"
+            id="simulacao-building-select" (ngModelChange)="selectBuilding($event)" [disabled]="isLoading || !addressWasSelected">
+            <option *ngFor="let item of buildings" [ngValue]="item">{{item.description}}</option>
+          </select>
+        </div>
+        <div class="col-sm-3">
+          <label for="simulacao-location-select">Localização</label>
+          <select name="simulacao-location-select" class="form-control" [(ngModel)]="selectedLocation"
+            id="simulacao-location-select" (ngModelChange)="selectLocation($event)" [disabled]="isLoading || !buildingWasSelected">
+            <option *ngFor="let item of locations" [ngValue]="item">{{item.description}}</option>
+          </select>
+        </div>
+        <div class="col-sm-3">
+          <label for="simulacao-sensor-select">Sensor</label>
+          <select name="simulacao-sensor-select" class="form-control" [(ngModel)]="selectedSensor"
+            id="simulacao-location-select" [disabled]="isLoading || !locationWasSelected">
+            <option *ngFor="let item of sensors" [ngValue]="item">{{item.description}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="simulacao-vector-select">Vetor</label>
+          <select name="simulacao-vector-select" class="form-control" [(ngModel)]="selectedVector"
+            id="simulacao-vector-select" [disabled]="isLoading">
+            <option *ngFor="let item of vectors" [ngValue]="item">{{ getVectorDescription(item)}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="simulacao-equipment-select">Equipamento</label>
+          <select name="simulacao-equipment-select" class="form-control" [(ngModel)]="selectedEquipment"
+            id="simulacao-equipment-select" [disabled]="isLoading">
+            <option *ngFor="let item of equipments" [ngValue]="item">{{item.description}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-9">
+          <button (click)="save()" class="btn btn-primary" [disabled]="isLoading || !IsValidToSave()">
+            Salvar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

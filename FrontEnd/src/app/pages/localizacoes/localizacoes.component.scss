@@ -1,0 +1,19 @@
+.localizations {
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    width: 100vw;
+}
+
+.localizations-content{
+    margin: auto;
+}
+
+.localizations-content-table{
+    max-width: 50vw;
+}
+
+.sensors {
+    max-width: 50vw;
+    margin: 0 auto 0 auto;
+}

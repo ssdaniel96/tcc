@@ -1,0 +1,82 @@
+<article class="equipments">
+  <div class="equipments-content">
+    <h1 class="equipment-content-title">Equipamentos</h1>
+    <table class="equipments-content-table table table-striped form-group">
+      <thead>
+        <tr>
+          <th class="table-column-description">Descrição</th>
+          <th class="table-column-rfTag">RfTag</th>
+          <th class="table-column-action"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of equipments">
+          <td>{{ item.description }}</td>
+          <td>{{ item.rfTag }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-secondary btn-delete"
+              [disabled]="loading"
+              (click)="remove(item.id)"
+            >
+              Excluir
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="newEquipmentSetted">
+          <td>
+            <input
+              class="form-control"
+              id="newEquipmentDescription"
+              type="text"
+              [(ngModel)]="newEquipment.description"
+            />
+          </td>
+          <td>
+            <input
+              class="form-control"
+              id="newEquipmentRfTag"
+              type="text"
+              [(ngModel)]="newEquipment.rfTag"
+            />
+          </td>
+          <td>
+            <div class="btn-group" role="group">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                [disabled]="loading"
+                (click)="cancel()"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                [disabled]="loading"
+                (click)="save()"
+              >
+                Salvar
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="!newEquipmentSetted" class="last-line">
+          <td>
+            <button
+              type="button"
+              class="btn btn-primary"
+              [disabled]="loading"
+              (click)="newEquipmentToggle()"
+            >
+              Novo
+            </button>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</article>

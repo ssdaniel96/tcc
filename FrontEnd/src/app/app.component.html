@@ -1,0 +1,13 @@
+<!-- menu -->
+<app-menu class="site-menu"></app-menu>
+
+<!-- loading-bar -->
+<div *ngIf="loading" class="loading-container flex-content-center">
+  <app-loading-bar></app-loading-bar>
+</div>
+
+<!-- application -->
+<router-outlet class="site-application"></router-outlet>
+
+<!-- to show messages requirements -->
+<ng-toast></ng-toast>

@@ -1,7 +1,9 @@
 ﻿using Domain.Entities.Locations;
+using Domain.Repositories.Dtos;
 
 namespace Domain.Repositories.Locations;
 
 public interface ILocationRepository : IRepository<Location>
 {
+    Task<PageResponse<Location>> GetAsync(PageRequest pageRequest, int buildingId = 0, string? filter = null);
 }

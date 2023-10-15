@@ -1,0 +1,58 @@
+<div class="localizacoes-novo">
+  <h1>Cadastro de Nova Localização</h1>
+  <form class="form-group" (ngSubmit)="save()" [formGroup]="formLocation">
+    <div class="row">
+      <label for="location-building-address">Endereço</label>
+      <select
+          class="form-control"
+          id="location-address"
+          formControlName="address"
+          (ngModelChange)="changeAddress($event)">
+        <option [ngValue]="newAddress">
+          {{ newAddress.description }}
+        </option>
+        <option *ngFor="let address of addresses" [ngValue]="address">
+          {{ address.description }}
+        </option>
+
+      </select>
+    </div>
+    <div class="row" *ngIf="isNewAddressEditView">
+      <app-novo-endereco (newAddressSelected)="createAddress($event)"></app-novo-endereco>
+    </div>
+    <div class="row">
+      <label for="location-building">Prédio</label>
+      <select class="form-control" id="location-building" formControlName="building" (ngModelChange)="changeBuilding($event)">
+        <option [ngValue]="newBuilding">
+          {{ newBuilding.descriptionFormatted }}
+        </option>
+        <option *ngFor="let building of buildings" [ngValue]="building">
+          {{ building.descriptionFormatted }}
+        </option>
+      </select>
+    </div>
+    <div class="row" *ngIf="isNewBuildingEditView">
+      <app-novo-predio (newBuilding)="createBuilding($event)"></app-novo-predio>
+    </div>
+    <div class="row">
+      <label for="location-level">Andar</label>
+      <input id="location-level" type="text" class="form-control" formControlName="level">
+    </div>
+    <div class="row">
+      <label for="location-description">Descrição</label>
+      <input id="location-description" type="text" class="form-control" formControlName="description">
+    </div>
+    <div class="row">
+      <div class="btn-group" role="group">
+        <button type="submit" class="btn btn-primary" [disabled]="isLoading || !formLocation.valid">
+          Salvar
+        </button>
+        <button type="button" routerLink="../" routerLinkActive="router-link-active" class="btn btn-secondary"
+          [disabled]="isLoading">
+          Cancelar
+        </button>
+      </div>
+
+    </div>
+  </form>
+</div>

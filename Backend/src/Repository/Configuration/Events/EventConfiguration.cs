@@ -10,18 +10,26 @@ internal sealed class EventConfiguration : IEntityTypeConfiguration<Event>
     {
         builder.HasKey(p => p.Id);
 
+        builder.HasOne(p => p.Sensor)
+            .WithMany(p => p.Events)
+            .HasForeignKey(p => p.SensorId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired();
+
         builder.HasOne(p => p.Location)
-            .WithMany()
-            .HasForeignKey("LocationId")
+            .WithMany(p => p.Events)
+            .HasForeignKey(p => p.LocationId)
+            .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
         builder.HasOne(p => p.Equipment)
             .WithMany(p => p.Events)
-            .HasForeignKey("EquipmentId")
+            .HasForeignKey(p => p.EquipmentId)
+            .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
         builder.Property(p => p.MovimentType)
-            .IsRequired(); // converson int to MovimentType
+            .IsRequired();
 
         builder.Property(p => p.EventDateTime)
             .IsRequired();

@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.UseCases.Events.Dtos;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IoC;
@@ -9,7 +9,7 @@ public static class MediatorConfiguration
     {
         services.AddMediatR(cfg =>
         {
-            cfg.RegisterServicesFromAssembly(typeof(EventDto).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(EventHistoryDto).Assembly);
         });
         return services;
     }

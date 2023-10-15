@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  backend:
+    extends:
+      file: Backend/src/Api/docker-compose.yml
+      service: backend
+    environment:
+      TZ: America/Sao_Paulo
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+;http://+
+      ASPNETCORE_Kestrel:Certificates:Default:Password: ABC@abc123
+      ASPNETCORE_Kestrel:Certificates:Default:Path: /https/aspnetapp.pfx
+      ConnectionStrings:Default: Server=host.docker.internal,1433;Database=tcc_new;User ID=sa;Password=Abcd!234;Trusted_Connection=False; TrustServerCertificate=True;
+
+  frontend:
+    extends:
+      file: FrontEnd/docker-compose.yml
+      service: frontend
+    environment:
+      TZ: America/Sao_Paulo
+  
+  database:
+    extends:
+      file: Database/docker-compose.yml
+      service: sql-server
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Abcd!234

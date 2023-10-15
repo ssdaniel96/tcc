@@ -1,0 +1,81 @@
+<div class="sensors-group">
+  <h2>
+    Sensores de {{ location?.building?.description }} -
+    {{ location.description }}
+  </h2>
+  <table class="sensors-table">
+    <thead>
+      <th>Id</th>
+      <th>Descrição</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of sensors">
+        <td>{{ item?.id }}</td>
+        <td>{{ item?.description }}</td>
+        <td> 
+          <button 
+            *ngIf="!isNewSensor"
+            class="btn btn-danger"
+            (click)="remove(item.id)"
+            [disabled]="isLoading"
+          >
+            Excluir
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="isNewSensor">
+        <td>
+          <input
+            id="id-sensor"
+            class="form-control"
+            [(ngModel)]="newSensor.id"
+            aria-label
+            placeholder="123"
+          />
+        </td>
+        <td>
+          <input
+            id="description-sensor"
+            class="form-control"
+            [(ngModel)]="newSensor.description"
+            placeholder="Porta da frente..."
+            aria-label
+          />
+        </td>
+      </tr>
+      <tr *ngIf="!isNewSensor">
+        <td>
+          <button
+            class="btn btn-primary"
+            (click)="setToEditTable()"
+            [disabled]="isLoading"
+          >
+            Novo
+          </button>
+        </td>
+        <td></td>
+      </tr>
+      <tr *ngIf="isNewSensor">
+        <td>
+          <button
+            class="btn btn-primary"
+            (click)="add()"
+            [disabled]="isLoading"
+          >
+            Salvar
+          </button>
+        </td>
+        <td>
+          <button
+            class="btn btn-secondary"
+            (click)="setToViewTable()"
+            [disabled]="isLoading"
+          >
+            Cancelar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
