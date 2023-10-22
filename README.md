@@ -24,13 +24,13 @@ Receberá as capturas de evento e salvará em banco, posteriormente fornecerá o
 Exibirá os logs para o usuário de acordo com os filtros solicitados, por equipamento, por localização, intervalo de tempo, etc.
 
 # GET STARTED
-
+- Instalar o NET SDK (apenas para gerar as credenciais SSL)
 - Instalar Docker-Desktop (Windows precisara do WSL habilitado)
-- Preparar credenciais SSL de desenvolvimento (isso precisara do .net SDK instalado)
+- Preparar credenciais SSL de desenvolvimento 
 
 ```
     dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p ABC@abc123
     dotnet dev-certs https --trust
 ```
 
-- Executar comando `docker-compose up --build`
+- Executar comando `docker-compose up --build` na raiz da soluçao (onde se encontra esse README)
