@@ -18,14 +18,14 @@ services:
       ConnectionStrings:Default: Server=host.docker.internal,1433;Database=tcc_new;User ID=sa;Password=Abcd!234;Trusted_Connection=False; TrustServerCertificate=True;
     volumes:
       - ~/.aspnet/https:/https:ro
-    depends_on:
-      - database
+    # depends_on:
+    #   - database
 
 
-  database:
-    extends:
-      file: ../../../Database/docker-compose.yml
-      service: sql-server
-      environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=Abcd!234
+  # database:
+    # extends:
+    #   file: ../../../Database/docker-compose.yml
+    #   service: sql-server
+    #   environment:
+    #   - ACCEPT_EULA=Y
+    #   - MSSQL_SA_PASSWORD=Abcd!234
