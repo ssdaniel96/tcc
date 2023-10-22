@@ -25,6 +25,6 @@ internal sealed class LocationConfiguration : IEntityTypeConfiguration<Location>
             .HasForeignKey("BuildingId")
             .IsRequired();
         
-        builder.ToTable(nameof(Location), schema: "locations");
+        builder.ToTable(nameof(Location));
     }
 }

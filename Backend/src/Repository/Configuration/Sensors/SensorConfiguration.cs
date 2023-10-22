@@ -25,6 +25,6 @@ internal sealed class SensorConfiguration : IEntityTypeConfiguration<Sensor>
             .HasForeignKey(p => p.LocationId)
             .IsRequired();
 
-        builder.ToTable(nameof(Sensor), schema: "sensors");    
+        builder.ToTable(nameof(Sensor));    
     }
 }
