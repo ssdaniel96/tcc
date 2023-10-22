@@ -25,6 +25,12 @@ Exibirá os logs para o usuário de acordo com os filtros solicitados, por equip
 
 # GET STARTED
 
-Logo será atualizadom com mais informações.
+- Instalar Docker-Desktop (Windows precisara do WSL habilitado)
+- Preparar credenciais SSL de desenvolvimento (isso precisara do .net SDK instalado)
 
+```
+    dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p ABC@abc123
+    dotnet dev-certs https --trust
+```
 
+- Executar comando `docker-compose up --build`

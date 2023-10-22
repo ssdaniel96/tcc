@@ -1,5 +1,10 @@
 version: '3.4'
 
+networks:
+  tcc-network:
+    name: tcc-network
+    external: false
+
 services:
   my-sql-server:
     image: arm64v8/mysql:latest
@@ -7,3 +12,5 @@ services:
       - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=@BcD1234
+    networks:
+      - tcc-network
