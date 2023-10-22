@@ -15,7 +15,7 @@ namespace Repository.Configuration.Events
                 .HasMaxLength(3)
                 .IsRequired();
 
-            builder.ToTable(nameof(MovimentType), schema: "events");
+            builder.ToTable(nameof(MovimentType));
         }
     }
 }

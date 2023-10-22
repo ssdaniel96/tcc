@@ -1,0 +1,4 @@
+"SqlServer": "Server=host.docker.internal,1433;Database=tcc;User ID=sa;Password=Abcd!234;Trusted_Connection=False; TrustServerCertificate=True;",
+"SqlServer": "Server=localhost,1433;Database=tcc_new;User ID=sa;Password=Abcd!234;Trusted_Connection=False; TrustServerCertificate=True;",
+"MySql": "host.docker.internal,3306;database=tcc;user=root;password=@BcD1234"
+"MySql": "server=localhost,3306;database=tcc;user=root;password=@BcD1234"

@@ -34,6 +34,6 @@ internal sealed class EventConfiguration : IEntityTypeConfiguration<Event>
         builder.Property(p => p.EventDateTime)
             .IsRequired();
 
-        builder.ToTable(nameof(Event), schema: "events");
+        builder.ToTable(nameof(Event));
     }
 }

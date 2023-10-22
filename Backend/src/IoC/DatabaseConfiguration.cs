@@ -13,8 +13,9 @@ internal static class DatabaseConfiguration
         IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(
-                opt => opt.UseSqlServer(configuration.GetConnectionString("Default"),
-                            sqlServerOptions => sqlServerOptions.CommandTimeout(120))
+                opt => opt.UseMySQL(configuration.GetConnectionString("MySql"))
+                    // opt.UseSqlServer(configuration.GetConnectionString("SqlServer"),
+                    //         sqlServerOptions => sqlServerOptions.CommandTimeout(120))
                     .EnableSensitiveDataLogging()
                     .LogTo(Console.WriteLine, LogLevel.Information));
 

@@ -4,13 +4,13 @@ networks:
   tcc-network:
     name: tcc-network
     external: false
+
 services:
-  frontend:
-    build: .
-    image: frontend
+  my-sql-server:
+    image: arm64v8/mysql:latest
     ports:
-      - '4200:4200'
+      - 3306:3306
     environment:
-      TZ: America/Sao_Paulo
+      - MYSQL_ROOT_PASSWORD=@BcD1234
     networks:
       - tcc-network
