@@ -19,9 +19,8 @@ namespace Repository.Seeders
             {
                 addresses = new()
                 {
-                    new("13182823", "43", complement: "Bl B Apt 30"),
-                    new("13192823", "700", complement: "Bl A Apt 55", observation: "Condomínio das Pérolas"),
-                    new("13182800", "71A")
+                    new("13184010", "265", complement: "UNASP-HT"),
+                    new("13165000", "S/N", complement: "UNASP-EC", observation: "Condomínio das Pérolas")
                 };
 
                 _context.AddRange(addresses);
@@ -34,10 +33,10 @@ namespace Repository.Seeders
             {
                 buildings = new()
                 {
-                    new(addresses[0], "Prédio de TI"),
-                    new(addresses[0], "Prédio de RH"),
-                    new(addresses[1], "Prédio de Commerce"),
-                    new(addresses[2], "Prédio Social")
+                    new(addresses[0], "Predio Escolar"),
+                    new(addresses[0], "Biblioteca"),
+                    new (addresses[1], "Predio da Faculdade"),
+                    new (addresses[1], "Restaurante")
                 };
 
                 _context.AddRange(buildings);
@@ -49,14 +48,39 @@ namespace Repository.Seeders
             {
                 locations = new()
                 {
-                    new("Sala 1", "1", buildings[0]),
-                    new("Sala 2", "1", buildings[0]),
-                    new("Sala 1", "2", buildings[1]),
-                    new("Sala 3", "Térreo", buildings[2]),
-                    new("Auditório", "Térreo", buildings[3])
+                    new("Sala 1", "Térreo", buildings[0]),
+                    new("Sala 2", "Térreo", buildings[0]),
+                    new("Sala de informatica", "Térreo", buildings[1]),
+                    new("Biblioteca", "Térreo", buildings[1]),
+                    new("Sala 1", "Térreo", buildings[2]),
+                    new("Sala 2", "Térreo", buildings[2]),
+                    new("Restaurante", "Térreo", buildings[3]),
+                    new("Cozinha", "Térreo", buildings[3])
                 };
 
                 _context.AddRange(locations);
+                await _context.SaveChangesAsync();
+            }
+
+            var sensors = _context.Sensors.ToList();
+            if (!sensors.Any())
+            {
+                sensors = new()
+                {
+                    new(1, "Porta", locations[0]), //SALA
+                    new(2, "Porta", locations[1]), //SALA
+                    new(3, "Porta", locations[2]), // LAB INFO
+                    new(4, "Porta principal", locations[3]), // BIBLIOTECA
+                    new(5, "Porta lateral", locations[3]), // BIBLIOTECA
+                    new(6, "Porta", locations[4]), // SALA
+                    new(7, "Porta", locations[5]), // SALA
+                    new(8, "Porta principal", locations[6]), // RESTAURANTE
+                    new(9, "Porta secundaria", locations[6]), // RESTAURANTE
+                    new(10, "Porta lateral", locations[7]),  // COZINHA
+                    new(11, "Porta interna", locations[7])  // COZINHA
+                };
+                
+                _context.AddRange(sensors);
                 await _context.SaveChangesAsync();
             }
 
@@ -65,9 +89,10 @@ namespace Repository.Seeders
             {
                 equipments = new()
                 {
-                    new("123", "IPhone"),
-                    new("133", "Notebook"),
-                    new("143", "Prancha de Surf"),
+                    new("123", "Aspire F5 001"),
+                    new("133", "Aspire F5 001"),
+                    new("143", "Projetor Portatil 001"),
+                    new("143", "Raspberry 4 001")
                 };
 
                 _context.AddRange(equipments);
