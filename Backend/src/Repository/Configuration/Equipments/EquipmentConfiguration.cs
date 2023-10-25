@@ -20,7 +20,7 @@ internal sealed class EquipmentConfiguration : IEntityTypeConfiguration<Equipmen
             .HasMaxLength(100)
             .IsRequired();
 
-        builder.ToTable(nameof(Equipment));
+        builder.ToTable(nameof(Equipment), schema: "equipments");
     }
 }
 

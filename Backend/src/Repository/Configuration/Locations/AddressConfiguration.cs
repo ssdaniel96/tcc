@@ -28,6 +28,6 @@ internal sealed class AddressConfiguration : IEntityTypeConfiguration<Address>
             .HasColumnType("varchar")
             .HasMaxLength(100);
 
-        builder.ToTable(nameof(Address));
+        builder.ToTable(nameof(Address), schema: "locations");
     }
 }

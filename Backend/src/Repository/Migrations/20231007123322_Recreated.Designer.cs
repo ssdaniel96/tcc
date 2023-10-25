@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository.Context;
@@ -11,16 +12,17 @@ using Repository.Context;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231022140350_MySqlStarted")]
-    partial class MySqlStarted
+    [Migration("20231007123322_Recreated")]
+    partial class Recreated
     {
-        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.12")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("ProductVersion", "6.0.16")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("Domain.Entities.Equipments.Equipment", b =>
                 {
@@ -28,19 +30,21 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("RfTag")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Equipment", (string)null);
+                    b.ToTable("Equipment", "equipments");
                 });
 
             modelBuilder.Entity("Domain.Entities.Events.Event", b =>
@@ -49,11 +53,13 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<int>("EquipmentId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EventDateTime")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
@@ -72,7 +78,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("SensorId");
 
-                    b.ToTable("Event", (string)null);
+                    b.ToTable("Event", "events");
                 });
 
             modelBuilder.Entity("Domain.Entities.Events.MovimentType", b =>
@@ -81,14 +87,16 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(3)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(3)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("MovimentType", (string)null);
+                    b.ToTable("MovimentType", "events");
                 });
 
             modelBuilder.Entity("Domain.Entities.Locations.Address", b =>
@@ -97,27 +105,29 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<string>("Complement")
                         .HasMaxLength(100)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("Observation")
                         .HasMaxLength(100)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("ZipCode")
                         .IsRequired()
                         .HasMaxLength(8)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(8)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Address", (string)null);
+                    b.ToTable("Address", "locations");
                 });
 
             modelBuilder.Entity("Domain.Entities.Locations.Building", b =>
@@ -126,19 +136,21 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("Building", (string)null);
+                    b.ToTable("Building", "locations");
                 });
 
             modelBuilder.Entity("Domain.Entities.Locations.Location", b =>
@@ -147,24 +159,26 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<int>("BuildingId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Level")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(10)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BuildingId");
 
-                    b.ToTable("Location", (string)null);
+                    b.ToTable("Location", "locations");
                 });
 
             modelBuilder.Entity("Domain.Entities.Sensors.Sensor", b =>
@@ -175,7 +189,7 @@ namespace Repository.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("varchar");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
@@ -184,7 +198,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Sensor", (string)null);
+                    b.ToTable("Sensor", "sensors");
                 });
 
             modelBuilder.Entity("Domain.Entities.Events.Event", b =>
