@@ -25,10 +25,10 @@ export class SimulacaoComponent implements OnInit {
   public sensors: SensorModel[] = new Array<SensorModel>();
   public vectors: Vector[] = [Vector.IN, Vector.OUT];
 
-  public selectedAddress: AddressModel = new AddressModel(0, '', '', null, null);
-  public selectedBuilding: BuildingModel = new BuildingModel(0, '', null);
-  public selectedLocation: LocalizationModel = new LocalizationModel(0, '', '', null);
-  public selectedSensor: SensorModel = new SensorModel(0, '', null);
+  public selectedAddress: AddressModel | null = null;
+  public selectedBuilding: BuildingModel | null = null;
+  public selectedLocation: LocalizationModel | null = null;
+  public selectedSensor: SensorModel | null = null;
   public selectedVector: Vector = 0 as Vector;
   public selectedEquipment: EquipmentModel = new EquipmentModel();
 
@@ -49,23 +49,28 @@ export class SimulacaoComponent implements OnInit {
 
 
   private resetBuilding(): void {
-    this.selectedBuilding = new BuildingModel(0, '', null);
+    this.selectedBuilding = null;
     this.buildingWasSelected = false;
     this.resetLocation();
   }
 
   private resetLocation(): void {
-    this.selectedLocation = new LocalizationModel(0, '', '', null);
+    this.selectedLocation = null;
     this.locationWasSelected = false;
     this.resetSensor();
   }
 
   private resetSensor(): void {
-    this.selectedSensor = new SensorModel(0, '', null);
+    this.selectedSensor = null;
   }
 
   public save(): void {
-    const newEvent = new NewEventModel(this.selectedEquipment.rfTag, this.selectedVector, this.selectedSensor.id);
+    if (!this.selectedSensor?.id) {
+      this.messageService.showError('Atualize a pagina, houve uma complicacaozinha', 'Desculpe, falha minha');
+      return;
+    }
+
+    const newEvent = new NewEventModel(this.selectedEquipment.rfTag, this.selectedVector, this.selectedSensor!.id);
     this.isLoading = true;
     this.eventService.save(newEvent).subscribe({
       next: res => {
@@ -87,11 +92,16 @@ export class SimulacaoComponent implements OnInit {
 
 
   public IsValidToSave(): boolean {
-    return !!(this.selectedAddress.id
-      && this.selectedBuilding.id
-      && this.selectedLocation.id
-      && this.selectedVector
-      && this.selectedEquipment.id);
+    if (this.selectedAddress?.id 
+    && this.selectedBuilding?.id 
+    && this.selectedLocation?.id 
+    && this.selectedSensor?.id 
+    && this.selectedEquipment.id 
+    && this.selectedVector) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public selectAddress(address: AddressModel): void {
@@ -105,26 +115,33 @@ export class SimulacaoComponent implements OnInit {
     }
   }
 
-  public selectBuilding(building: BuildingModel): void {
-    if (building.id) {
+  public selectBuilding(building: BuildingModel | null): void {
+    if (building?.id) {
       this.searchLocation();
       this.buildingWasSelected = true;
       this.resetLocation();
     }
     else {
+      this.selectedBuilding = building;
       this.buildingWasSelected = false;
     }
   }
 
-  public selectLocation(location: LocalizationModel): void {
-    if (location.id) {
+  public selectLocation(location: LocalizationModel | null): void {
+    if (location?.id) {
       this.searchSensors();
       this.locationWasSelected = true;
       this.resetSensor();
     }
     else {
+      this.selectedLocation = location;
       this.locationWasSelected = false;
     }
+  }
+
+  public selectSensor(sensor: SensorModel | null): void {
+    if (!sensor?.id)
+      this.selectedSensor = sensor;
   }
 
   public searchEquipment(filter: string | null = null): void {
@@ -149,7 +166,7 @@ export class SimulacaoComponent implements OnInit {
 
   public searchBuilding(filter: string | null = null): void {
     this.isLoading = true;
-    this.locationService.getBuildings(this.selectedAddress.id, filter).subscribe({
+    this.locationService.getBuildings(this.selectedAddress!.id, filter).subscribe({
       next: res => {
         if (res.isSuccessfully) {
           this.buildings = res.data.map(p => new BuildingModel(p.id, p.description, p.address));
@@ -168,6 +185,8 @@ export class SimulacaoComponent implements OnInit {
   }
 
   public searchLocation(filter: string | null = null): void {
+    if (!this.selectedBuilding?.id) return;
+
     this.isLoading = true;
     this.locationService.get(this.selectedBuilding.id, filter).subscribe({
       next: res => {
@@ -188,6 +207,8 @@ export class SimulacaoComponent implements OnInit {
   }
 
   public searchSensors(): void {
+    if (!this.selectedLocation?.id) return;
+
     this.isLoading = true;
     this.locationService.getSensors(this.selectedLocation.id, new PageRequest(1, 100)).subscribe({
       next: res => {

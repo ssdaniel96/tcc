@@ -22,5 +22,5 @@ services:
   
   database:
     extends:
-      file: Database/docker-compose.mysql.yml
-      service: my-sql-server
+      file: Database/docker-compose.sqlserver-arm.yml
+      service: sql-server

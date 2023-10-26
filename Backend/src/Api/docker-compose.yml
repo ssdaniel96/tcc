@@ -3,7 +3,7 @@ version: '3.4'
 networks:
   tcc-network:
     name: tcc-network
-    external: false
+    external: true
 
 services:
   backend:
@@ -20,7 +20,7 @@ services:
       ASPNETCORE_URLS: https://+;http://+
       ASPNETCORE_Kestrel:Certificates:Default:Password: ABC@abc123
       ASPNETCORE_Kestrel:Certificates:Default:Path: /https/aspnetapp.pfx
-      ConnectionStrings:MySql: server=host.docker.internal,3306;database=tcc;user=root;password=@BcD1234
+      ConnectionStrings:Default: Server=host.docker.internal,1433;Database=tcc;User ID=sa;Password=Abcd!234;Trusted_Connection=False; TrustServerCertificate=True;
     volumes:
       - ~/.aspnet/https:/https:ro
     depends_on:
@@ -31,5 +31,5 @@ services:
 
   database:
     extends:
-      file: ../../../Database/docker-compose.mysql.yml
-      service: my-sql-server
+      file: ../../../Database/docker-compose.sqlserver-arm.yml.yml
+      service: sqlserver

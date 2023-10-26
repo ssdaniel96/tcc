@@ -20,6 +20,6 @@ internal sealed class BuildingConfiguration : IEntityTypeConfiguration<Building>
             .HasForeignKey(p => p.AddressId)
             .IsRequired();
 
-        builder.ToTable(nameof(Building));
+        builder.ToTable(nameof(Building), schema: "locations");
     }
 }
