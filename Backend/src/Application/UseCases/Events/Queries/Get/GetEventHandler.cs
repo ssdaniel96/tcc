@@ -29,8 +29,8 @@ public sealed class GetEventHandler : IRequestHandler<GetEventRequest, ResponseD
             request.BuildingId,
             request.LocationId,
             request.SensorId,
-            request.StartDatetime,
-            request.EndDatetime);
+            request.StartDatetime.AddHours(-3),
+            request.EndDatetime.AddHours(-3));
 
         var pagedResult = _mapper.Map<PageResponse<EventHistoryDto>>(entities);
 
