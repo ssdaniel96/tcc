@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/757eb9ee-f4ce-4f88-b6c4-cc5ea1e2aff3/microsoft.web/sites/subscriptions/757eb9ee-f4ce-4f88-b6c4-cc5ea1e2aff3/resourceGroups/TCC/providers/Microsoft.Web/sites/unasp-ht-engenharia-tcc-web",
+    "appService.deploySubpath": "."
+}

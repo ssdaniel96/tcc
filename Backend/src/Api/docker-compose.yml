@@ -20,16 +20,16 @@ services:
       ASPNETCORE_URLS: https://+;http://+
       ASPNETCORE_Kestrel:Certificates:Default:Password: ABC@abc123
       ASPNETCORE_Kestrel:Certificates:Default:Path: /https/aspnetapp.pfx
-      ConnectionStrings:Default: Server=host.docker.internal,1433;Database=tcc;User ID=sa;Password=Abcd!234;Trusted_Connection=False; TrustServerCertificate=True;
+      ConnectionStrings:Default: Server=unasp-ht-engenhara-tcc.database.windows.net,1433;Initial Catalog=tcc;Persist Security Info=False;User ID=admin.tcc;Password=XMyqq6NvdML4dfERfu;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
     volumes:
       - ~/.aspnet/https:/https:ro
-    depends_on:
-      - database
+    # depends_on:
+    #   - database
     networks:
       - tcc-network
 
 
-  database:
-    extends:
-      file: ../../../Database/docker-compose.sqlserver-arm.yml.yml
-      service: sqlserver
+  # database:
+  #   extends:
+  #     file: ../../../Database/docker-compose.sqlserver-arm.yml.yml
+  #     service: sqlserver
