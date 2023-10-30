@@ -48,6 +48,7 @@
       <div *ngIf="events.data.length" class="pagination flex align-items-center justify-content-center" >
         <p-paginator
           (onPageChange)="onPageChange($event)"
+          [first]="first"
           [rows]="pageRequest.pageSize"
           [totalRecords]="events.totalRows"
           [rowsPerPageOptions]="[5, 10, 30]">
