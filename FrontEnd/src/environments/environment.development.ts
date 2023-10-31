@@ -1,3 +1,3 @@
 export const environment = {
-  api_url: 'https://unasp-ht-engenhara-tcc.azurewebsites.net/api'
+  api_url: 'https://unasp-ht-engenharia-tcc.azurewebsites.net/api'
 };
