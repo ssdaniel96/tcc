@@ -90,9 +90,9 @@ namespace Repository.Seeders
                 equipments = new()
                 {
                     new("123", "Aspire F5 001"),
-                    new("133", "Aspire F5 001"),
-                    new("143", "Projetor Portatil 001"),
-                    new("143", "Raspberry 4 001")
+                    new("133", "Aspire F5 002"),
+                    new("143", "Projetor 001"),
+                    new("143", "Raspberry 4")
                 };
 
                 _context.AddRange(equipments);

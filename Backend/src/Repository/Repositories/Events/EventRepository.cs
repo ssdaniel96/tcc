@@ -49,6 +49,7 @@ public sealed class EventRepository : Repository<Event>, IEventRepository
 
         var entities = await query.Skip(pageRequest.GetRecordsCountToSkip())
             .Take(pageRequest.PageSize)
+            .OrderByDescending(p => p.EventDateTime)
             .ToListAsync();
 
         return new(entities, pageRequest, totalRows);

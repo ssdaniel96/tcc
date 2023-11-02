@@ -398,3 +398,7 @@ FodyWeavers.xsd
 *.sln.iml
 Backend/.idea
 FrontEnd/yarn.lock
+.vscode/launch.json
+FrontEnd/.vscode/settings.json
+FrontEnd/.vscode/settings.json
+**/settings.json
