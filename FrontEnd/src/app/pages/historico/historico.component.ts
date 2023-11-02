@@ -18,6 +18,7 @@ export class HistoricoComponent implements OnInit {
 
   public events: PageResponse<EventHistoryModel> = new PageResponse<EventHistoryModel>(this.pageRequest.pageNumber, this.pageRequest.pageSize, 0, []);
   public parameters: EventHistoryParametersModel = new EventHistoryParametersModel();
+  public first: number = 0;
 
   public isLoading: boolean = false;
 
@@ -30,9 +31,12 @@ export class HistoricoComponent implements OnInit {
   }
 
   public onPageChange(item: PaginatorState): void {
-    this.pageRequest.pageNumber = (item.first! / item.rows!)+1;
+    this.first = item.first!;
+    this.pageRequest.pageNumber = item.page!+1;
     this.pageRequest.pageSize = item.rows!;
-    this.searchByEvent(this.parameters);
+    this.parameters.pageRequest = this.pageRequest;
+
+    this.search();
   }
 
   public getVectorDescription(vector: Vector): string {
@@ -69,6 +73,8 @@ export class HistoricoComponent implements OnInit {
   }
 
   public searchByEvent(filters: EventHistoryParametersModel): void {
+    this.pageRequest.pageNumber = 1;
+    this.first = 0;
     filters.pageRequest = this.pageRequest;
     this.parameters = filters;
     this.search();
